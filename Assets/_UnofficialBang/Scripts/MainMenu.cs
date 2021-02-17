@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     #region Inspector fields
 
     [Header("Configuration")]
+    [SerializeField]
     private int minPlayerCount = 3;
 
     [Header("Room Panel")]
@@ -67,6 +68,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private TMP_InputField roomNameInputField;
 
     [SerializeField]
+    private Button cancelRoomButton;
+
+    [SerializeField]
     private Button confirmRoomButton;
 
     #endregion
@@ -95,6 +99,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
         roomNameInputField.onValueChanged.AddListener(OnRoomNameInputFieldValueChanged);
 
         createRoomButton.onClick.AddListener(OnCreateRoomButtonClick);
+        cancelRoomButton.onClick.AddListener(OnCancelRoomButtonClick);
         confirmRoomButton.onClick.AddListener(OnConfirmRoomButtonClick);
         refreshButton.onClick.AddListener(OnRefreshButtonClick);
         leaveButton.onClick.AddListener(OnLeaveButtonClick);
@@ -191,7 +196,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
                     room.Refresh(ri);
                 }
             }
-            else
+            else if (!ri.RemovedFromList)
             {
                 var roomElement = Instantiate(roomElementPrefab, roomsContainer);
                 roomElement.Configure(ri, () => OnJoinButtonClick(ri.Name));
@@ -250,41 +255,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region Private methods
-
-    private void SetReady(bool isReady)
-    {
-        var customProperties = new Hashtable();
-        customProperties["ready"] = isReady;
-        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
-
-        readyButton.interactable = !isReady;
-    }
-
-    private void RefreshPlayerElement(Player player)
-    {
-        var playerElement = playerElements.SingleOrDefault(pe => pe.Player.ActorNumber == player.ActorNumber);
-        if (playerElement != null)
-        {
-            playerElement.Refresh(player);
-        }
-    }
-
-    private void RefreshStartButton()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            startButton.gameObject.SetActive(true);
-
-            int readyCount = playerElements.Count(pe => (bool)pe.Player.CustomProperties["ready"]);
-            startButton.interactable = PhotonNetwork.CurrentRoom.PlayerCount >= minPlayerCount && PhotonNetwork.CurrentRoom.PlayerCount <= readyCount;
-        }
-        else
-        {
-            startButton.gameObject.SetActive(false);
-        }
-    }
-
+    #region Listeners
     private void OnNicknameInputFieldValueChanged(string value)
     {
         createRoomButton.interactable = !string.IsNullOrEmpty(value);
@@ -304,6 +275,13 @@ public class MainMenu : MonoBehaviourPunCallbacks
         createRoomModal.SetActive(true);
 
         roomNameInputField.text = $"Stanza di {nicknameInputField.text}";
+    }
+
+    private void OnCancelRoomButtonClick()
+    {
+        roomListingPanel.SetActive(true);
+        playerListingPanel.SetActive(false);
+        createRoomModal.SetActive(false);
     }
 
     private void OnConfirmRoomButtonClick()
@@ -345,7 +323,45 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
+
         PhotonNetwork.LoadLevel("Game");
+    }
+
+    #endregion
+
+    #region Private methods
+
+    private void SetReady(bool isReady)
+    {
+        var customProperties = new Hashtable();
+        customProperties["ready"] = isReady;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
+
+        readyButton.interactable = !isReady;
+    }
+
+    private void RefreshPlayerElement(Player player)
+    {
+        var playerElement = playerElements.SingleOrDefault(pe => pe.Player.ActorNumber == player.ActorNumber);
+        if (playerElement != null)
+        {
+            playerElement.Refresh(player);
+        }
+    }
+
+    private void RefreshStartButton()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.gameObject.SetActive(true);
+
+            int readyCount = playerElements.Count(pe => (bool)pe.Player.CustomProperties["ready"]);
+            startButton.interactable = PhotonNetwork.CurrentRoom.PlayerCount >= minPlayerCount && PhotonNetwork.CurrentRoom.PlayerCount <= readyCount;
+        }
+        else
+        {
+            startButton.gameObject.SetActive(false);
+        }
     }
 
     #endregion
