@@ -12,6 +12,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
 {
     #region Inspector fields
 
+    [Header("Configuration")]
+    private int minPlayerCount = 3;
+
     [Header("Room Panel")]
 
     [SerializeField]
@@ -51,6 +54,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     [SerializeField]
     private Button readyButton;
+
+    [SerializeField]
+    private Button startButton;
 
     [Header("Create Room Modal")]
 
@@ -93,6 +99,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
         refreshButton.onClick.AddListener(OnRefreshButtonClick);
         leaveButton.onClick.AddListener(OnLeaveButtonClick);
         readyButton.onClick.AddListener(OnReadyButtonClick);
+        startButton.onClick.AddListener(OnStartButtonClick);
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -125,15 +132,15 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         createRoomButton.interactable = !string.IsNullOrEmpty(nicknameInputField.text);
 
-        var customProperties = new Hashtable();
-        customProperties["ready"] = false;
-        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
-
         roomElements.ForEach(re => Destroy(re.gameObject));
         roomElements.Clear();
 
         playerElements.ForEach(pe => Destroy(pe.gameObject));
         playerElements.Clear();
+
+        SetReady(false);
+
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnJoinedRoom()
@@ -143,6 +150,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         roomListingPanel.SetActive(false);
         playerListingPanel.SetActive(true);
         createRoomModal.SetActive(false);
+
+        readyButton.interactable = true;
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
@@ -154,6 +163,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             playerElements.Add(playerElement);
         });
 
+        RefreshStartButton();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -203,6 +213,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
             playerElements.Add(playerElement);
         }
+
+        RefreshStartButton();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -216,33 +228,62 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
             Destroy(playerElement.gameObject);
         }
+
+        RefreshStartButton();
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         Debug.Log($"Player {targetPlayer.NickName} properties updated");
 
-        var playerElement = playerElements.SingleOrDefault(pe => pe.Player.ActorNumber == targetPlayer.ActorNumber);
-        if (playerElement != null)
-        {
-            playerElement.Refresh(targetPlayer);
-        }
+        RefreshPlayerElement(targetPlayer);
+        RefreshStartButton();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         Debug.Log($"Master client switched to {newMasterClient.NickName}");
 
-        var playerElement = playerElements.SingleOrDefault(pe => pe.Player.ActorNumber == newMasterClient.ActorNumber);
-        if (playerElement != null)
-        {
-            playerElement.Refresh(newMasterClient);
-        }
+        RefreshPlayerElement(newMasterClient);
+        RefreshStartButton();
     }
 
     #endregion
 
     #region Private methods
+
+    private void SetReady(bool isReady)
+    {
+        var customProperties = new Hashtable();
+        customProperties["ready"] = isReady;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
+
+        readyButton.interactable = !isReady;
+    }
+
+    private void RefreshPlayerElement(Player player)
+    {
+        var playerElement = playerElements.SingleOrDefault(pe => pe.Player.ActorNumber == player.ActorNumber);
+        if (playerElement != null)
+        {
+            playerElement.Refresh(player);
+        }
+    }
+
+    private void RefreshStartButton()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.gameObject.SetActive(true);
+
+            int readyCount = playerElements.Count(pe => (bool)pe.Player.CustomProperties["ready"]);
+            startButton.interactable = PhotonNetwork.CurrentRoom.PlayerCount >= minPlayerCount && PhotonNetwork.CurrentRoom.PlayerCount <= readyCount;
+        }
+        else
+        {
+            startButton.gameObject.SetActive(false);
+        }
+    }
 
     private void OnNicknameInputFieldValueChanged(string value)
     {
@@ -258,11 +299,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void OnCreateRoomButtonClick()
     {
-        if (string.IsNullOrEmpty(nicknameInputField.text))
-        {
-            return;
-        }
-
         roomListingPanel.SetActive(true);
         playerListingPanel.SetActive(false);
         createRoomModal.SetActive(true);
@@ -272,11 +308,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void OnConfirmRoomButtonClick()
     {
-        if (string.IsNullOrEmpty(roomNameInputField.text) || string.IsNullOrEmpty(nicknameInputField.text))
-        {
-            return;
-        }
-
         var roomOptions = new RoomOptions
         {
             MaxPlayers = 7,
@@ -294,11 +325,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void OnJoinButtonClick(string roomName)
     {
-        if (string.IsNullOrEmpty(nicknameInputField.text))
-        {
-            return;
-        }
-
         PlayerPrefs.SetString("nickname", nicknameInputField.text);
 
         PhotonNetwork.NickName = nicknameInputField.text;
@@ -307,15 +333,19 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void OnReadyButtonClick()
     {
-        var customProperties = new Hashtable();
-        customProperties["ready"] = true;
-
-        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
+        SetReady(true);
     }
 
     private void OnLeaveButtonClick()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    private void OnStartButtonClick()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.LoadLevel("Game");
     }
 
     #endregion
