@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     #region Inspector fields
 
     [Header("Configuration")]
+
     [SerializeField]
     private int minPlayerCount = 3;
 
