@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
@@ -7,6 +8,11 @@ namespace Thirties.UnofficialBang
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _gameManager.InitializeDecks();
+            }
 
             GoTo(FSMTrigger.Forward);
         }

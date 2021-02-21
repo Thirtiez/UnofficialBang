@@ -41,7 +41,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ee39fbd6df097c246a923138b1707609, type: 3}
   - {fileID: 21300000, guid: 98c14797164e82548aa08bdefbe995c7, type: 3}
   - {fileID: 21300000, guid: a87392d8e0fb71447aa27999c05d896f, type: 3}
-  - {fileID: 8848993070067138329, guid: c2eaf1f94ed77264e96f7f611b0eaa76, type: 3}
+  - {fileID: 21300000, guid: c2eaf1f94ed77264e96f7f611b0eaa76, type: 3}
+  - {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
   m_PackedSpriteNamesToIndex:
   - back_
   - starred
@@ -50,6 +51,7 @@ SpriteAtlas:
   - paper_back_m
   - back_foot
   - logo
-  - bullets_0
+  - bullets
+  - back250x389
   m_Tag: Common
   m_IsVariant: 0

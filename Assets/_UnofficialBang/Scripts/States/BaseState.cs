@@ -12,6 +12,8 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
+            Debug.Log($"<color=green> Entered {GetType().Name}</color>");
+
             _fsm = animator;
 
             if (_gameManager == null && GameManager.Instance != null)
@@ -28,6 +30,8 @@ namespace Thirties.UnofficialBang
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
+
+            Debug.Log($"<color=green> Exited {GetType().Name}</color>");
         }
 
         protected void GoTo(int trigger)

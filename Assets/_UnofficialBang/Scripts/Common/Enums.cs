@@ -32,4 +32,20 @@
         Queen,
         King
     }
+
+    public enum PlayerRole
+    {
+        Outlaw,
+        Renegade,
+        Vice,
+        Sceriff
+    }
+
+    public enum DeckClass
+    {
+        Main,
+        Discard,
+        Character,
+        Role
+    }
 }
