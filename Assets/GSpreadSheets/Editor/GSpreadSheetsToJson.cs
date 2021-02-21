@@ -79,7 +79,7 @@ public class GSpreadSheetsToJson : EditorWindow {
 	/// <summary>
 	/// The data types which is allowed to convert from sheet to json object
 	/// </summary>
-	private static List<string> allowedDataTypes = new List<string>(){"string", "int", "bool", "float", "string[]", "int[]", "bool[]", "float[]"};
+	private static List<string> allowedDataTypes = new List<string>(){"string", "int", "int?", "bool", "float", "string[]", "int[]", "bool[]", "float[]"};
 
 	/// <summary>
 	/// Position of the scroll view.
@@ -325,6 +325,13 @@ public class GSpreadSheetsToJson : EditorWindow {
 						data.Add(propertyNames[columnId], val);
 						break;
 					}
+					case "int?":
+						{
+							bool success = int.TryParse(strVal, out int result);
+							int? val = success ? result : (int?)null;
+							data.Add(propertyNames[columnId], val);
+							break;
+						}
 					case "bool":
 					{
 						bool val = false;

@@ -8,20 +8,25 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 [CreateAssetMenu(menuName = "Card Set")]
-public class CardSet : ScriptableObject
+public class CardSet : SerializedScriptableObject
 {
-    [SerializeField]
-    [FilePath(Extensions = "txt", RequireExistingPath = true)]
-    private string jsonFilePath;
-
-    [SerializeField]
+    [OdinSerialize]
+    [PropertyOrder(2)]
+    [PropertySpace]
     [TableList]
     private List<Card> cards;
     public List<Card> Cards => cards;
 
+#if UNITY_EDITOR
+    [SerializeField]
+    [PropertyOrder(0)]
+    [FilePath(Extensions = "txt", RequireExistingPath = true)]
+    private string jsonFilePath;
+
     private bool IsValidFilePath => !string.IsNullOrEmpty(jsonFilePath) && jsonFilePath.EndsWith(".txt");
 
     [EnableIf("IsValidFilePath")]
+    [PropertyOrder(1)]
     [Button]
     private void Import()
     {
@@ -30,6 +35,10 @@ public class CardSet : ScriptableObject
         {
             Debug.Log($"Json file {jsonFilePath} not found");
         }
+
         cards = JsonConvert.DeserializeObject<List<Card>>(json.text);
+
+        EditorUtility.SetDirty(this);
     }
+#endif
 }

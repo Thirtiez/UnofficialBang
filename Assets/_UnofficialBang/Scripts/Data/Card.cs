@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 
 namespace Thirties.UnofficialBang
@@ -8,27 +7,27 @@ namespace Thirties.UnofficialBang
     [Serializable]
     public class Card
     {
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public string Id { get; set; }
 
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public string Name { get; set; }
 
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public string Sprite { get; set; }
 
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public CardClass? Class { get; set; }
 
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public CardRank? Rank { get; set; }
 
-        [ShowInInspector]
+        [OdinSerialize]
         [DisplayAsString]
         public CardSuit? Suit { get; set; }
     }

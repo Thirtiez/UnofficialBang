@@ -18,7 +18,7 @@
 
     public enum CardRank
     {
-        Ace,
+        Ace = 1,
         Two,
         Three,
         Four,

@@ -960,6 +960,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fsm: {fileID: 170670045}
+  cardSpriteDatabase: {fileID: 11400000, guid: 9576d365afd1ef446904c9ea5ef9f99d, type: 2}
+  baseSet: {fileID: 11400000, guid: a5f49c0be67a326419b9224d3de95f79, type: 2}
 --- !u!4 &170670047
 Transform:
   m_ObjectHideFlags: 0
