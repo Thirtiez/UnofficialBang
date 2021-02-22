@@ -1,9 +1,4 @@
-﻿using Photon.Realtime;
-using Sirenix.Serialization;
-using System;
-
-namespace Thirties.UnofficialBang
+﻿namespace Thirties.UnofficialBang
 {
-    [Serializable]
     public class BaseEventData { }
 }

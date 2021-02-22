@@ -1,16 +1,18 @@
 ﻿using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
     public class GameManager : MonoBehaviour, IOnEventCallback
     {
+        #region Inspector fields
+
         [Header("FSM")]
         [SerializeField]
         private Animator fsm;
@@ -23,18 +25,37 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private CardSetData baseSet;
 
+        [Header("UI")]
+        [SerializeField]
+        private GameLog gameLog;
+        public GameLog GameLog => gameLog;
+
+        #endregion
+
+        #region Public properties
+
         public static GameManager Instance { get; private set; }
 
         public List<Player> Players { get; private set; }
+        public List<CardData> Cards { get; private set; }
+
+        #endregion
+
+        #region Private fields
 
         private List<CardData> _mainDeck;
         private List<CardData> _rolesDeck;
         private List<CardData> _charactersDeck;
         private List<CardData> _discardPile;
+
         private List<CardData> _playerHand;
         private List<CardData> _playerBoard;
         private CardData _playerCharacter;
         private CardData _playerRole;
+
+        #endregion
+
+        #region Monobehaviour methods
 
         protected void Awake()
         {
@@ -47,14 +68,23 @@ namespace Thirties.UnofficialBang
                 Instance = this;
 
                 Players = PhotonNetwork.PlayerList.ToList();
+                Cards = baseSet.Cards.ToList();
             }
         }
 
-        private void SendEvent(byte gameEvent, BaseEventData eventData, ReceiverGroup receivers = ReceiverGroup.All)
+        private void OnEnable()
         {
-            var options = new RaiseEventOptions { Receivers = receivers };
-            PhotonNetwork.RaiseEvent(gameEvent, eventData, options, SendOptions.SendReliable);
+            PhotonNetwork.AddCallbackTarget(this);
         }
+
+        private void OnDisable()
+        {
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
+
+        #endregion
+
+        #region Public methods
 
         public void InitializeDecks()
         {
@@ -97,8 +127,10 @@ namespace Thirties.UnofficialBang
             {
                 case DeckClass.Main:
                     break;
+
                 case DeckClass.Discard:
                     break;
+
                 case DeckClass.Character:
                     break;
 
@@ -106,27 +138,50 @@ namespace Thirties.UnofficialBang
                     var card = _rolesDeck[0];
                     _rolesDeck.RemoveAt(0);
 
-                    SendEvent(GameEvent.DealCard, new DealCardEventData { Card = card, Player = player });
+                    SendEvent(GameEvent.DealCard, new DealCardEventData { CardId = card.Id, PlayerId = player.ActorNumber });
                     break;
             }
         }
 
-        #region Photon event handlers
+        #endregion
+
+        #region Event methods and handlers
+
+        private void SendEvent(byte gameEvent, BaseEventData eventData, RaiseEventOptions raiseEventOptions = null, SendOptions? sendOptions = null)
+        {
+            var json = JsonConvert.SerializeObject(eventData);
+
+            Debug.Log($"Event {gameEvent} sent with data: {json}");
+
+            raiseEventOptions = raiseEventOptions ?? new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            sendOptions = sendOptions ?? SendOptions.SendReliable;
+
+            PhotonNetwork.RaiseEvent(gameEvent, json, raiseEventOptions, sendOptions.Value);
+        }
 
         public void OnEvent(EventData photonEvent)
         {
+            var json = photonEvent.CustomData as string;
+
+            Debug.Log($"Event {photonEvent.Code} received with data: {json}");
+
             switch (photonEvent.Code)
             {
                 case GameEvent.DealCard:
-                    var eventData = photonEvent.CustomData as DealCardEventData;
-                    OnCardDealt(eventData.Card, eventData.Player);
+                    var eventData = JsonConvert.DeserializeObject<DealCardEventData>(json);
+                    OnCardDealt(eventData.CardId, eventData.PlayerId);
                     break;
             }
         }
 
-        private void OnCardDealt(CardData card, Player player)
+        private void OnCardDealt(int cardId, int playerId)
         {
-            if (PhotonNetwork.LocalPlayer == player)
+            var card = baseSet.Cards[cardId];
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(playerId);
+
+            gameLog.Log("Dealt {0} to {1}", card, player);
+
+            if (PhotonNetwork.LocalPlayer.ActorNumber == playerId)
             {
                 switch (card.Class)
                 {

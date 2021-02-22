@@ -6,6 +6,7 @@ using Thirties.UnofficialBang;
 using UnityEditor;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Linq;
 
 [CreateAssetMenu(menuName = "Card Set Data")]
 public class CardSetData : SerializedScriptableObject
@@ -37,6 +38,8 @@ public class CardSetData : SerializedScriptableObject
         }
 
         cards = JsonConvert.DeserializeObject<List<CardData>>(json.text);
+
+        cards = cards.OrderBy(x => x.Id).ToList();
 
         EditorUtility.SetDirty(this);
     }

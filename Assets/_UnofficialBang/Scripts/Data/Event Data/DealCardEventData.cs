@@ -1,6 +1,6 @@
 ﻿namespace Thirties.UnofficialBang
 {
-    public class RevealRoleEventData : BaseEventData
+    public class DealCardEventData : BaseEventData
     {
         public int PlayerId { get; set; }
 

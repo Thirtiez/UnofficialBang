@@ -1,63 +1,66 @@
-﻿using ExitGames.Client.Photon;
-using OneP.InfinityScrollView;
-using Photon.Pun;
-using Photon.Realtime;
-using Sirenix.Serialization;
+﻿using Photon.Realtime;
+using PolyAndCode.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
 {
-    public enum LogTemplate
+    public class GameLog : MonoBehaviour, IRecyclableScrollRectDataSource
     {
-        RoleRevealed,
-        CharacterRevealed,
-        GameStarted
-    }
+        [Header("References")]
 
-    public class GameLog : MonoBehaviour, IOnEventCallback
-    {
         [SerializeField]
-        private InfinityScrollView infinityScrollView;
+        private RecyclableScrollRect recyclableScrollRect;
+        [SerializeField]
+        private Scrollbar scrollbar;
 
-        [OdinSerialize]
-        private Dictionary<LogTemplate, string> templates;
+        [Header("Colors")]
 
-        public List<string> Messages { get; private set; } = new List<string>();
+        [SerializeField]
+        private Color cardColor = Color.red;
+        [SerializeField]
+        private Color targetColor = Color.yellow;
+        [SerializeField]
+        private Color instigatorColor = Color.yellow;
+
+        private string hexCardColor => ColorUtility.ToHtmlStringRGBA(cardColor);
+        private string hexTargetColor => ColorUtility.ToHtmlStringRGBA(targetColor);
+        private string hexInstigatorColor => ColorUtility.ToHtmlStringRGBA(instigatorColor);
+
+        private List<string> messages = new List<string>();
 
         protected void Awake()
         {
-            infinityScrollView.Setup(Messages.Count);
+            recyclableScrollRect.DataSource = this;
         }
 
-        protected void OnEnable()
+        public void Log(string message, CardData card = null, Player target = null, Player instigator = null)
         {
-            PhotonNetwork.AddCallbackTarget(this);
+            string cardName = $"<color=#{hexCardColor}>{card?.Name}</color>";
+            string targetName = $"<color=#{hexTargetColor}>{target?.NickName}</color>";
+            string instigatorName = $"<color=#{hexInstigatorColor}>{instigator?.NickName}</color>";
+
+            message = string.Format(message, cardName, targetName, instigatorName);
+            messages.Add(message);
+
+            recyclableScrollRect.ReloadData();
         }
 
-        protected void OnDisable()
+        #region Data source
+
+        public int GetItemCount()
         {
-            PhotonNetwork.RemoveCallbackTarget(this);
+            return messages.Count;
         }
 
-        private void Log(LogTemplate template, CardData card = null, Player instigator = null, Player target = null)
+        public void SetCell(ICell cell, int index)
         {
-            string message = string.Format(templates[template], card?.Name, target?.NickName, instigator?.NickName);
-            Messages.Add(message);
-
-            infinityScrollView.Setup(Messages.Count);
+            var logElement = cell as LogElement;
+            logElement.Configure(messages[index]);
         }
 
-        public void OnEvent(EventData photonEvent)
-        {
-            switch (photonEvent.Code)
-            {
-                case GameEvent.RevealRole:
-                    var eventData = photonEvent.CustomData as RevealRoleEventData;
-                    Log(LogTemplate.RoleRevealed, eventData.Card, eventData.Player);
-                    break;
-            }
-        }
+        #endregion
     }
 }

@@ -29,7 +29,7 @@ namespace Thirties.UnofficialBang
 
         private IEnumerator DealAndWait()
         {
-            foreach (Player player in _gameManager.Players)
+            foreach (Player player in PhotonNetwork.PlayerList)
             {
                 _gameManager.DealCard(player, DeckClass.Role);
 
