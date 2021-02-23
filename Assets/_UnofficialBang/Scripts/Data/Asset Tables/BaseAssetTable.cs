@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEditor;
-using System.Linq;
 
 namespace Thirties.UnofficialBang
 {
-    public abstract class Database<T> : ScriptableObject
+    public abstract class BaseAssetTable<T> : ScriptableObject
         where T : Object
     {
         [SerializeField]
-        [FolderPath]
-        private string[] folders;
-
-        [SerializeField]
+        [PropertyOrder(2)]
+        [PropertySpace]
         private List<T> resources;
+        public List<T> Resources => resources;
 
 #if UNITY_EDITOR
 
+        [SerializeField]
+        [PropertyOrder(0)]
+        [FilePath]
+        private string[] folders;
+
+        private bool IsValidFoldersPath => folders != null && folders.Length > 0;
+
+        [EnableIf("IsValidFoldersPath")]
+        [PropertyOrder(1)]
         [Button]
         private void LoadFolders()
         {
@@ -41,10 +48,5 @@ namespace Thirties.UnofficialBang
         }
 
 #endif
-
-        public T Get(string name)
-        {
-            return resources.SingleOrDefault(x => x.name == name);
-        }
     }
 }

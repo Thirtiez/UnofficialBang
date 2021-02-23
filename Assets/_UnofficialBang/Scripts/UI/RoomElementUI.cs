@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
 {
-    public class RoomElement : MonoBehaviour
+    public class RoomElementUI : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text nameText;

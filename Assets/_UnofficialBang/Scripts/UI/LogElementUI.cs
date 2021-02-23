@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class LogElement : MonoBehaviour, ICell
+    public class LogElementUI : MonoBehaviour, ICell
     {
         [SerializeField]
         private TMP_Text contentText;

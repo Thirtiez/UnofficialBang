@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
@@ -19,23 +20,6 @@ namespace Thirties.UnofficialBang
                 list[random] = temp;
             }
             return list;
-        }
-
-        public static PlayerRole? StringToPlayerRole(this string role)
-        {
-            switch (role)
-            {
-                case "Fuorilegge":
-                    return PlayerRole.Outlaw;
-                case "Sceriffo":
-                    return PlayerRole.Sceriff;
-                case "Vice":
-                    return PlayerRole.Vice;
-                case "Rinnegato":
-                    return PlayerRole.Renegade;
-            }
-
-            return null;
         }
     }
 }

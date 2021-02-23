@@ -5,12 +5,8 @@ using System;
 namespace Thirties.UnofficialBang
 {
     [Serializable]
-    public class CardData
+    public class CardData : BaseData
     {
-        [OdinSerialize]
-        [DisplayAsString]
-        public int Id { get; set; }
-
         [OdinSerialize]
         [DisplayAsString]
         public string Name { get; set; }

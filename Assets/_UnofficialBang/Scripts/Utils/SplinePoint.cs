@@ -17,34 +17,33 @@ namespace Thirties.UnofficialBang
 
         protected void Awake()
         {
-            if (spline != null)
-            {
-                SetPosition(time);
-            }
+            SetTransform(time);
         }
 
 #if UNITY_EDITOR
 
         protected void Update()
         {
-            SetPosition(time);
+            SetTransform(time);
         }
 
 #endif
 
-        public void SetSpline(Spline spline)
+        public void Configure(Spline spline)
         {
             this.spline = spline;
         }
 
-        public void SetPosition(float time)
+        public void SetTransform(float time)
         {
-            this.time = time;
+            if (spline != null)
+            {
+                this.time = time;
 
-            var curve = spline.GetSample(time);
-            transform.localPosition = curve.location;
-            transform.up = curve.up;
-
+                var curve = spline.GetSample(time);
+                transform.localPosition = curve.location;
+                transform.up = curve.up;
+            }
         }
     }
 }

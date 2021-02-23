@@ -3622,6 +3622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minPlayerCount: 2
+  nicknameDataTable: {fileID: 11400000, guid: 875731bc845500049b242c94fbdfc34f, type: 2}
   roomListingPanel: {fileID: 1704470814}
   roomsContainer: {fileID: 801612279}
   roomElementPrefab: {fileID: 7961132230572513644, guid: 8b4a245a408cf9c4c8c59f9a9f498620,

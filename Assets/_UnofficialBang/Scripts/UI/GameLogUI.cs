@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
 {
-    public class GameLog : MonoBehaviour, IRecyclableScrollRectDataSource
+    public class GameLogUI : MonoBehaviour, IRecyclableScrollRectDataSource
     {
         [Header("References")]
 
@@ -57,7 +57,7 @@ namespace Thirties.UnofficialBang
 
         public void SetCell(ICell cell, int index)
         {
-            var logElement = cell as LogElement;
+            var logElement = cell as LogElementUI;
             logElement.Configure(messages[index]);
         }
 

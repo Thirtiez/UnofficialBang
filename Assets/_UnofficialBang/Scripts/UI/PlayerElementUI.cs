@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class PlayerElement : MonoBehaviour
+    public class PlayerElementUI : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text nameText;

@@ -14,21 +14,27 @@ namespace Thirties.UnofficialBang
         #region Inspector fields
 
         [Header("FSM")]
+
         [SerializeField]
         private Animator fsm;
 
-        [Header("Databases")]
-        [SerializeField]
-        private CardSpriteDatabase cardSpriteDatabase;
+        [Header("Scriptable objects")]
 
-        [Header("Sets")]
         [SerializeField]
-        private CardSetData baseSet;
+        private CardSpriteTable cardSpriteTable;
+
+        [SerializeField]
+        private CardDataTable baseCardDataTable;
+
+        [Header("Views")]
+
+        [SerializeField]
+        private PlayerView playerView;
 
         [Header("UI")]
+
         [SerializeField]
-        private GameLog gameLog;
-        public GameLog GameLog => gameLog;
+        private GameLogUI gameLog;
 
         #endregion
 
@@ -38,6 +44,9 @@ namespace Thirties.UnofficialBang
 
         public List<Player> Players { get; private set; }
         public List<CardData> Cards { get; private set; }
+
+        public CardSpriteTable CardSpriteDatabase => cardSpriteTable;
+        public GameLogUI GameLog => gameLog;
 
         #endregion
 
@@ -68,7 +77,7 @@ namespace Thirties.UnofficialBang
                 Instance = this;
 
                 Players = PhotonNetwork.PlayerList.ToList();
-                Cards = baseSet.Cards.ToList();
+                Cards = baseCardDataTable.Records.ToList();
             }
         }
 
@@ -98,17 +107,17 @@ namespace Thirties.UnofficialBang
                 return;
             }
 
-            _mainDeck = baseSet.Cards
+            _mainDeck = baseCardDataTable.Records
                 .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
                 .ToList()
                 .Shuffle();
 
-            _charactersDeck = baseSet.Cards
+            _charactersDeck = baseCardDataTable.Records
                 .Where(c => c.Class == CardClass.Character)
                 .ToList()
                 .Shuffle();
 
-            _rolesDeck = baseSet.Cards
+            _rolesDeck = baseCardDataTable.Records
                 .Where(c => c.Class == CardClass.Role)
                 .ToList()
                 .Shuffle();
@@ -151,7 +160,7 @@ namespace Thirties.UnofficialBang
         {
             var json = JsonConvert.SerializeObject(eventData);
 
-            Debug.Log($"Event {gameEvent} sent with data: {json}");
+            Debug.Log($"<color=cyan>Event {gameEvent} sent with data: {json}</color>");
 
             raiseEventOptions = raiseEventOptions ?? new RaiseEventOptions { Receivers = ReceiverGroup.All };
             sendOptions = sendOptions ?? SendOptions.SendReliable;
@@ -163,7 +172,7 @@ namespace Thirties.UnofficialBang
         {
             var json = photonEvent.CustomData as string;
 
-            Debug.Log($"Event {photonEvent.Code} received with data: {json}");
+            Debug.Log($"<color=cyan>Event {photonEvent.Code} received with data: {json}</color>");
 
             switch (photonEvent.Code)
             {
@@ -176,25 +185,29 @@ namespace Thirties.UnofficialBang
 
         private void OnCardDealt(int cardId, int playerId)
         {
-            var card = baseSet.Cards[cardId];
-            var player = PhotonNetwork.CurrentRoom.GetPlayer(playerId);
-
-            gameLog.Log("Dealt {0} to {1}", card, player);
+            var card = baseCardDataTable.Records[cardId];
 
             if (PhotonNetwork.LocalPlayer.ActorNumber == playerId)
             {
+
                 switch (card.Class)
                 {
                     case CardClass.Brown:
                     case CardClass.Blue:
+                        playerView.DealPlayingCard(card);
+
                         _playerHand.Add(card);
                         break;
 
                     case CardClass.Character:
+                        playerView.DealCharacter(card);
+
                         _playerCharacter = card;
                         break;
 
                     case CardClass.Role:
+                        playerView.DealRole(card);
+
                         _playerRole = card;
                         break;
                 }
@@ -208,4 +221,3 @@ namespace Thirties.UnofficialBang
         #endregion
     }
 }
-

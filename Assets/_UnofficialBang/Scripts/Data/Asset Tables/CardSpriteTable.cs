@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    [CreateAssetMenu(menuName = "Card Sprite Database")]
-    public class CardSpriteDatabase : Database<Sprite>
+    [CreateAssetMenu(menuName = "Card Sprite Table")]
+    public class CardSpriteTable : BaseAssetTable<Sprite>
     {
 
     }

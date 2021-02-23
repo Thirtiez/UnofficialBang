@@ -1,0 +1,361 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c21d624536340a4a934d604bf718624, type: 3}
+  m_Name: Nickname Data Table
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: records
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Thirties.UnofficialBang.NicknameData,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 27
+    - Name: 
+      Entry: 7
+      Data: 1|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Massimo Boldi
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Giancarlo Magalli
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Gerry Scotti
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Pippo Baudo
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Il Gabibbo
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Barbara DUrso
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Vittorio Sgarbi
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Carlo Conti
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Maurizio Costanzo
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Maria De Filippi
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Christian De Sica
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Enrico Papi
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Paolo bonolis
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Luca Laurenti
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 15|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Cristiano Malgioglio
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Mago Otelma
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Platinette
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 18|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Alessandra Mussolini
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 19|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Giucas Casella
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Paolo Brosio
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 21|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Fabrizio Corona
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 22|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Antonio Zequila
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 23|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Alfonso Signorini
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 24|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Umberto Smaila
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 25|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Giorgio Mastrota
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 26|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: Er Baffo
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 27|Thirties.UnofficialBang.NicknameData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 0
+    - Name: Nickname
+      Entry: 1
+      Data: L'Uomo Gatto
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  jsonFilePath: Assets/Resources/JsonData/Nicknames.txt

@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 316e93f4c63b1c04485e7a2b152cd368, type: 3}
-  m_Name: Card Sprite Database
+  m_Name: Card Sprite Table
   m_EditorClassIdentifier: 
-  folders:
-  - Assets/_UnofficialBang/Sprites/Cards/Base
   resources:
   - {fileID: 21300000, guid: 04b318510f3a03c4aad7243118c14a3b, type: 3}
   - {fileID: 21300000, guid: 32a6844a8b3e8a048a1314650527b8ae, type: 3}
@@ -57,3 +55,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94b93e781cf3d6646a0eb3cb2ea472e2, type: 3}
   - {fileID: 21300000, guid: 9d9c82d061e410846883606011925f89, type: 3}
   - {fileID: 21300000, guid: 68deb87228615cf4d9e090f68036646f, type: 3}
+  folders:
+  - Assets/_UnofficialBang/Sprites/Cards/Base

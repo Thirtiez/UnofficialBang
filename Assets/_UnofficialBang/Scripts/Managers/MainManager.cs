@@ -19,6 +19,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private int minPlayerCount = 3;
 
+        [SerializeField]
+        private NicknameDataTable nicknameDataTable;
+
         [Header("Room Panel")]
 
         [SerializeField]
@@ -28,7 +31,7 @@ namespace Thirties.UnofficialBang
         private Transform roomsContainer;
 
         [SerializeField]
-        private RoomElement roomElementPrefab;
+        private RoomElementUI roomElementPrefab;
 
         [SerializeField]
         private TMP_InputField nicknameInputField;
@@ -48,7 +51,7 @@ namespace Thirties.UnofficialBang
         private Transform playersContainer;
 
         [SerializeField]
-        private PlayerElement playerElementPrefab;
+        private PlayerElementUI playerElementPrefab;
 
         [SerializeField]
         private TMP_Text roomNameText;
@@ -80,8 +83,8 @@ namespace Thirties.UnofficialBang
 
         #region Private fields
 
-        private List<RoomElement> roomElements = new List<RoomElement>();
-        private List<PlayerElement> playerElements = new List<PlayerElement>();
+        private List<RoomElementUI> roomElements = new List<RoomElementUI>();
+        private List<PlayerElementUI> playerElements = new List<PlayerElementUI>();
 
         #endregion
 
@@ -89,10 +92,15 @@ namespace Thirties.UnofficialBang
 
         protected void Start()
         {
+#if UNITY_EDITOR
+            int nameIndex = Random.Range(0, nicknameDataTable.Records.Count);
+            nicknameInputField.text = nicknameDataTable.Records[nameIndex].Nickname;
+#else
             if (PlayerPrefs.HasKey("nickname"))
             {
                 nicknameInputField.text = PlayerPrefs.GetString("nickname");
             }
+#endif
 
             roomListingPanel.SetActive(false);
             playerListingPanel.SetActive(false);
@@ -259,6 +267,7 @@ namespace Thirties.UnofficialBang
         #endregion
 
         #region Listeners
+
         private void OnNicknameInputFieldValueChanged(string value)
         {
             createRoomButton.interactable = !string.IsNullOrEmpty(value);
@@ -306,8 +315,9 @@ namespace Thirties.UnofficialBang
 
         private void OnJoinButtonClick(string roomName)
         {
+#if !UNITY_EDITOR
             PlayerPrefs.SetString("nickname", nicknameInputField.text);
-
+#endif
             PhotonNetwork.NickName = nicknameInputField.text;
             PhotonNetwork.JoinRoom(roomName);
         }
