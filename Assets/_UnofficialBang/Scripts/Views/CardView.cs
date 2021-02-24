@@ -12,7 +12,7 @@ namespace Thirties.UnofficialBang
 
         public void Configure(CardData cardData)
         {
-            spriteRenderer.sprite = GameManager.Instance.CardSpriteDatabase.Resources.SingleOrDefault(c => c.name == cardData.Sprite);
+            spriteRenderer.sprite = GameManager.Instance?.CardSpriteDatabase?.Resources?.SingleOrDefault(c => c.name == cardData.Sprite);
         }
     }
 }

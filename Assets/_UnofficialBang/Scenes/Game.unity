@@ -3300,6 +3300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1143370029}
   time: 0.251
+  applyRotation: 0
+  applyUp: 0
 --- !u!212 &459437635
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3822,7 +3824,7 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4159999
+      value: 1.308
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
@@ -3897,6 +3899,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 2033131925}
   time: 0.9
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &544966709
 GameObject:
   m_ObjectHideFlags: 0
@@ -4418,6 +4422,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1143370029}
   time: 0.507
+  applyRotation: 0
+  applyUp: 0
 --- !u!212 &607653613
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5117,7 +5123,7 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.852
+      value: 0.726
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
@@ -5192,6 +5198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 2033131925}
   time: 0.7
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &680937779
 GameObject:
   m_ObjectHideFlags: 0
@@ -6391,6 +6399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1143370029}
   time: 0.388
+  applyRotation: 0
+  applyUp: 0
 --- !u!212 &784372745
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7554,6 +7564,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 2033131925}
   time: 0.5
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &985897346
 GameObject:
   m_ObjectHideFlags: 0
@@ -8321,7 +8333,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 2033131925}
-  time: 0.1
+  time: 0
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &1063032578
 GameObject:
   m_ObjectHideFlags: 0
@@ -8695,32 +8709,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - position: {x: -1.5, y: 0, z: 0}
-    direction: {x: -1.5, y: 0.5, z: 0}
+    direction: {x: -1, y: 0.5, z: 0}
     up: {x: -0.5, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   - position: {x: 1.5, y: 0, z: 0}
-    direction: {x: 1.5, y: -0.5, z: 0}
+    direction: {x: 2, y: -0.5, z: 0}
     up: {x: 0.5, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   curves:
   - n1:
       position: {x: -1.5, y: 0, z: 0}
-      direction: {x: -1.5, y: 0.5, z: 0}
+      direction: {x: -1, y: 0.5, z: 0}
       up: {x: -0.5, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     n2:
       position: {x: 1.5, y: 0, z: 0}
-      direction: {x: 1.5, y: -0.5, z: 0}
+      direction: {x: 2, y: -0.5, z: 0}
       up: {x: 0.5, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     Changed:
       m_PersistentCalls:
         m_Calls: []
-  Length: 3.2317564
+  Length: 3.1524577
   isLoop: 0
   CurveChanged:
     m_PersistentCalls:
@@ -8923,6 +8937,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1080512215}
   time: 0.55
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &1104332921
 GameObject:
   m_ObjectHideFlags: 0
@@ -11551,6 +11567,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1080512215}
   time: 0.4
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &1408839890
 GameObject:
   m_ObjectHideFlags: 0
@@ -12335,7 +12353,7 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.852
+      value: -0.726
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
@@ -12410,6 +12428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 2033131925}
   time: 0.3
+  applyRotation: 0
+  applyUp: 1
 --- !u!1 &1491195483
 GameObject:
   m_ObjectHideFlags: 0
@@ -13417,6 +13437,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1143370029}
   time: 0.032
+  applyRotation: 0
+  applyUp: 0
 --- !u!212 &1575004707
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17565,32 +17587,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - position: {x: -1.5, y: 0, z: 0}
-    direction: {x: -1.5, y: 0.5, z: 0}
+    direction: {x: -1, y: 0.5, z: 0}
     up: {x: -0.5, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   - position: {x: 1.5, y: 0, z: 0}
-    direction: {x: 1.5, y: -0.5, z: 0}
+    direction: {x: 2, y: -0.5, z: 0}
     up: {x: 0.5, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   curves:
   - n1:
       position: {x: -1.5, y: 0, z: 0}
-      direction: {x: -1.5, y: 0.5, z: 0}
+      direction: {x: -1, y: 0.5, z: 0}
       up: {x: -0.5, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     n2:
       position: {x: 1.5, y: 0, z: 0}
-      direction: {x: 1.5, y: -0.5, z: 0}
+      direction: {x: 2, y: -0.5, z: 0}
       up: {x: 0.5, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     Changed:
       m_PersistentCalls:
         m_Calls: []
-  Length: 3.2317564
+  Length: 3.1524577
   isLoop: 0
   CurveChanged:
     m_PersistentCalls:
@@ -18258,6 +18280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 1143370029}
   time: 0.63
+  applyRotation: 0
+  applyUp: 0
 --- !u!212 &2098351836
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18529,12 +18553,12 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4159999
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.13499999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
@@ -18544,7 +18568,7 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9819564
+      value: 0.973249
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
@@ -18559,7 +18583,7 @@ PrefabInstance:
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.18910752
+      value: 0.22975294
       objectReference: {fileID: 0}
     - target: {fileID: 953721418509168654, guid: 0fec28119d38afa44a2ff117b2be3caf,
         type: 3}

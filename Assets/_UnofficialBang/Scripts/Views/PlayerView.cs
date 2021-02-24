@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using SplineMesh;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
@@ -62,9 +63,11 @@ namespace Thirties.UnofficialBang
             var card = Instantiate(cardPrefab, deckTransform.position, deckTransform.rotation, target.transform);
             card.Configure(cardData);
 
-            var curve = sideSpline.GetSample(0.5f);
-            card.transform.DOLocalMove(curve.location, tweenDuration);
-            card.transform.DOLookAt(target.transform.forward, tweenDuration, AxisConstraint.None, curve.up);
+            var curve = sideSpline.GetSample(0.4f);
+            card.transform.DOLocalMove(curve.location, tweenDuration).SetEase(Ease.OutQuint);
+
+            var rotation = Quaternion.LookRotation(Vector3.forward, curve.up);
+            card.transform.DOLocalRotateQuaternion(rotation, tweenDuration).SetEase(Ease.OutQuint);
 
             return card;
         }
