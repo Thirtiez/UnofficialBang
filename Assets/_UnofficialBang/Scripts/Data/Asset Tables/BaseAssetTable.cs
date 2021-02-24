@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEditor;
+using System.Linq;
 
 namespace Thirties.UnofficialBang
 {
@@ -13,7 +14,6 @@ namespace Thirties.UnofficialBang
         [PropertyOrder(2)]
         [PropertySpace]
         private List<T> resources;
-        public List<T> Resources => resources;
 
 #if UNITY_EDITOR
 
@@ -48,5 +48,10 @@ namespace Thirties.UnofficialBang
         }
 
 #endif
+
+        public T Get(string name)
+        {
+            return resources?.SingleOrDefault(r => r.name == name);
+        }
     }
 }

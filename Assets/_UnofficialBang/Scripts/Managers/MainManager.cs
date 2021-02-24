@@ -93,8 +93,9 @@ namespace Thirties.UnofficialBang
         protected void Start()
         {
 #if UNITY_EDITOR
-            int nameIndex = Random.Range(0, nicknameDataTable.Records.Count);
-            nicknameInputField.text = nicknameDataTable.Records[nameIndex].Nickname;
+            var nicknames = nicknameDataTable.GetAll();
+            int nameIndex = Random.Range(0, nicknames.Count);
+            nicknameInputField.text = nicknames[nameIndex].Nickname;
 #else
             if (PlayerPrefs.HasKey("nickname"))
             {

@@ -10,14 +10,13 @@ using System.Linq;
 namespace Thirties.UnofficialBang
 {
     public abstract class DataTable<T> : SerializedScriptableObject
-    where T : BaseData
+        where T : BaseData
     {
         [OdinSerialize]
         [PropertyOrder(2)]
         [PropertySpace]
         [TableList]
         private List<T> records;
-        public List<T> Records => records;
 
 #if UNITY_EDITOR
 
@@ -46,5 +45,15 @@ namespace Thirties.UnofficialBang
         }
 
 #endif
+
+        public T Get(int id)
+        {
+            return records[id];
+        }
+
+        public List<T> GetAll()
+        {
+            return records;
+        }
     }
 }

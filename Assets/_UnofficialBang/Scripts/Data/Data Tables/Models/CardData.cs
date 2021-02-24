@@ -26,5 +26,7 @@ namespace Thirties.UnofficialBang
         [OdinSerialize]
         [DisplayAsString]
         public CardSuit? Suit { get; set; }
+
+        public bool IsSceriff => Name == "Sceriffo";
     }
 }

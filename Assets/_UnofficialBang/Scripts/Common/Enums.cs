@@ -32,12 +32,4 @@
         Queen,
         King
     }
-
-    public enum DeckClass
-    {
-        Main,
-        Discard,
-        Character,
-        Role
-    }
 }

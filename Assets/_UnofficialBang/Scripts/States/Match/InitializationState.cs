@@ -9,6 +9,8 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
+            _gameManager.InitializePlayer();
+
             if (PhotonNetwork.IsMasterClient)
             {
                 _gameManager.InitializeDecks();

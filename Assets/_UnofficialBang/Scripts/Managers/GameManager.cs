@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Thirties.UnofficialBang
 {
@@ -42,11 +43,18 @@ namespace Thirties.UnofficialBang
 
         public static GameManager Instance { get; private set; }
 
-        public List<Player> Players { get; private set; }
         public List<CardData> Cards { get; private set; }
 
-        public CardSpriteTable CardSpriteDatabase => cardSpriteTable;
+        public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public GameLogUI GameLog => gameLog;
+
+        #endregion
+
+        #region Events
+
+        public UnityAction<CardDealingEventData> CardDealing { get; set; }
+        public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
+        public UnityAction<CharacterRevealingEventData> CharacterRevealing { get; set; }
 
         #endregion
 
@@ -76,87 +84,29 @@ namespace Thirties.UnofficialBang
             {
                 Instance = this;
 
-                Players = PhotonNetwork.PlayerList.ToList();
-                Cards = baseCardDataTable.Records.ToList();
+                Cards = baseCardDataTable.GetAll();
             }
         }
 
         private void OnEnable()
         {
             PhotonNetwork.AddCallbackTarget(this);
+
+            CardDealing += OnCardDealing;
         }
 
         private void OnDisable()
         {
             PhotonNetwork.RemoveCallbackTarget(this);
+
+            CardDealing -= OnCardDealing;
         }
 
         #endregion
 
         #region Public methods
 
-        public void InitializeDecks()
-        {
-            _playerHand = new List<CardData>();
-            _playerBoard = new List<CardData>();
-            _playerCharacter = null;
-            _playerRole = null;
-
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                return;
-            }
-
-            _mainDeck = baseCardDataTable.Records
-                .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
-                .ToList()
-                .Shuffle();
-
-            _charactersDeck = baseCardDataTable.Records
-                .Where(c => c.Class == CardClass.Character)
-                .ToList()
-                .Shuffle();
-
-            _rolesDeck = baseCardDataTable.Records
-                .Where(c => c.Class == CardClass.Role)
-                .ToList()
-                .Shuffle();
-
-            _discardPile = new List<CardData>();
-        }
-
-        public void DealCard(Player player, DeckClass deckClass)
-        {
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                return;
-            }
-
-            switch (deckClass)
-            {
-                case DeckClass.Main:
-                    break;
-
-                case DeckClass.Discard:
-                    break;
-
-                case DeckClass.Character:
-                    break;
-
-                case DeckClass.Role:
-                    var card = _rolesDeck[0];
-                    _rolesDeck.RemoveAt(0);
-
-                    SendEvent(GameEvent.DealCard, new DealCardEventData { CardId = card.Id, PlayerId = player.ActorNumber });
-                    break;
-            }
-        }
-
-        #endregion
-
-        #region Event methods and handlers
-
-        private void SendEvent(byte gameEvent, BaseEventData eventData, RaiseEventOptions raiseEventOptions = null, SendOptions? sendOptions = null)
+        public void SendEvent(byte gameEvent, BaseEventData eventData, RaiseEventOptions raiseEventOptions = null, SendOptions? sendOptions = null)
         {
             var json = JsonConvert.SerializeObject(eventData);
 
@@ -168,6 +118,74 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RaiseEvent(gameEvent, json, raiseEventOptions, sendOptions.Value);
         }
 
+        public void InitializePlayer()
+        {
+            _playerHand = new List<CardData>();
+            _playerBoard = new List<CardData>();
+            _playerCharacter = null;
+            _playerRole = null;
+        }
+
+        public void InitializeDecks()
+        {
+            _mainDeck = baseCardDataTable.GetAll()
+                .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
+                .ToList()
+                .Shuffle();
+
+            _charactersDeck = baseCardDataTable.GetAll()
+                .Where(c => c.Class == CardClass.Character)
+                .ToList()
+                .Shuffle();
+
+            _rolesDeck = baseCardDataTable.GetAll()
+                .Where(c => c.Class == CardClass.Role)
+                .ToList()
+                .Shuffle();
+
+            _discardPile = new List<CardData>();
+        }
+
+        public CardData DrawPlayingCard()
+        {
+            return DrawCard(_mainDeck);
+        }
+
+        public CardData DrawDiscardedCard()
+        {
+            return DrawCard(_discardPile);
+        }
+
+        public CardData DrawCharacter()
+        {
+            return DrawCard(_charactersDeck);
+        }
+
+        public CardData DrawRole()
+        {
+            return DrawCard(_rolesDeck);
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private CardData DrawCard(List<CardData> deck)
+        {
+            CardData card = null;
+            if (_rolesDeck.Count > 0)
+            {
+                card = deck[0];
+                deck.RemoveAt(0);
+            }
+
+            return card;
+        }
+
+        #endregion
+
+        #region Event handlers
+
         public void OnEvent(EventData photonEvent)
         {
             var json = photonEvent.CustomData as string;
@@ -176,45 +194,44 @@ namespace Thirties.UnofficialBang
 
             switch (photonEvent.Code)
             {
-                case GameEvent.DealCard:
-                    var eventData = JsonConvert.DeserializeObject<DealCardEventData>(json);
-                    OnCardDealt(eventData.CardId, eventData.PlayerId);
+                case PhotonEvent.CardDealing:
+                    var cardDealingEventData = JsonConvert.DeserializeObject<CardDealingEventData>(json);
+                    CardDealing?.Invoke(cardDealingEventData);
+                    break;
+
+                case PhotonEvent.RoleRevealing:
+                    var roleRevealingEventData = JsonConvert.DeserializeObject<RoleRevealingEventData>(json);
+                    RoleRevealing?.Invoke(roleRevealingEventData);
+                    break;
+
+                case PhotonEvent.CharacterRevealing:
+                    var characterRevealingEventData = JsonConvert.DeserializeObject<CharacterRevealingEventData>(json);
+                    CharacterRevealing?.Invoke(characterRevealingEventData);
                     break;
             }
         }
 
-        private void OnCardDealt(int cardId, int playerId)
+        private void OnCardDealing(CardDealingEventData eventData)
         {
-            var card = baseCardDataTable.Records[cardId];
+            var card = baseCardDataTable.Get(eventData.CardId);
 
-            if (PhotonNetwork.LocalPlayer.ActorNumber == playerId)
+            if (PhotonNetwork.LocalPlayer.ActorNumber == eventData.PlayerId)
             {
-
                 switch (card.Class)
                 {
                     case CardClass.Brown:
                     case CardClass.Blue:
-                        playerView.DealPlayingCard(card);
-
                         _playerHand.Add(card);
                         break;
 
                     case CardClass.Character:
-                        playerView.DealCharacter(card);
-
                         _playerCharacter = card;
                         break;
 
                     case CardClass.Role:
-                        playerView.DealRole(card);
-
                         _playerRole = card;
                         break;
                 }
-            }
-            else
-            {
-
             }
         }
 

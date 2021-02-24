@@ -1,32 +1,36 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using Sirenix.OdinInspector;
 using SplineMesh;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
     public class PlayerView : MonoBehaviour
     {
+        #region Inspector fields
+
         [Header("Parameters")]
 
         [SerializeField]
         [SuffixLabel("s")]
-        private float tweenDuration;
+        private float tweenDuration = 1.0f;
 
-        [Header("Cards")]
+        [SerializeField]
+        [Range(0, 1)]
+        private float preferredDistance = 0.2f;
+
+        [Header("Prefabs")]
 
         [SerializeField]
         private CardView cardPrefab;
 
-        [Header("Deck")]
+        [Header("References")]
 
         [SerializeField]
         private Transform deckTransform;
-
-        [Header("Card containers")]
 
         [SerializeField]
         private Spline sideSpline;
@@ -37,39 +41,95 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Spline boardSpline;
 
+        #endregion
+
+        #region Private fields
+
         private List<CardView> _handCards = new List<CardView>();
         private List<CardView> _boardCards = new List<CardView>();
-        private CardView _characterCard;
-        private CardView _roleCard;
+        private List<CardView> _sideCards = new List<CardView>();
 
-        public void DealRole(CardData cardData)
+        private GameManager _gameManager;
+
+        #endregion
+
+        #region Monobehaviour callbacks
+
+        protected void OnEnable()
         {
-            _roleCard = Deal(cardData, sideSpline);
+            _gameManager = GameManager.Instance;
+
+            _gameManager.CardDealing += OnCardDealing;
+            _gameManager.RoleRevealing += OnRoleRevealing;
         }
 
-        public void DealCharacter(CardData cardData)
+        protected void OnDisable()
         {
-            _characterCard = Deal(cardData, sideSpline);
+            _gameManager.CardDealing -= OnCardDealing;
+            _gameManager.RoleRevealing -= OnRoleRevealing;
         }
 
-        public void DealPlayingCard(CardData cardData)
-        {
-            var card = Deal(cardData, handSpline);
-            _handCards.Add(card);
-        }
+        #endregion
 
-        private CardView Deal(CardData cardData, Spline target)
+        #region Private methods
+
+        private void Deal(CardData cardData, Spline target, List<CardView> cardList)
         {
             var card = Instantiate(cardPrefab, deckTransform.position, deckTransform.rotation, target.transform);
             card.Configure(cardData);
 
-            var curve = sideSpline.GetSample(0.4f);
-            card.transform.DOLocalMove(curve.location, tweenDuration).SetEase(Ease.OutQuint);
+            cardList.Add(card);
 
-            var rotation = Quaternion.LookRotation(Vector3.forward, curve.up);
-            card.transform.DOLocalRotateQuaternion(rotation, tweenDuration).SetEase(Ease.OutQuint);
+            float possibleDistance = 1f / cardList.Count;
+            float distance = possibleDistance >= preferredDistance ? preferredDistance : possibleDistance;
+            float startTime = (1 - (distance * (cardList.Count - 1))) * 0.5f;
 
-            return card;
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                var curve = sideSpline.GetSample(startTime + distance * i);
+                var rotation = Quaternion.LookRotation(Vector3.forward, curve.up);
+
+                card.transform.DOLocalMove(curve.location, tweenDuration).SetEase(Ease.OutQuint);
+                card.transform.DOLocalRotateQuaternion(rotation, tweenDuration).SetEase(Ease.OutQuint);
+            }
         }
+
+        #endregion
+
+        #region Event handlers
+
+        private void OnCardDealing(CardDealingEventData eventData)
+        {
+            if (eventData.PlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                var cardData = _gameManager.Cards[eventData.CardId];
+
+                if (cardData.Class == CardClass.Blue || cardData.Class == CardClass.Brown)
+                {
+                    Deal(cardData, handSpline, _handCards);
+                }
+                else if (cardData.Class == CardClass.Character || cardData.Class == CardClass.Role)
+                {
+                    Deal(cardData, sideSpline, _sideCards);
+                }
+            }
+            else
+            {
+                //TODO deal to opponent
+            }
+        }
+
+        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        {
+            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                var cardData = _gameManager.Cards[eventData.CardId];
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+
+                //TODO reveal opponent
+            }
+        }
+
+        #endregion
     }
 }

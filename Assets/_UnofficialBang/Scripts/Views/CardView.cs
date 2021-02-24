@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
@@ -12,7 +11,7 @@ namespace Thirties.UnofficialBang
 
         public void Configure(CardData cardData)
         {
-            spriteRenderer.sprite = GameManager.Instance?.CardSpriteDatabase?.Resources?.SingleOrDefault(c => c.name == cardData.Sprite);
+            spriteRenderer.sprite = GameManager.Instance?.CardSpriteTable?.Get(cardData.Sprite);
         }
     }
 }
