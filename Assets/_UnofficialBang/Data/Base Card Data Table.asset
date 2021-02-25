@@ -27,7 +27,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 104
+      Data: 103
     - Name: 
       Entry: 7
       Data: 1|Thirties.UnofficialBang.CardData, Assembly-CSharp
@@ -60,6 +60,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -101,6 +110,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -136,6 +154,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -177,6 +204,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -212,6 +248,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -253,6 +298,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -288,6 +342,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -329,6 +392,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -364,6 +436,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -405,6 +486,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -440,6 +530,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -481,6 +580,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -516,6 +624,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -557,6 +674,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -592,6 +718,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -633,6 +768,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -668,6 +812,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -709,6 +862,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -744,6 +906,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -785,6 +956,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -820,6 +1000,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -861,6 +1050,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -896,6 +1094,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -937,6 +1144,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -972,6 +1188,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1013,6 +1238,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1048,6 +1282,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1089,6 +1332,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1124,6 +1376,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1165,6 +1426,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1200,6 +1470,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1241,6 +1520,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1276,6 +1564,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1317,6 +1614,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1352,6 +1658,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1393,6 +1708,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1428,6 +1752,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1469,6 +1802,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1504,6 +1846,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1545,6 +1896,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1580,6 +1940,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1621,6 +1990,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1656,6 +2034,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1697,6 +2084,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1732,6 +2128,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1773,6 +2178,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1808,6 +2222,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1849,6 +2272,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1884,6 +2316,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1925,6 +2366,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1960,6 +2410,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2001,6 +2460,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2036,6 +2504,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2077,6 +2554,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2112,6 +2598,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2153,6 +2648,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2188,6 +2692,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2229,6 +2742,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2264,6 +2786,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2305,6 +2836,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2340,6 +2880,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2381,6 +2930,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2416,6 +2974,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2457,6 +3024,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2492,6 +3068,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2533,6 +3118,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2568,6 +3162,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2609,6 +3212,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2644,6 +3256,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2685,6 +3306,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2720,6 +3350,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2761,6 +3400,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2796,6 +3444,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2837,6 +3494,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2872,6 +3538,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2913,6 +3588,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2948,6 +3632,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2989,6 +3682,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3024,6 +3726,15 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3065,6 +3776,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3103,6 +3823,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3112,44 +3841,6 @@ MonoBehaviour:
     - Name: Id
       Entry: 3
       Data: 81
-    - Name: Name
-      Entry: 1
-      Data: Bart Cassidy
-    - Name: Sprite
-      Entry: 1
-      Data: 01_bartcassidy
-    - Name: Class
-      Entry: 3
-      Data: 2
-    - Name: Rank
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardRank, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Suit
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 83|Thirties.UnofficialBang.CardData, Assembly-CSharp
-    - Name: Id
-      Entry: 3
-      Data: 82
     - Name: Name
       Entry: 1
       Data: Black Jack
@@ -3179,15 +3870,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 84|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 83|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 83
+      Data: 82
     - Name: Name
       Entry: 1
       Data: Calamity Janet
@@ -3217,15 +3917,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 85|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 84|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 84
+      Data: 83
     - Name: Name
       Entry: 1
       Data: El Gringo
@@ -3255,15 +3964,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 86|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 85|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 85
+      Data: 84
     - Name: Name
       Entry: 1
       Data: Jesse Jones
@@ -3293,15 +4011,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 87|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 86|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 86
+      Data: 85
     - Name: Name
       Entry: 1
       Data: Jourdonnais
@@ -3331,15 +4058,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 88|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 87|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 87
+      Data: 86
     - Name: Name
       Entry: 1
       Data: Kit Carlson
@@ -3369,15 +4105,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 89|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 88|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 88
+      Data: 87
     - Name: Name
       Entry: 1
       Data: Lucky Duke
@@ -3407,15 +4152,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 90|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 89|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 89
+      Data: 88
     - Name: Name
       Entry: 1
       Data: Paul Regret
@@ -3445,15 +4199,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 91|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 90|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 90
+      Data: 89
     - Name: Name
       Entry: 1
       Data: Pedro Ramirez
@@ -3483,15 +4246,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 92|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 91|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 91
+      Data: 90
     - Name: Name
       Entry: 1
       Data: Rose Doolan
@@ -3521,15 +4293,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 93|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 92|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 92
+      Data: 91
     - Name: Name
       Entry: 1
       Data: Sid Ketchum
@@ -3559,21 +4340,30 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 94|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 93|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 93
+      Data: 92
     - Name: Name
       Entry: 1
       Data: Slab the Killer
     - Name: Sprite
       Entry: 1
-      Data: 01_slabthekiller
+      Data: 01_slab
     - Name: Class
       Entry: 3
       Data: 2
@@ -3597,15 +4387,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 95|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 94|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 94
+      Data: 93
     - Name: Name
       Entry: 1
       Data: Suzy Lafayette
@@ -3635,15 +4434,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 96|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 95|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 95
+      Data: 94
     - Name: Name
       Entry: 1
       Data: Vulture Sam
@@ -3673,15 +4481,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 97|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 96|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 96
+      Data: 95
     - Name: Name
       Entry: 1
       Data: Willy the Kid
@@ -3705,6 +4522,62 @@ MonoBehaviour:
       Entry: 7
       Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
         mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 97|Thirties.UnofficialBang.CardData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 96
+    - Name: Name
+      Entry: 1
+      Data: Fuorilegge
+    - Name: Sprite
+      Entry: 1
+      Data: 01_fuorilegge
+    - Name: Class
+      Entry: 3
+      Data: 3
+    - Name: Rank
+      Entry: 7
+      Data: System.Nullable`1[[Thirties.UnofficialBang.CardRank, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Suit
+      Entry: 7
+      Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 6
       Data: 
@@ -3749,6 +4622,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3787,6 +4669,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3796,44 +4687,6 @@ MonoBehaviour:
     - Name: Id
       Entry: 3
       Data: 99
-    - Name: Name
-      Entry: 1
-      Data: Fuorilegge
-    - Name: Sprite
-      Entry: 1
-      Data: 01_fuorilegge
-    - Name: Class
-      Entry: 3
-      Data: 3
-    - Name: Rank
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardRank, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Suit
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 101|Thirties.UnofficialBang.CardData, Assembly-CSharp
-    - Name: Id
-      Entry: 3
-      Data: 100
     - Name: Name
       Entry: 1
       Data: Rinnegato
@@ -3863,15 +4716,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 102|Thirties.UnofficialBang.CardData, Assembly-CSharp
+      Data: 101|Thirties.UnofficialBang.CardData, Assembly-CSharp
     - Name: Id
       Entry: 3
-      Data: 101
+      Data: 100
     - Name: Name
       Entry: 1
       Data: Sceriffo
@@ -3895,6 +4757,62 @@ MonoBehaviour:
       Entry: 7
       Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
         mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 102|Thirties.UnofficialBang.CardData, Assembly-CSharp
+    - Name: Id
+      Entry: 3
+      Data: 101
+    - Name: Name
+      Entry: 1
+      Data: Vice
+    - Name: Sprite
+      Entry: 1
+      Data: 01_vice
+    - Name: Class
+      Entry: 3
+      Data: 3
+    - Name: Rank
+      Entry: 7
+      Data: System.Nullable`1[[Thirties.UnofficialBang.CardRank, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Suit
+      Entry: 7
+      Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 6
       Data: 
@@ -3939,38 +4857,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
+    - Name: Health
       Entry: 7
-      Data: 104|Thirties.UnofficialBang.CardData, Assembly-CSharp
-    - Name: Id
-      Entry: 3
-      Data: 103
-    - Name: Name
-      Entry: 1
-      Data: Vice
-    - Name: Sprite
-      Entry: 1
-      Data: 01_vice
-    - Name: Class
-      Entry: 3
-      Data: 3
-    - Name: Rank
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardRank, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Suit
-      Entry: 7
-      Data: System.Nullable`1[[Thirties.UnofficialBang.CardSuit, Assembly-CSharp]],
-        mscorlib
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 6
       Data: 

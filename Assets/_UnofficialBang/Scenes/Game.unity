@@ -2197,8 +2197,8 @@ MonoBehaviour:
   scrollbar: {fileID: 817725858}
   brownCardColor: {r: 0.8235295, g: 0.6745098, b: 0.4039216, a: 1}
   blueCardColor: {r: 0.41960788, g: 0.54901963, b: 0.7843138, a: 1}
-  characterCardColor: {r: 0.6627451, g: 0.6509804, b: 0.46274513, a: 1}
-  roleCardColor: {r: 0.9725491, g: 0.9294118, b: 0.882353, a: 1}
+  characterCardColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
+  roleCardColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   targetColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   instigatorColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
 --- !u!222 &344167018

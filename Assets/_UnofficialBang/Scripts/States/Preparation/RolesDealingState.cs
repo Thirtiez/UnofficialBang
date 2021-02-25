@@ -22,6 +22,8 @@ namespace Thirties.UnofficialBang
             {
                 GameManager.Instance.StartCoroutine(DealRoles());
             }
+
+            GameManager.Instance.RoleRevealing += OnRoleRevealing;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -31,6 +33,8 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            GameManager.Instance.RoleRevealing -= OnRoleRevealing;
+
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
 
@@ -58,8 +62,15 @@ namespace Thirties.UnofficialBang
 
                 yield return new WaitForSeconds(sceriffRevealDelay);
             }
+        }
 
-            GoTo(FSMTrigger.Forward);
+        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        {
+            var card = _gameManager.Cards[eventData.CardId];
+            if (card.Class == CardClass.Role)
+            {
+                GoTo(FSMTrigger.Forward);
+            }
         }
     }
 }

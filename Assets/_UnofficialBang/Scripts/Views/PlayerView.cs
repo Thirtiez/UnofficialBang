@@ -89,8 +89,8 @@ namespace Thirties.UnofficialBang
                 var curve = sideSpline.GetSample(startTime + distance * i);
                 var rotation = Quaternion.LookRotation(Vector3.forward, curve.up);
 
-                card.transform.DOLocalMove(curve.location, tweenDuration).SetEase(Ease.OutQuint);
-                card.transform.DOLocalRotateQuaternion(rotation, tweenDuration).SetEase(Ease.OutQuint);
+                cardList[i].transform.DOLocalMove(curve.location, tweenDuration).SetEase(Ease.OutQuint);
+                cardList[i].transform.DOLocalRotateQuaternion(rotation, tweenDuration).SetEase(Ease.OutQuint);
             }
         }
 

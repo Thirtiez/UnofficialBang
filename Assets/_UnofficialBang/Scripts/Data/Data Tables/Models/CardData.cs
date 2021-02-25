@@ -27,6 +27,10 @@ namespace Thirties.UnofficialBang
         [DisplayAsString]
         public CardSuit? Suit { get; set; }
 
+        [OdinSerialize]
+        [DisplayAsString]
+        public int? Health { get; set; }
+
         public bool IsSceriff => Name == "Sceriffo";
         public bool IsRenegade => Name == "Rinnegato";
         public bool IsOutlaw => Name == "Fuorilegge";

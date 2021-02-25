@@ -70,6 +70,9 @@ namespace Thirties.UnofficialBang
         private CardData _playerCharacter;
         private CardData _playerRole;
 
+        private int maxHealth;
+        private int currentHealth;
+
         #endregion
 
         #region Monobehaviour methods
@@ -124,6 +127,9 @@ namespace Thirties.UnofficialBang
             _playerBoard = new List<CardData>();
             _playerCharacter = null;
             _playerRole = null;
+
+            maxHealth = 0;
+            currentHealth = 0;
         }
 
         public void InitializeDecks()
@@ -238,6 +244,14 @@ namespace Thirties.UnofficialBang
 
                     case CardClass.Character:
                         _playerCharacter = card;
+
+                        maxHealth = card.Health.Value;
+                        if (_playerRole.IsSceriff)
+                        {
+                            maxHealth++;
+                        }
+                        currentHealth = maxHealth;
+                        
                         break;
 
                     case CardClass.Role:
