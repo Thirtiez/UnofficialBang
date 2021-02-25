@@ -10,6 +10,8 @@ namespace Thirties.UnofficialBang
 {
     public class GameLogUI : MonoBehaviour, IRecyclableScrollRectDataSource
     {
+        #region Inspector fields
+
         [Header("References")]
 
         [SerializeField]
@@ -21,21 +23,39 @@ namespace Thirties.UnofficialBang
         [Header("Colors")]
 
         [SerializeField]
-        private Color cardColor = Color.red;
+        private Color brownCardColor;
 
         [SerializeField]
-        private Color targetColor = Color.yellow;
+        private Color blueCardColor;
 
         [SerializeField]
-        private Color instigatorColor = Color.yellow;
+        private Color characterCardColor;
 
-        private string hexCardColor => ColorUtility.ToHtmlStringRGBA(cardColor);
+        [SerializeField]
+        private Color roleCardColor;
+
+        [SerializeField]
+        private Color targetColor;
+
+        [SerializeField]
+        private Color instigatorColor;
+
+        #endregion
+
+        #region Private fields
+
+        private string hexBrownCardColor => ColorUtility.ToHtmlStringRGBA(brownCardColor);
+        private string hexBlueCardColor => ColorUtility.ToHtmlStringRGBA(blueCardColor);
+        private string hexCharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
+        private string hexRoleCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
         private string hexTargetColor => ColorUtility.ToHtmlStringRGBA(targetColor);
         private string hexInstigatorColor => ColorUtility.ToHtmlStringRGBA(instigatorColor);
 
         private List<string> _messages = new List<string>();
 
         private GameManager _gameManager;
+
+        #endregion
 
         #region Monobehaviour callbacks
 
@@ -64,7 +84,31 @@ namespace Thirties.UnofficialBang
 
         private void Log(string message, CardData card = null, Player target = null, Player instigator = null)
         {
-            string cardName = $"<color=#{hexCardColor}>{card?.Name}</color>";
+            string cardColor = null;
+
+            if (card != null)
+            {
+                switch (card.Class)
+                {
+                    case CardClass.Brown:
+                        cardColor = hexBrownCardColor;
+                        break;
+
+                    case CardClass.Blue:
+                        cardColor = hexBlueCardColor;
+                        break;
+
+                    case CardClass.Character:
+                        cardColor = hexCharacterCardColor;
+                        break;
+
+                    case CardClass.Role:
+                        cardColor = hexRoleCardColor;
+                        break;
+                }
+            }
+
+            string cardName = $"<color=#{cardColor}>{card?.Name}</color>";
             string targetName = $"<color=#{hexTargetColor}>{target?.NickName}</color>";
             string instigatorName = $"<color=#{hexInstigatorColor}>{instigator?.NickName}</color>";
 
@@ -121,7 +165,7 @@ namespace Thirties.UnofficialBang
         {
             var card = _gameManager.Cards[eventData.CardId];
             var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            string message = card.IsSceriff ? "{1} è lo {0}" : "{1} era un {0}";
+            string message = card.IsSceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
 
             Log(message, card, player);
         }

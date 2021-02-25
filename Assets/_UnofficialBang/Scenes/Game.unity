@@ -2195,9 +2195,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recyclableScrollRect: {fileID: 2068673472}
   scrollbar: {fileID: 817725858}
-  cardColor: {r: 1, g: 0, b: 0, a: 1}
-  targetColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  instigatorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  brownCardColor: {r: 0.8235295, g: 0.6745098, b: 0.4039216, a: 1}
+  blueCardColor: {r: 0.41960788, g: 0.54901963, b: 0.7843138, a: 1}
+  characterCardColor: {r: 0.6627451, g: 0.6509804, b: 0.46274513, a: 1}
+  roleCardColor: {r: 0.9725491, g: 0.9294118, b: 0.882353, a: 1}
+  targetColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
+  instigatorColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
 --- !u!222 &344167018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14746,6 +14749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenDuration: 1
+  preferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
   deckTransform: {fileID: 1098792907594311676}

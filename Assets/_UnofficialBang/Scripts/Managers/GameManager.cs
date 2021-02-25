@@ -138,12 +138,24 @@ namespace Thirties.UnofficialBang
                 .ToList()
                 .Shuffle();
 
-            _rolesDeck = baseCardDataTable.GetAll()
-                .Where(c => c.Class == CardClass.Role)
-                .ToList()
-                .Shuffle();
-
             _discardPile = new List<CardData>();
+            _rolesDeck = new List<CardData>();
+
+            int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+            int outlawCount = playerCount / 2;
+            int deputyCount = playerCount > 6 ? 2 : playerCount > 4 ? 1 : 0;
+
+            var roles = baseCardDataTable.GetAll()
+                .Where(c => c.Class == CardClass.Role)
+                .ToList();
+
+            var baseRoles = roles.Where(r => r.IsRenegade || r.IsSceriff);
+            var outlaws = roles.Where(r => r.IsOutlaw).Take(outlawCount);
+            var deputies = roles.Where(r => r.IsDeputy).Take(deputyCount);
+
+            _rolesDeck.AddRange(baseRoles);
+            _rolesDeck.AddRange(outlaws);
+            _rolesDeck.AddRange(deputies);
         }
 
         public CardData DrawPlayingCard()

@@ -14,10 +14,7 @@ namespace Thirties.UnofficialBang
     {
         #region Inspector fields
 
-        [Header("Configuration")]
-
-        [SerializeField]
-        private int minPlayerCount = 3;
+        [Header("Data")]
 
         [SerializeField]
         private NicknameDataTable nicknameDataTable;
@@ -85,6 +82,16 @@ namespace Thirties.UnofficialBang
 
         private List<RoomElementUI> roomElements = new List<RoomElementUI>();
         private List<PlayerElementUI> playerElements = new List<PlayerElementUI>();
+
+        #endregion
+
+        #region Constants
+
+#if UNITY_EDITOR
+        private readonly int MinPlayerCount = 2;
+#else
+        private readonly int MinPlayerCount = 4;
+#endif
 
         #endregion
 
@@ -370,7 +377,7 @@ namespace Thirties.UnofficialBang
                 startButton.gameObject.SetActive(true);
 
                 int readyCount = playerElements.Count(pe => (bool)pe.Player.CustomProperties["ready"]);
-                startButton.interactable = PhotonNetwork.CurrentRoom.PlayerCount >= minPlayerCount && PhotonNetwork.CurrentRoom.PlayerCount <= readyCount;
+                startButton.interactable = PhotonNetwork.CurrentRoom.PlayerCount >= MinPlayerCount && PhotonNetwork.CurrentRoom.PlayerCount <= readyCount;
             }
             else
             {
