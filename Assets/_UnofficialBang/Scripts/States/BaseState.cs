@@ -19,6 +19,7 @@ namespace Thirties.UnofficialBang
             if (_gameManager == null && GameManager.Instance != null)
             {
                 _gameManager = GameManager.Instance;
+                _gameManager.CurrentState = this;
             }
         }
 

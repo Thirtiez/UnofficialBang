@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Thirties.UnofficialBang
 {
@@ -43,7 +44,10 @@ namespace Thirties.UnofficialBang
 
         public static GameManager Instance { get; private set; }
 
+        public BaseState CurrentState { get; set; }
         public List<CardData> Cards { get; private set; }
+        public PlayerCustomProperties PlayerProperties { get; private set; }
+        public List<Player> Players { get; private set; }
 
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public GameLogUI GameLog => gameLog;
@@ -70,9 +74,6 @@ namespace Thirties.UnofficialBang
         private CardData _playerCharacter;
         private CardData _playerRole;
 
-        private int maxHealth;
-        private int currentHealth;
-
         #endregion
 
         #region Monobehaviour methods
@@ -87,7 +88,8 @@ namespace Thirties.UnofficialBang
             {
                 Instance = this;
 
-                Cards = baseCardDataTable.GetAll();
+                Cards = baseCardDataTable.GetAll().OrderBy(x => x.Id).ToList();
+                Players = PhotonNetwork.PlayerList.OrderBy(x => x.ActorNumber).ToList();
             }
         }
 
@@ -96,6 +98,7 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.AddCallbackTarget(this);
 
             CardDealing += OnCardDealing;
+            RoleRevealing += OnRoleRevealing;
         }
 
         private void OnDisable()
@@ -103,6 +106,7 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RemoveCallbackTarget(this);
 
             CardDealing -= OnCardDealing;
+            RoleRevealing -= OnRoleRevealing;
         }
 
         #endregion
@@ -121,6 +125,21 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RaiseEvent(gameEvent, json, raiseEventOptions, sendOptions.Value);
         }
 
+        public void SetPlayerProperties()
+        {
+            var json = JsonConvert.SerializeObject(PlayerProperties);
+            var hashtable = new Hashtable();
+            hashtable["json"] = json;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+        }
+
+        public PlayerCustomProperties GetPlayerProperties(Player player)
+        {
+            var json = (string)player.CustomProperties["json"];
+            var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
+            return customProperties;
+        }
+
         public void InitializePlayer()
         {
             _playerHand = new List<CardData>();
@@ -128,18 +147,17 @@ namespace Thirties.UnofficialBang
             _playerCharacter = null;
             _playerRole = null;
 
-            maxHealth = 0;
-            currentHealth = 0;
+            PlayerProperties = new PlayerCustomProperties();
         }
 
         public void InitializeDecks()
         {
-            _mainDeck = baseCardDataTable.GetAll()
+            _mainDeck = Cards
                 .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
                 .ToList()
                 .Shuffle();
 
-            _charactersDeck = baseCardDataTable.GetAll()
+            _charactersDeck = Cards
                 .Where(c => c.Class == CardClass.Character)
                 .ToList()
                 .Shuffle();
@@ -151,7 +169,7 @@ namespace Thirties.UnofficialBang
             int outlawCount = playerCount / 2;
             int deputyCount = playerCount > 6 ? 2 : playerCount > 4 ? 1 : 0;
 
-            var roles = baseCardDataTable.GetAll()
+            var roles = Cards
                 .Where(c => c.Class == CardClass.Role)
                 .ToList();
 
@@ -231,7 +249,7 @@ namespace Thirties.UnofficialBang
 
         private void OnCardDealing(CardDealingEventData eventData)
         {
-            var card = baseCardDataTable.Get(eventData.CardId);
+            var card = Cards[eventData.CardId];
 
             if (PhotonNetwork.LocalPlayer.ActorNumber == eventData.PlayerId)
             {
@@ -240,23 +258,45 @@ namespace Thirties.UnofficialBang
                     case CardClass.Brown:
                     case CardClass.Blue:
                         _playerHand.Add(card);
+
+                        PlayerProperties.HandCount = _playerHand.Count;
                         break;
 
                     case CardClass.Character:
                         _playerCharacter = card;
 
-                        maxHealth = card.Health.Value;
+                        PlayerProperties.MaxHealth = card.Health.Value;
                         if (_playerRole.IsSceriff)
                         {
-                            maxHealth++;
+                            PlayerProperties.MaxHealth++;
                         }
-                        currentHealth = maxHealth;
-                        
+                        PlayerProperties.CurrentHealth = PlayerProperties.MaxHealth;
+
                         break;
 
                     case CardClass.Role:
                         _playerRole = card;
                         break;
+                }
+
+                SetPlayerProperties();
+            }
+        }
+
+        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        {
+            var card = Cards[eventData.CardId];
+
+            if (card.Class == CardClass.Role && card.IsSceriff)
+            {
+                var player = Players.SingleOrDefault(p => p.ActorNumber == eventData.PlayerId);
+                var rotateAmount = Players.IndexOf(player);
+
+                for (int i = 0; i < rotateAmount; i++)
+                {
+                    var last = Players[Players.Count - 1];
+                    Players.RemoveAt(Players.Count - 1);
+                    Players.Insert(0, last);
                 }
             }
         }

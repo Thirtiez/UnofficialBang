@@ -42,7 +42,7 @@ namespace Thirties.UnofficialBang
         {
             RoleRevealingEventData revealRoleEventData = null;
 
-            foreach (Player player in PhotonNetwork.PlayerList)
+            foreach (Player player in _gameManager.Players)
             {
                 var card = _gameManager.DrawRole();
 

@@ -36,7 +36,7 @@ namespace Thirties.UnofficialBang
 
         private IEnumerator DealCharacters()
         {
-            foreach (Player player in PhotonNetwork.PlayerList)
+            foreach (Player player in _gameManager.Players)
             {
                 var card = _gameManager.DrawCharacter();
 
