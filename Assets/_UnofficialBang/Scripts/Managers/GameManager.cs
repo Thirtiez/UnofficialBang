@@ -58,7 +58,8 @@ namespace Thirties.UnofficialBang
 
         public UnityAction<CardDealingEventData> CardDealing { get; set; }
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
-        public UnityAction<CharacterRevealingEventData> CharacterRevealing { get; set; }
+        public UnityAction CharactersDealt { get; set; }
+        public UnityAction CardsDealt { get; set; }
 
         #endregion
 
@@ -113,9 +114,9 @@ namespace Thirties.UnofficialBang
 
         #region Public methods
 
-        public void SendEvent(byte gameEvent, BaseEventData eventData, RaiseEventOptions raiseEventOptions = null, SendOptions? sendOptions = null)
+        public void SendEvent(byte gameEvent, BaseEventData eventData = null, RaiseEventOptions raiseEventOptions = null, SendOptions? sendOptions = null)
         {
-            var json = JsonConvert.SerializeObject(eventData);
+            var json = eventData != null ? JsonConvert.SerializeObject(eventData) : "";
 
             Debug.Log($"<color=cyan>Event {gameEvent} sent with data: {json}</color>");
 
@@ -135,7 +136,8 @@ namespace Thirties.UnofficialBang
 
         public PlayerCustomProperties GetPlayerProperties(Player player)
         {
-            var json = (string)player.CustomProperties["json"];
+            var actualPlayer = PhotonNetwork.CurrentRoom.GetPlayer(player.ActorNumber);
+            var json = (string)actualPlayer.CustomProperties["json"];
             var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
             return customProperties;
         }
@@ -240,9 +242,12 @@ namespace Thirties.UnofficialBang
                     RoleRevealing?.Invoke(roleRevealingEventData);
                     break;
 
-                case PhotonEvent.CharacterRevealing:
-                    var characterRevealingEventData = JsonConvert.DeserializeObject<CharacterRevealingEventData>(json);
-                    CharacterRevealing?.Invoke(characterRevealingEventData);
+                case PhotonEvent.CharactersDealt:
+                    CharactersDealt?.Invoke();
+                    break;
+
+                case PhotonEvent.CardsDealt:
+                    CardsDealt?.Invoke();
                     break;
             }
         }

@@ -9,9 +9,26 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
-        public void Configure(CardData cardData)
+        [SerializeField]
+        private Sprite coveredCard;
+
+        private CardData cardData;
+
+        public void Configure(CardData cardData, bool isCovered)
+        {
+            this.cardData = cardData;
+
+            spriteRenderer.sprite = isCovered ? coveredCard : GameManager.Instance?.CardSpriteTable?.Get(cardData.Sprite);
+        }
+
+        public void Reveal()
         {
             spriteRenderer.sprite = GameManager.Instance?.CardSpriteTable?.Get(cardData.Sprite);
+        }
+
+        public void Hide()
+        {
+            spriteRenderer.sprite = coveredCard;
         }
     }
 }

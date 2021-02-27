@@ -19,7 +19,7 @@ namespace Thirties.UnofficialBang
                 _gameManager.StartCoroutine(DealCharacters());
             }
 
-            _gameManager.CardDealing += OnCardDealing;
+            _gameManager.CharactersDealt += OnCharactersDealt;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -29,7 +29,7 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _gameManager.CardDealing -= OnCardDealing;
+            _gameManager.CharactersDealt -= OnCharactersDealt;
 
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
@@ -44,15 +44,13 @@ namespace Thirties.UnofficialBang
 
                 yield return new WaitForSeconds(dealCardDelay);
             }
+
+            _gameManager.SendEvent(PhotonEvent.CharactersDealt);
         }
 
-        private void OnCardDealing(CardDealingEventData eventData)
+        private void OnCharactersDealt()
         {
-            var card = _gameManager.Cards[eventData.CardId];
-            if (card.Class == CardClass.Character)
-            {
-                GoTo(FSMTrigger.Forward);
-            }
+            GoTo(FSMTrigger.Forward);
         }
     }
 }
