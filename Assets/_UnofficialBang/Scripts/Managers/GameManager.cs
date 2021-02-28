@@ -194,7 +194,7 @@ namespace Thirties.UnofficialBang
             _rolesDeck = new List<CardData>();
 
             int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-            int outlawCount = playerCount / 2;
+            int outlawCount = playerCount == 2 ? 0 : playerCount / 2;
             int deputyCount = playerCount > 6 ? 2 : playerCount > 4 ? 1 : 0;
 
             var roles = Cards
@@ -208,6 +208,8 @@ namespace Thirties.UnofficialBang
             _rolesDeck.AddRange(baseRoles);
             _rolesDeck.AddRange(outlaws);
             _rolesDeck.AddRange(deputies);
+
+            _rolesDeck = _rolesDeck.Shuffle();
         }
 
         public CardData DrawPlayingCard()

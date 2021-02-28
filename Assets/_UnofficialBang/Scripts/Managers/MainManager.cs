@@ -199,6 +199,10 @@ namespace Thirties.UnofficialBang
             });
 
             RefreshStartButton();
+
+#if UNITY_EDITOR
+            SetReady(true);
+#endif
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)

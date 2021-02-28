@@ -3666,8 +3666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14348f6b7d880a84d9cbbabe70e82303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recyclableScrollRect: {fileID: 2068673472}
-  scrollbar: {fileID: 817725858}
+  scrollRect: {fileID: 2068673473}
+  logElementPrefab: {fileID: 4318611134281819409, guid: 827b3579bb721d44dbb04d5417b2dfef,
+    type: 3}
   brownCardColor: {r: 0.8235295, g: 0.6745098, b: 0.4039216, a: 1}
   blueCardColor: {r: 0.41960788, g: 0.54901963, b: 0.7843138, a: 1}
   characterCardColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
@@ -9632,7 +9633,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 923583280}
   m_HandleRect: {fileID: 923583279}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -12755,7 +12756,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1106171530
 MonoBehaviour:
@@ -21112,6 +21113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777910211}
   - component: {fileID: 1777910212}
+  - component: {fileID: 1777910213}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -21133,11 +21135,11 @@ RectTransform:
   m_Father: {fileID: 1106171529}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1777910212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21163,6 +21165,20 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &1777910213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777910210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &1785568194
 GameObject:
   m_ObjectHideFlags: 0
@@ -25263,7 +25279,7 @@ GameObject:
   - component: {fileID: 2068673470}
   - component: {fileID: 2068673474}
   - component: {fileID: 2068673471}
-  - component: {fileID: 2068673472}
+  - component: {fileID: 2068673473}
   m_Layer: 5
   m_Name: Scroll Rect
   m_TagString: Untagged
@@ -25321,7 +25337,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2068673472
+--- !u!114 &2068673473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -25330,7 +25346,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2068673469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248d9fa993d3e44daa165a75b0063088, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1777910211}
@@ -25339,11 +25355,11 @@ MonoBehaviour:
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.135
+  m_DecelerationRate: 0.15
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1106171529}
   m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 817725858}
   m_HorizontalScrollbarVisibility: 0
   m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: 0
@@ -25351,12 +25367,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  IsGrid: 0
-  PrototypeCell: {fileID: 4247297666849188303, guid: 827b3579bb721d44dbb04d5417b2dfef,
-    type: 3}
-  SelfInitialize: 1
-  Direction: 0
-  _segments: 0
 --- !u!222 &2068673474
 CanvasRenderer:
   m_ObjectHideFlags: 0

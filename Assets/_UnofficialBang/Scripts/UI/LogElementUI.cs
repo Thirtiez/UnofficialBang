@@ -1,12 +1,11 @@
-﻿using PolyAndCode.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class LogElementUI : MonoBehaviour, ICell
+    public class LogElementUI : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text contentText;

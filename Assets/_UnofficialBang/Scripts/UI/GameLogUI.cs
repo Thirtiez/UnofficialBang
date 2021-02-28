@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using PolyAndCode.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,17 +7,17 @@ using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
 {
-    public class GameLogUI : MonoBehaviour, IRecyclableScrollRectDataSource
+    public class GameLogUI : MonoBehaviour
     {
         #region Inspector fields
 
         [Header("References")]
 
         [SerializeField]
-        private RecyclableScrollRect recyclableScrollRect;
+        private ScrollRect scrollRect;
 
         [SerializeField]
-        private Scrollbar scrollbar;
+        private LogElementUI logElementPrefab;
 
         [Header("Colors")]
 
@@ -58,11 +57,6 @@ namespace Thirties.UnofficialBang
         #endregion
 
         #region Monobehaviour callbacks
-
-        protected void Awake()
-        {
-            recyclableScrollRect.DataSource = this;
-        }
 
         protected void OnEnable()
         {
@@ -115,22 +109,19 @@ namespace Thirties.UnofficialBang
             message = string.Format(message, cardName, targetName, instigatorName);
             _messages.Add(message);
 
-            recyclableScrollRect.ReloadData();
+            var logElement = Instantiate(logElementPrefab, scrollRect.content);
+            logElement.Configure(message);
+
+            StartCoroutine(ScrollToBottom());
         }
 
-        #endregion
-
-        #region Data source
-
-        public int GetItemCount()
+        private IEnumerator ScrollToBottom()
         {
-            return _messages.Count;
-        }
+            Canvas.ForceUpdateCanvases();
+            yield return null;
 
-        public void SetCell(ICell cell, int index)
-        {
-            var logElement = cell as LogElementUI;
-            logElement.Configure(_messages[index]);
+            scrollRect.verticalScrollbar.value = 0;
+            Canvas.ForceUpdateCanvases();
         }
 
         #endregion
