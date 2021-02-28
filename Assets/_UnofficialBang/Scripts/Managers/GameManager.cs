@@ -237,7 +237,7 @@ namespace Thirties.UnofficialBang
         private CardData DrawCard(List<CardData> deck)
         {
             CardData card = null;
-            if (_rolesDeck.Count > 0)
+            if (deck.Count > 0)
             {
                 card = deck[0];
                 deck.RemoveAt(0);
@@ -344,6 +344,8 @@ namespace Thirties.UnofficialBang
 
         private void OnConfirmExitButtonClicked()
         {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsVisible = true;
             PhotonNetwork.LoadLevel("Main");
         }
 

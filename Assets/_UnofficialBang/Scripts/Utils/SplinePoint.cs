@@ -15,12 +15,6 @@ namespace Thirties.UnofficialBang
         [Range(0, 1)]
         private float time;
 
-        [SerializeField]
-        private bool applyRotation = false;
-
-        [SerializeField]
-        private bool applyUp = false;
-
         protected void Awake()
         {
             SetTransform(time);
@@ -47,17 +41,10 @@ namespace Thirties.UnofficialBang
                 this.time = time;
 
                 var curve = spline.GetSample(time);
+
                 transform.localPosition = curve.location;
-
-                if (applyRotation)
-                {
-                    transform.localRotation = curve.Rotation;
-                }
-
-                if (applyUp)
-                {
-                    transform.up = curve.up;
-                }
+                transform.localScale = Vector3.one;
+                transform.localRotation = Quaternion.LookRotation(Vector3.forward, curve.up);
             }
         }
     }

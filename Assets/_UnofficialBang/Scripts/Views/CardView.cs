@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,13 +17,18 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Sprite roleBack;
 
+        [SerializeField]
+        [SuffixLabel("s")]
+        private float animationDuration = 1.0f;
+
         public CardData CardData { get; private set; }
 
         private bool isCovered = false;
+        private bool isAnimating = false;
 
         protected void OnMouseEnter()
         {
-            if (!isCovered)
+            if (!isCovered && !isAnimating)
             {
                 GameManager.Instance.CardMouseOverEnter(this);
 
@@ -31,7 +38,7 @@ namespace Thirties.UnofficialBang
 
         protected void OnMouseExit()
         {
-            if (!isCovered)
+            if (!isCovered && !isAnimating)
             {
                 GameManager.Instance.CardMouseOverExit();
 
@@ -67,6 +74,22 @@ namespace Thirties.UnofficialBang
             isCovered = true;
 
             spriteRenderer.sprite = CardData.Class == CardClass.Role ? roleBack : cardBack;
+        }
+
+        public void MoveTo(Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            isAnimating = true;
+
+            transform
+                .DOLocalMove(position, animationDuration)
+                .SetEase(Ease.OutQuint);
+            transform
+                .DOLocalRotateQuaternion(rotation, animationDuration)
+                .SetEase(Ease.OutQuint);
+            transform
+                .DOScale(Vector3.one, animationDuration)
+                .SetEase(Ease.OutQuint)
+                .OnComplete(() => isAnimating = false);
         }
     }
 }

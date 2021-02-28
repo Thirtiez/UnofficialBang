@@ -21,10 +21,6 @@ namespace Thirties.UnofficialBang
 
         [SerializeField]
         [SuffixLabel("s")]
-        private float cardAnimationDuration = 1.0f;
-
-        [SerializeField]
-        [SuffixLabel("s")]
         private float bulletAnimationDuration = 0.5f;
 
         [SerializeField]
@@ -152,9 +148,7 @@ namespace Thirties.UnofficialBang
                 var position = curve.location + new Vector3(0, 0, -0.01f * i);
                 var rotation = Quaternion.LookRotation(Vector3.forward, curve.up);
 
-                cardList[i].transform.DOLocalMove(position, cardAnimationDuration).SetEase(Ease.OutQuint);
-                cardList[i].transform.DOLocalRotateQuaternion(rotation, cardAnimationDuration).SetEase(Ease.OutQuint);
-                cardList[i].transform.DOScale(Vector3.one, cardAnimationDuration).SetEase(Ease.OutQuint);
+                cardList[i].MoveTo(position, rotation, Vector3.one);
             }
         }
 
