@@ -29,7 +29,7 @@ namespace Thirties.UnofficialBang
 
         [SerializeField]
         [SuffixLabel("s")]
-        private float bulletAnimationDelay = 0.1f;
+        private float bulletAnimationDelay = 0.4f;
 
         [SerializeField]
         [Range(0, 1)]
@@ -56,7 +56,7 @@ namespace Thirties.UnofficialBang
         private TMP_Text nicknameText;
 
         [SerializeField]
-        private List<CanvasGroup> bulletCanvasGroups;
+        private List<GameObject> bullets;
 
         #endregion
 
@@ -127,7 +127,11 @@ namespace Thirties.UnofficialBang
 
                 nicknameText.text = _player.NickName;
 
-                bulletCanvasGroups.ForEach(b => b.alpha = 0);
+                bullets.ForEach(b =>
+                {
+                    b.gameObject.SetActive(false);
+                    b.transform.localScale = Vector3.zero;
+                });
             }
         }
 
@@ -158,21 +162,25 @@ namespace Thirties.UnofficialBang
         {
             for (int i = 0; i < count; i++)
             {
-                GainBullet(bulletCanvasGroups[i]);
+                GainBullet(bullets[i]);
                 yield return new WaitForSeconds(bulletAnimationDelay);
             }
         }
 
-        private void GainBullet(CanvasGroup bullet)
+        private void GainBullet(GameObject bullet)
         {
-            bullet.transform.DOScale(Vector3.one * 0.1f, bulletAnimationDuration).SetEase(Ease.OutBack);
-            bullet.DOFade(1, bulletAnimationDuration);
+            bullet.gameObject.SetActive(true);
+            bullet.transform
+                .DOScale(Vector3.one * 0.1f, bulletAnimationDuration)
+                .SetEase(Ease.OutBack);
         }
 
-        private void LoseBullet(CanvasGroup bullet)
+        private void LoseBullet(GameObject bullet)
         {
-            bullet.transform.DOScale(Vector3.zero, bulletAnimationDuration).SetEase(Ease.InBack);
-            bullet.DOFade(0, bulletAnimationDuration);
+            bullet.transform
+                .DOScale(Vector3.zero, bulletAnimationDuration)
+                .SetEase(Ease.InBack)
+                .OnComplete(() => bullet.gameObject.SetActive(false));
         }
 
         #endregion

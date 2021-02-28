@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Thirties.UnofficialBang
@@ -28,15 +29,22 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private CardDataTable baseCardDataTable;
 
-        [Header("Views")]
-
-        [SerializeField]
-        private PlayerView playerView;
-
         [Header("UI")]
 
         [SerializeField]
         private GameLogUI gameLog;
+
+        [SerializeField]
+        private GameObject exitModal;
+
+        [SerializeField]
+        private Button exitButton;
+
+        [SerializeField]
+        private Button cancelExitButton;
+
+        [SerializeField]
+        private Button confirmExitButton;
 
         #endregion
 
@@ -94,15 +102,21 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnEnable()
+        private void Start()
         {
             PhotonNetwork.AddCallbackTarget(this);
 
             CardDealing += OnCardDealing;
             RoleRevealing += OnRoleRevealing;
+
+            exitButton.onClick.AddListener(OnExitButtonClicked);
+            cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
+            confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
+
+            exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             PhotonNetwork.RemoveCallbackTarget(this);
 
@@ -304,6 +318,21 @@ namespace Thirties.UnofficialBang
                     Players.Insert(0, last);
                 }
             }
+        }
+
+        private void OnExitButtonClicked()
+        {
+            exitModal.SetActive(true);
+        }
+
+        private void OnCancelExitButtonClicked()
+        {
+            exitModal.SetActive(false);
+        }
+
+        private void OnConfirmExitButtonClicked()
+        {
+            PhotonNetwork.LoadLevel("Main");
         }
 
         #endregion

@@ -99,21 +99,6 @@ namespace Thirties.UnofficialBang
 
         protected void Start()
         {
-#if UNITY_EDITOR
-            var nicknames = nicknameDataTable.GetAll();
-            int nameIndex = Random.Range(0, nicknames.Count);
-            nicknameInputField.text = nicknames[nameIndex].Nickname;
-#else
-            if (PlayerPrefs.HasKey("nickname"))
-            {
-                nicknameInputField.text = PlayerPrefs.GetString("nickname");
-            }
-#endif
-
-            roomListingPanel.SetActive(false);
-            playerListingPanel.SetActive(false);
-            createRoomModal.SetActive(false);
-
             nicknameInputField.onValueChanged.AddListener(OnNicknameInputFieldValueChanged);
             roomNameInputField.onValueChanged.AddListener(OnRoomNameInputFieldValueChanged);
 
@@ -125,7 +110,33 @@ namespace Thirties.UnofficialBang
             readyButton.onClick.AddListener(OnReadyButtonClick);
             startButton.onClick.AddListener(OnStartButtonClick);
 
-            PhotonNetwork.ConnectUsingSettings();
+            if (PhotonNetwork.CurrentRoom != null)
+            {
+                nicknameInputField.text = PhotonNetwork.LocalPlayer.NickName;
+
+                SetReady(false);
+                OnJoinedRoom();
+            }
+            else
+            {
+
+#if UNITY_EDITOR
+                var nicknames = nicknameDataTable.GetAll();
+                int nameIndex = Random.Range(0, nicknames.Count);
+                nicknameInputField.text = nicknames[nameIndex].Nickname;
+#else
+                if (PlayerPrefs.HasKey("nickname"))
+                {
+                    nicknameInputField.text = PlayerPrefs.GetString("nickname");
+                }
+#endif
+
+                roomListingPanel.SetActive(false);
+                playerListingPanel.SetActive(false);
+                createRoomModal.SetActive(false);
+
+                PhotonNetwork.ConnectUsingSettings();
+            }
         }
 
         #endregion
