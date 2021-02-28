@@ -2190,6 +2190,7 @@ MonoBehaviour:
   exitButton: {fileID: 1110088298}
   cancelExitButton: {fileID: 288218913}
   confirmExitButton: {fileID: 104663513}
+  cardZoomImage: {fileID: 1378145101}
 --- !u!4 &170670047
 Transform:
   m_ObjectHideFlags: 0
@@ -4244,7 +4245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 581303387}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &321005771
 GameObject:
   m_ObjectHideFlags: 0
@@ -5333,7 +5335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 417198035}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &404412141
 GameObject:
   m_ObjectHideFlags: 0
@@ -7357,7 +7360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 903225876}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &544966709
 GameObject:
   m_ObjectHideFlags: 0
@@ -7865,7 +7869,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &585242660
@@ -9403,7 +9407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 144406602}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &680937779
 GameObject:
   m_ObjectHideFlags: 0
@@ -12984,6 +12989,7 @@ RectTransform:
   - {fileID: 344167016}
   - {fileID: 1110088297}
   - {fileID: 621099148}
+  - {fileID: 1378145100}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13453,7 +13459,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &885550419
@@ -14370,7 +14376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1509539304}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &985897346
 GameObject:
   m_ObjectHideFlags: 0
@@ -15569,7 +15576,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 710387401}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1063032578
 GameObject:
   m_ObjectHideFlags: 0
@@ -15794,7 +15802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 881650395}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1076825575
 GameObject:
   m_ObjectHideFlags: 0
@@ -16196,7 +16205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 708364435}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1103031815
 GameObject:
   m_ObjectHideFlags: 0
@@ -20185,7 +20195,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1343205265
@@ -20979,6 +20989,80 @@ MonoBehaviour:
   time: 0
   applyRotation: 0
   applyUp: 1
+--- !u!1 &1378145099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378145100}
+  - component: {fileID: 1378145102}
+  - component: {fileID: 1378145101}
+  m_Layer: 5
+  m_Name: Card Zoom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1378145100
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378145099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 850649764}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 250, y: 389}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1378145101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378145099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 04b318510f3a03c4aad7243118c14a3b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1378145102
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378145099}
+  m_CullTransparentMesh: 0
 --- !u!1 &1378730398
 GameObject:
   m_ObjectHideFlags: 0
@@ -21218,7 +21302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 719300936}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1407168716
 GameObject:
   m_ObjectHideFlags: 0
@@ -21329,7 +21414,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1408839890
@@ -22288,7 +22373,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1459212103
@@ -22982,7 +23067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1039813604}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1491195483
 GameObject:
   m_ObjectHideFlags: 0
@@ -28053,7 +28139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1183604230}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1834362600
 GameObject:
   m_ObjectHideFlags: 0
@@ -30049,7 +30136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1407676075}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1001 &1929467148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30316,7 +30404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1338266974}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &1950128802
 GameObject:
   m_ObjectHideFlags: 0
@@ -32690,7 +32779,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1458832045}
-  coveredCard: {fileID: 21300000, guid: f8cdc3fdc12514f4388b990ae7a193f8, type: 3}
+  cardBack: {fileID: 0}
+  roleBack: {fileID: 0}
 --- !u!1 &2110996993
 GameObject:
   m_ObjectHideFlags: 0
@@ -33609,7 +33699,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1098792907594311676
@@ -33721,6 +33811,6 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 3.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

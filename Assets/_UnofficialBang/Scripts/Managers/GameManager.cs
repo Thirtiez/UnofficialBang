@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Button confirmExitButton;
 
+        [SerializeField]
+        private Image cardZoomImage;
+
         #endregion
 
         #region Public properties
@@ -68,6 +72,8 @@ namespace Thirties.UnofficialBang
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
         public UnityAction CharactersDealt { get; set; }
         public UnityAction CardsDealt { get; set; }
+        public UnityAction<CardView> CardMouseOverEnter { get; set; }
+        public UnityAction CardMouseOverExit { get; set; }
 
         #endregion
 
@@ -108,12 +114,16 @@ namespace Thirties.UnofficialBang
 
             CardDealing += OnCardDealing;
             RoleRevealing += OnRoleRevealing;
+            CardMouseOverEnter += OnCardMouseOverEnter;
+            CardMouseOverExit += OnCardMouseOverExit;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
             confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
 
             exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+            exitModal.gameObject.SetActive(false);
+            cardZoomImage.gameObject.SetActive(false);
         }
 
         private void OnDestroy()
@@ -122,6 +132,8 @@ namespace Thirties.UnofficialBang
 
             CardDealing -= OnCardDealing;
             RoleRevealing -= OnRoleRevealing;
+            CardMouseOverEnter -= OnCardMouseOverEnter;
+            CardMouseOverExit -= OnCardMouseOverExit;
         }
 
         #endregion
@@ -333,6 +345,29 @@ namespace Thirties.UnofficialBang
         private void OnConfirmExitButtonClicked()
         {
             PhotonNetwork.LoadLevel("Main");
+        }
+
+        private void OnCardMouseOverEnter(CardView cardView)
+        {
+            cardZoomImage.sprite = cardSpriteTable.Get(cardView.CardData.Sprite);
+            cardZoomImage.gameObject.SetActive(true);
+
+            var screenPosition = Camera.main.WorldToScreenPoint(cardView.transform.position);
+            //bool left = screenPosition.x < Screen.width / 2;
+            bool bottom = screenPosition.y < Screen.height / 2;
+
+            var anchor = new Vector2(0.5f, bottom ? 0 : 1);
+            cardZoomImage.rectTransform.anchorMin = anchor;
+            cardZoomImage.rectTransform.anchorMax = anchor;
+            cardZoomImage.rectTransform.pivot = anchor;
+
+            cardZoomImage.transform.position = screenPosition;
+        }
+
+        private void OnCardMouseOverExit()
+        {
+            cardZoomImage.sprite = null;
+            cardZoomImage.gameObject.SetActive(false);
         }
 
         #endregion

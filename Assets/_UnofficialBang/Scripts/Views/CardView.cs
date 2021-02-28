@@ -10,25 +10,63 @@ namespace Thirties.UnofficialBang
         private SpriteRenderer spriteRenderer;
 
         [SerializeField]
-        private Sprite coveredCard;
+        private Sprite cardBack;
 
-        private CardData cardData;
+        [SerializeField]
+        private Sprite roleBack;
+
+        public CardData CardData { get; private set; }
+
+        private bool isCovered = false;
+
+        protected void OnMouseEnter()
+        {
+            if (!isCovered)
+            {
+                GameManager.Instance.CardMouseOverEnter(this);
+
+                spriteRenderer.enabled = false;
+            }
+        }
+
+        protected void OnMouseExit()
+        {
+            if (!isCovered)
+            {
+                GameManager.Instance.CardMouseOverExit();
+
+                spriteRenderer.enabled = true;
+            }
+        }
 
         public void Configure(CardData cardData, bool isCovered)
         {
-            this.cardData = cardData;
+            CardData = cardData;
 
-            spriteRenderer.sprite = isCovered ? coveredCard : GameManager.Instance?.CardSpriteTable?.Get(cardData.Sprite);
+            this.isCovered = isCovered;
+
+            if (isCovered)
+            {
+                Hide();
+            }
+            else
+            {
+                Reveal();
+            }
         }
 
         public void Reveal()
         {
-            spriteRenderer.sprite = GameManager.Instance?.CardSpriteTable?.Get(cardData.Sprite);
+            isCovered = false;
+
+            spriteRenderer.sprite = GameManager.Instance?.CardSpriteTable?.Get(CardData.Sprite);
         }
 
         public void Hide()
         {
-            spriteRenderer.sprite = coveredCard;
+            isCovered = true;
+
+            spriteRenderer.sprite = CardData.Class == CardClass.Role ? roleBack : cardBack;
         }
     }
 }
