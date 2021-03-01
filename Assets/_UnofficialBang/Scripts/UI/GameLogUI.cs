@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,109 +10,21 @@ namespace Thirties.UnofficialBang
     {
         #region Inspector fields
 
-        [Header("References")]
-
         [SerializeField]
         private ScrollRect scrollRect;
 
         [SerializeField]
         private LogElementUI logElementPrefab;
 
-        [Header("Colors")]
-
-        [SerializeField]
-        private Color brownCardColor;
-
-        [SerializeField]
-        private Color blueCardColor;
-
-        [SerializeField]
-        private Color characterCardColor;
-
-        [SerializeField]
-        private Color roleCardColor;
-
-        [SerializeField]
-        private Color targetColor;
-
-        [SerializeField]
-        private Color instigatorColor;
-
         #endregion
 
         #region Private fields
 
-        private string hexBrownCardColor => ColorUtility.ToHtmlStringRGBA(brownCardColor);
-        private string hexBlueCardColor => ColorUtility.ToHtmlStringRGBA(blueCardColor);
-        private string hexCharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
-        private string hexRoleCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
-        private string hexTargetColor => ColorUtility.ToHtmlStringRGBA(targetColor);
-        private string hexInstigatorColor => ColorUtility.ToHtmlStringRGBA(instigatorColor);
-
         private List<string> _messages = new List<string>();
-
-        private GameManager _gameManager;
-
-        #endregion
-
-        #region Monobehaviour callbacks
-
-        protected void OnEnable()
-        {
-            _gameManager = GameManager.Instance;
-
-            _gameManager.CardDealing += OnCardDealing;
-            _gameManager.RoleRevealing += OnRoleRevealing;
-        }
-
-        protected void OnDisable()
-        {
-            _gameManager.CardDealing -= OnCardDealing;
-            _gameManager.RoleRevealing -= OnRoleRevealing;
-        }
 
         #endregion
 
         #region Private methods
-
-        private void Log(string message, CardData card = null, Player target = null, Player instigator = null)
-        {
-            string cardColor = null;
-
-            if (card != null)
-            {
-                switch (card.Class)
-                {
-                    case CardClass.Brown:
-                        cardColor = hexBrownCardColor;
-                        break;
-
-                    case CardClass.Blue:
-                        cardColor = hexBlueCardColor;
-                        break;
-
-                    case CardClass.Character:
-                        cardColor = hexCharacterCardColor;
-                        break;
-
-                    case CardClass.Role:
-                        cardColor = hexRoleCardColor;
-                        break;
-                }
-            }
-
-            string cardName = $"<color=#{cardColor}>{card?.Name}</color>";
-            string targetName = $"<color=#{hexTargetColor}>{target?.NickName}</color>";
-            string instigatorName = $"<color=#{hexInstigatorColor}>{instigator?.NickName}</color>";
-
-            message = string.Format(message, cardName, targetName, instigatorName);
-            _messages.Add(message);
-
-            var logElement = Instantiate(logElementPrefab, scrollRect.content);
-            logElement.Configure(message);
-
-            StartCoroutine(ScrollToBottom());
-        }
 
         private IEnumerator ScrollToBottom()
         {
@@ -126,39 +37,46 @@ namespace Thirties.UnofficialBang
 
         #endregion
 
-        #region Event handlers
+        #region Public methods
 
-        private void OnCardDealing(CardDealingEventData eventData)
+        public void Log(string message, CardData card = null, Player target = null, Player instigator = null)
         {
-            if (eventData.PlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
-            {
-                var card = _gameManager.Cards[eventData.CardId];
+            var colorSettings = GameManager.Instance.ColorSettings;
+            string cardColor = null;
 
+            if (card != null)
+            {
                 switch (card.Class)
                 {
                     case CardClass.Brown:
+                        cardColor = colorSettings.BrownCardColor;
+                        break;
+
                     case CardClass.Blue:
-                        Log("Hai pescato la carta {0}", card);
+                        cardColor = colorSettings.BlueCardColor;
                         break;
 
                     case CardClass.Character:
-                        Log("Hai pescato il personaggio {0}", card);
+                        cardColor = colorSettings.CharacterCardColor;
                         break;
 
                     case CardClass.Role:
-                        Log("Hai pescato il ruolo {0}", card);
+                        cardColor = colorSettings.RoleCardColor;
                         break;
                 }
             }
-        }
 
-        private void OnRoleRevealing(RoleRevealingEventData eventData)
-        {
-            var card = _gameManager.Cards[eventData.CardId];
-            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            string message = card.IsSceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
+            string cardName = $"<color=#{cardColor}>{card?.Name}</color>";
+            string targetName = $"<color=#{colorSettings.PlayerColor}>{target?.NickName}</color>";
+            string instigatorName = $"<color=#{colorSettings.PlayerColor}>{instigator?.NickName}</color>";
 
-            Log(message, card, player);
+            message = string.Format(message, cardName, targetName, instigatorName);
+            _messages.Add(message);
+
+            var logElement = Instantiate(logElementPrefab, scrollRect.content);
+            logElement.Configure(message);
+
+            StartCoroutine(ScrollToBottom());
         }
 
         #endregion

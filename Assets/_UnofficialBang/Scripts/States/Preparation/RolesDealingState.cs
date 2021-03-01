@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class RolesDealingState : BaseState
+    public class RolesDealingState : PreparationState
     {
         [SerializeField]
         private float dealCardDelay = 0.2f;

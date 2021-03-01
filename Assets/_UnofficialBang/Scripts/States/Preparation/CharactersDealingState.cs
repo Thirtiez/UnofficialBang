@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class CharactersDealingState : BaseState
+    public class CharactersDealingState : PreparationState
     {
         [SerializeField]
         private float dealCardDelay = 0.2f;
@@ -18,8 +18,6 @@ namespace Thirties.UnofficialBang
             {
                 _gameManager.StartCoroutine(DealCharacters());
             }
-
-            _gameManager.CharactersDealt += OnCharactersDealt;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -29,8 +27,6 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _gameManager.CharactersDealt -= OnCharactersDealt;
-
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
 
@@ -45,11 +41,6 @@ namespace Thirties.UnofficialBang
                 yield return new WaitForSeconds(dealCardDelay);
             }
 
-            _gameManager.SendEvent(PhotonEvent.CharactersDealt);
-        }
-
-        private void OnCharactersDealt()
-        {
             GoTo(FSMTrigger.Forward);
         }
     }

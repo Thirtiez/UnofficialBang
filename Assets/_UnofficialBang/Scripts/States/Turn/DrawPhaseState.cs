@@ -2,7 +2,7 @@
 
 namespace Thirties.UnofficialBang
 {
-    public class TurnEndState : BaseState
+    public class DrawPhaseState : TurnState
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {

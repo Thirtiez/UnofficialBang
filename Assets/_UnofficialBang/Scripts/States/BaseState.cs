@@ -19,7 +19,8 @@ namespace Thirties.UnofficialBang
             if (_gameManager == null && GameManager.Instance != null)
             {
                 _gameManager = GameManager.Instance;
-                _gameManager.CurrentState = this;
+
+                _gameManager.OnStateEnter(this);
             }
         }
 
@@ -31,6 +32,8 @@ namespace Thirties.UnofficialBang
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
+
+            _gameManager.OnStateExit(this);
 
             Debug.Log($"<color=green> Exited {GetType().Name}</color>");
         }

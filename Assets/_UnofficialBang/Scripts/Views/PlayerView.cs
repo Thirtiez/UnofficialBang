@@ -91,7 +91,7 @@ namespace Thirties.UnofficialBang
 
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
-            _gameManager.CharactersDealt += OnCharactersDealt;
+            _gameManager.OnStateExit += OnStateExit;
 
             Configure();
         }
@@ -100,7 +100,7 @@ namespace Thirties.UnofficialBang
         {
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
-            _gameManager.CharactersDealt -= OnCharactersDealt;
+            _gameManager.OnStateExit -= OnStateExit;
         }
 
         #endregion
@@ -212,10 +212,13 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnCharactersDealt()
+        private void OnStateExit(BaseState state)
         {
-            int bulletCount = _gameManager.GetPlayerProperties(_player).CurrentHealth;
-            StartCoroutine(GainBulletRoutine(bulletCount));
+            if (state is CharactersDealingState)
+            {
+                int bulletCount = _gameManager.GetPlayerProperties(_player).CurrentHealth;
+                StartCoroutine(GainBulletRoutine(bulletCount));
+            }
         }
 
         #endregion

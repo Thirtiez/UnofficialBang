@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Thirties.UnofficialBang
@@ -22,7 +21,7 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Animator fsm;
 
-        [Header("Scriptable objects")]
+        [Header("Tables")]
 
         [SerializeField]
         private CardSpriteTable cardSpriteTable;
@@ -30,25 +29,10 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private CardDataTable baseCardDataTable;
 
-        [Header("UI")]
+        [Header("Settings")]
 
         [SerializeField]
-        private GameLogUI gameLog;
-
-        [SerializeField]
-        private GameObject exitModal;
-
-        [SerializeField]
-        private Button exitButton;
-
-        [SerializeField]
-        private Button cancelExitButton;
-
-        [SerializeField]
-        private Button confirmExitButton;
-
-        [SerializeField]
-        private Image cardZoomImage;
+        private ColorSettings colorSettings;
 
         #endregion
 
@@ -56,22 +40,24 @@ namespace Thirties.UnofficialBang
 
         public static GameManager Instance { get; private set; }
 
-        public BaseState CurrentState { get; set; }
+        public Player CurrentPlayer { get; set; }
+
         public List<CardData> Cards { get; private set; }
-        public PlayerCustomProperties PlayerProperties { get; private set; }
         public List<Player> Players { get; private set; }
 
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
-        public GameLogUI GameLog => gameLog;
+        public ColorSettings ColorSettings => colorSettings;
 
         #endregion
 
         #region Events
 
+        public UnityAction<BaseState> OnStateEnter { get; set; }
+        public UnityAction<BaseState> OnStateExit { get; set; }
+
         public UnityAction<CardDealingEventData> CardDealing { get; set; }
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
-        public UnityAction CharactersDealt { get; set; }
-        public UnityAction CardsDealt { get; set; }
+
         public UnityAction<CardView> CardMouseOverEnter { get; set; }
         public UnityAction CardMouseOverExit { get; set; }
 
@@ -114,16 +100,6 @@ namespace Thirties.UnofficialBang
 
             CardDealing += OnCardDealing;
             RoleRevealing += OnRoleRevealing;
-            CardMouseOverEnter += OnCardMouseOverEnter;
-            CardMouseOverExit += OnCardMouseOverExit;
-
-            exitButton.onClick.AddListener(OnExitButtonClicked);
-            cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
-            confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
-
-            exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
-            exitModal.gameObject.SetActive(false);
-            cardZoomImage.gameObject.SetActive(false);
         }
 
         private void OnDestroy()
@@ -132,8 +108,6 @@ namespace Thirties.UnofficialBang
 
             CardDealing -= OnCardDealing;
             RoleRevealing -= OnRoleRevealing;
-            CardMouseOverEnter -= OnCardMouseOverEnter;
-            CardMouseOverExit -= OnCardMouseOverExit;
         }
 
         #endregion
@@ -152,20 +126,29 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RaiseEvent(gameEvent, json, raiseEventOptions, sendOptions.Value);
         }
 
-        public void SetPlayerProperties()
+        public void SetPlayerProperties(PlayerCustomProperties customProperties = null)
         {
-            var json = JsonConvert.SerializeObject(PlayerProperties);
+            customProperties = customProperties ?? new PlayerCustomProperties();
+
+            var json = JsonConvert.SerializeObject(customProperties);
             var hashtable = new Hashtable();
             hashtable["json"] = json;
             PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
         }
 
-        public PlayerCustomProperties GetPlayerProperties(Player player)
+        public PlayerCustomProperties GetPlayerProperties(Player player = null)
         {
+            player = player ?? PhotonNetwork.LocalPlayer;
+
             var actualPlayer = PhotonNetwork.CurrentRoom.GetPlayer(player.ActorNumber);
-            var json = (string)actualPlayer.CustomProperties["json"];
-            var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
-            return customProperties;
+            if (actualPlayer.CustomProperties.ContainsKey("json"))
+            {
+                var json = (string)actualPlayer.CustomProperties["json"];
+                var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
+                return customProperties;
+            }
+
+            return new PlayerCustomProperties();
         }
 
         public void InitializePlayer()
@@ -175,7 +158,7 @@ namespace Thirties.UnofficialBang
             _playerCharacter = null;
             _playerRole = null;
 
-            PlayerProperties = new PlayerCustomProperties();
+            SetPlayerProperties();
         }
 
         public void InitializeDecks()
@@ -269,14 +252,6 @@ namespace Thirties.UnofficialBang
                     var roleRevealingEventData = JsonConvert.DeserializeObject<RoleRevealingEventData>(json);
                     RoleRevealing?.Invoke(roleRevealingEventData);
                     break;
-
-                case PhotonEvent.CharactersDealt:
-                    CharactersDealt?.Invoke();
-                    break;
-
-                case PhotonEvent.CardsDealt:
-                    CardsDealt?.Invoke();
-                    break;
             }
         }
 
@@ -286,33 +261,37 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.LocalPlayer.ActorNumber == eventData.PlayerId)
             {
+                var customProperties = GetPlayerProperties();
                 switch (card.Class)
                 {
                     case CardClass.Brown:
                     case CardClass.Blue:
+
                         _playerHand.Add(card);
 
-                        PlayerProperties.HandCount = _playerHand.Count;
+                        customProperties.HandCount = _playerHand.Count;
+                        SetPlayerProperties(customProperties);
                         break;
 
                     case CardClass.Character:
+
                         _playerCharacter = card;
 
-                        PlayerProperties.MaxHealth = card.Health.Value;
+                        customProperties.MaxHealth = card.Health.Value;
                         if (_playerRole.IsSceriff)
                         {
-                            PlayerProperties.MaxHealth++;
+                            customProperties.MaxHealth++;
                         }
-                        PlayerProperties.CurrentHealth = PlayerProperties.MaxHealth;
-
+                        customProperties.CurrentHealth = customProperties.MaxHealth;
+                        SetPlayerProperties(customProperties);
                         break;
 
                     case CardClass.Role:
+
                         _playerRole = card;
                         break;
                 }
 
-                SetPlayerProperties();
             }
         }
 
@@ -332,46 +311,6 @@ namespace Thirties.UnofficialBang
                     Players.Insert(0, last);
                 }
             }
-        }
-
-        private void OnExitButtonClicked()
-        {
-            exitModal.SetActive(true);
-        }
-
-        private void OnCancelExitButtonClicked()
-        {
-            exitModal.SetActive(false);
-        }
-
-        private void OnConfirmExitButtonClicked()
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = true;
-            PhotonNetwork.CurrentRoom.IsVisible = true;
-            PhotonNetwork.LoadLevel("Main");
-        }
-
-        private void OnCardMouseOverEnter(CardView cardView)
-        {
-            cardZoomImage.sprite = cardSpriteTable.Get(cardView.CardData.Sprite);
-            cardZoomImage.gameObject.SetActive(true);
-
-            var screenPosition = Camera.main.WorldToScreenPoint(cardView.transform.position);
-            //bool left = screenPosition.x < Screen.width / 2;
-            bool bottom = screenPosition.y < Screen.height / 2;
-
-            var anchor = new Vector2(0.5f, bottom ? 0 : 1);
-            cardZoomImage.rectTransform.anchorMin = anchor;
-            cardZoomImage.rectTransform.anchorMax = anchor;
-            cardZoomImage.rectTransform.pivot = anchor;
-
-            cardZoomImage.transform.position = screenPosition;
-        }
-
-        private void OnCardMouseOverExit()
-        {
-            cardZoomImage.sprite = null;
-            cardZoomImage.gameObject.SetActive(false);
         }
 
         #endregion

@@ -14,9 +14,9 @@ namespace Thirties.UnofficialBang
             if (PhotonNetwork.IsMasterClient)
             {
                 _gameManager.InitializeDecks();
-            }
 
-            GoTo(FSMTrigger.Forward);
+                GoTo(FSMTrigger.Forward);
+            }
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

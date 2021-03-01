@@ -2,7 +2,7 @@
 
 namespace Thirties.UnofficialBang
 {
-    public class CardSelectionState : BaseState
+    public class CardSelectionState : PlayPhaseState
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
