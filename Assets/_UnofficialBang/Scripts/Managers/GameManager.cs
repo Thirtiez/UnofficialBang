@@ -34,6 +34,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private ColorSettings colorSettings;
 
+        [SerializeField]
+        private AnimationSettings animationSettings;
+
         #endregion
 
         #region Public properties
@@ -45,8 +48,14 @@ namespace Thirties.UnofficialBang
         public List<CardData> Cards { get; private set; }
         public List<Player> Players { get; private set; }
 
+        public List<CardData> PlayerHand { get; private set; }
+        public List<CardData> PlayerBoard { get; private set; }
+        public CardData PlayerCharacter { get; private set; }
+        public CardData PlayerRole { get; private set; }
+
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public ColorSettings ColorSettings => colorSettings;
+        public AnimationSettings AnimationSettings => animationSettings;
 
         #endregion
 
@@ -69,11 +78,6 @@ namespace Thirties.UnofficialBang
         private List<CardData> _rolesDeck;
         private List<CardData> _charactersDeck;
         private List<CardData> _discardPile;
-
-        private List<CardData> _playerHand;
-        private List<CardData> _playerBoard;
-        private CardData _playerCharacter;
-        private CardData _playerRole;
 
         #endregion
 
@@ -140,10 +144,9 @@ namespace Thirties.UnofficialBang
         {
             player = player ?? PhotonNetwork.LocalPlayer;
 
-            var actualPlayer = PhotonNetwork.CurrentRoom.GetPlayer(player.ActorNumber);
-            if (actualPlayer.CustomProperties.ContainsKey("json"))
+            if (player.CustomProperties.ContainsKey("json"))
             {
-                var json = (string)actualPlayer.CustomProperties["json"];
+                var json = (string)player.CustomProperties["json"];
                 var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
                 return customProperties;
             }
@@ -153,10 +156,10 @@ namespace Thirties.UnofficialBang
 
         public void InitializePlayer()
         {
-            _playerHand = new List<CardData>();
-            _playerBoard = new List<CardData>();
-            _playerCharacter = null;
-            _playerRole = null;
+            PlayerHand = new List<CardData>();
+            PlayerBoard = new List<CardData>();
+            PlayerCharacter = null;
+            PlayerRole = null;
 
             SetPlayerProperties();
         }
@@ -243,6 +246,11 @@ namespace Thirties.UnofficialBang
 
             switch (photonEvent.Code)
             {
+                case PhotonEvent.ChangingState:
+                    var changingStateEventData = JsonConvert.DeserializeObject<ChangingStateEventData>(json);
+                    fsm.SetTrigger(changingStateEventData.Trigger);
+                    break;
+
                 case PhotonEvent.CardDealing:
                     var cardDealingEventData = JsonConvert.DeserializeObject<CardDealingEventData>(json);
                     CardDealing?.Invoke(cardDealingEventData);
@@ -261,24 +269,24 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.LocalPlayer.ActorNumber == eventData.PlayerId)
             {
-                var customProperties = GetPlayerProperties();
+                var customProperties = GetPlayerProperties(PhotonNetwork.LocalPlayer);
                 switch (card.Class)
                 {
                     case CardClass.Brown:
                     case CardClass.Blue:
 
-                        _playerHand.Add(card);
+                        PlayerHand.Add(card);
 
-                        customProperties.HandCount = _playerHand.Count;
+                        customProperties.HandCount = PlayerHand.Count;
                         SetPlayerProperties(customProperties);
                         break;
 
                     case CardClass.Character:
 
-                        _playerCharacter = card;
+                        PlayerCharacter = card;
 
                         customProperties.MaxHealth = card.Health.Value;
-                        if (_playerRole.IsSceriff)
+                        if (PlayerRole.IsSceriff)
                         {
                             customProperties.MaxHealth++;
                         }
@@ -288,7 +296,7 @@ namespace Thirties.UnofficialBang
 
                     case CardClass.Role:
 
-                        _playerRole = card;
+                        PlayerRole = card;
                         break;
                 }
 

@@ -1173,9 +1173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fsm: {fileID: 1720575559}
+  fsmView: {fileID: 0}
   cardSpriteTable: {fileID: 11400000, guid: 9576d365afd1ef446904c9ea5ef9f99d, type: 2}
   baseCardDataTable: {fileID: 11400000, guid: b9c3f24420aa5534bbbcf9a340d540f5, type: 2}
   colorSettings: {fileID: 11400000, guid: 2f64865f39bcd904085fcf113ce7fbdd, type: 2}
+  animationSettings: {fileID: 11400000, guid: 297556abae2af8447b3bbf6d4144eb26, type: 2}
 --- !u!4 &170670047
 Transform:
   m_ObjectHideFlags: 0
@@ -4007,8 +4009,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 3
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -5838,8 +5838,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 7
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -8188,8 +8186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -8456,8 +8452,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1720575562}
   - component: {fileID: 1720575559}
-  - component: {fileID: 1720575561}
-  - component: {fileID: 1720575560}
   m_Layer: 0
   m_Name: FSM
   m_TagString: Untagged
@@ -8484,98 +8478,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1720575560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720575558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 1
-    Name: Forward
-  - Type: 9
-    SynchronizeType: 1
-    Name: Back
-  - Type: 9
-    SynchronizeType: 1
-    Name: Initialization
-  - Type: 9
-    SynchronizeType: 1
-    Name: Preparation
-  - Type: 9
-    SynchronizeType: 1
-    Name: Game
-  - Type: 9
-    SynchronizeType: 1
-    Name: End
-  - Type: 9
-    SynchronizeType: 1
-    Name: RolesDealing
-  - Type: 9
-    SynchronizeType: 1
-    Name: CharactersDealing
-  - Type: 9
-    SynchronizeType: 1
-    Name: CardsDealing
-  - Type: 9
-    SynchronizeType: 1
-    Name: TurnStart
-  - Type: 9
-    SynchronizeType: 1
-    Name: DrawPhase
-  - Type: 9
-    SynchronizeType: 1
-    Name: PlayPhase
-  - Type: 9
-    SynchronizeType: 1
-    Name: DiscardPhase
-  - Type: 9
-    SynchronizeType: 1
-    Name: TurnEnd
-  - Type: 9
-    SynchronizeType: 1
-    Name: CardSelection
-  - Type: 9
-    SynchronizeType: 1
-    Name: TargetSelection
-  - Type: 9
-    SynchronizeType: 1
-    Name: CardResolution
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
---- !u!114 &1720575561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720575558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 2
-  Synchronization: 1
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 1720575560}
-  viewIdField: 1
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!4 &1720575562
 Transform:
   m_ObjectHideFlags: 0
@@ -8637,8 +8539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -9323,8 +9223,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 4
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -9576,8 +9474,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 2
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -9714,8 +9610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 6
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}
@@ -10697,8 +10591,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 5
-  bulletAnimationDuration: 0.5
-  bulletAnimationDelay: 0.3
   cardPreferredDistance: 0.2
   cardPrefab: {fileID: 3672196128578389826, guid: 0fec28119d38afa44a2ff117b2be3caf,
     type: 3}

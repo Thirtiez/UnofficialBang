@@ -37,10 +37,5 @@ namespace Thirties.UnofficialBang
 
             Debug.Log($"<color=green> Exited {GetType().Name}</color>");
         }
-
-        protected void GoTo(int trigger)
-        {
-            _fsm.SetTrigger(trigger);
-        }
     }
 }

@@ -17,10 +17,6 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Sprite roleBack;
 
-        [SerializeField]
-        [SuffixLabel("s")]
-        private float animationDuration = 1.0f;
-
         public CardData CardData { get; private set; }
 
         private bool isCovered = false;
@@ -80,14 +76,16 @@ namespace Thirties.UnofficialBang
         {
             isAnimating = true;
 
+            float duration = GameManager.Instance.AnimationSettings.DealCardDuration;
+
             transform
-                .DOLocalMove(position, animationDuration)
+                .DOLocalMove(position, duration)
                 .SetEase(Ease.OutQuint);
             transform
-                .DOLocalRotateQuaternion(rotation, animationDuration)
+                .DOLocalRotateQuaternion(rotation, duration)
                 .SetEase(Ease.OutQuint);
             transform
-                .DOScale(Vector3.one, animationDuration)
+                .DOScale(Vector3.one, duration)
                 .SetEase(Ease.OutQuint)
                 .OnComplete(() => isAnimating = false);
         }

@@ -72,6 +72,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 3
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -111,6 +129,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 3
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -166,6 +202,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 3
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 4
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -205,6 +259,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 5
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -260,6 +332,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 6
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -299,6 +389,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 6
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -354,6 +462,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 3
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 7
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -393,6 +519,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 3
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 7
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -448,6 +592,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 3
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 7
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -492,6 +654,24 @@ MonoBehaviour:
     - Name: 
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -542,6 +722,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -586,6 +784,24 @@ MonoBehaviour:
     - Name: 
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -636,6 +852,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -683,6 +917,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -722,6 +974,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 9
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -777,6 +1047,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 9
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -824,6 +1112,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 8
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -863,6 +1169,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -918,6 +1242,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -957,6 +1299,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1012,6 +1372,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1051,6 +1429,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1106,6 +1502,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1145,6 +1559,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1200,6 +1632,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1239,6 +1689,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1294,6 +1762,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1333,6 +1819,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1388,6 +1892,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1427,6 +1949,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1482,6 +2022,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1521,6 +2079,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1576,6 +2152,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1615,6 +2209,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1670,6 +2282,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1709,6 +2339,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1764,6 +2412,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1803,6 +2469,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1858,6 +2542,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1897,6 +2599,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -1952,6 +2672,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -1991,6 +2729,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 2
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2046,6 +2802,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2085,6 +2859,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2140,6 +2932,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2179,6 +2989,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2234,6 +3062,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2273,6 +3119,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2328,6 +3192,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 14
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2367,6 +3249,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 14
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2422,6 +3322,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 14
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2461,6 +3379,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 14
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2516,6 +3452,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2563,6 +3517,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2602,6 +3574,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 15
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2657,6 +3647,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 15
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2696,6 +3704,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 15
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2751,6 +3777,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 5
+    - Name: Effect
+      Entry: 3
+      Data: 16
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2790,6 +3834,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 5
+    - Name: Effect
+      Entry: 3
+      Data: 16
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2845,6 +3907,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 6
+    - Name: Effect
+      Entry: 3
+      Data: 10
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2884,6 +3964,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 6
+    - Name: Effect
+      Entry: 3
+      Data: 17
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -2939,6 +4037,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 6
+    - Name: Effect
+      Entry: 3
+      Data: 17
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2978,6 +4094,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3033,6 +4167,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3072,6 +4224,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3127,6 +4297,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3166,6 +4354,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3221,6 +4427,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3260,6 +4484,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3315,6 +4557,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3354,6 +4614,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3409,6 +4687,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3448,6 +4744,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3503,6 +4817,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 11
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3547,6 +4879,24 @@ MonoBehaviour:
     - Name: 
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 3
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -3597,6 +4947,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 3
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3641,6 +5009,24 @@ MonoBehaviour:
     - Name: 
       Entry: 6
       Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 3
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -3691,6 +5077,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 3
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3730,6 +5134,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 5
+    - Name: Effect
+      Entry: 3
+      Data: 12
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -3785,6 +5207,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3829,6 +5269,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 4
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3879,6 +5337,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 5
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 18
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3923,6 +5399,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 19
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -3973,6 +5467,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 4
+    - Name: Target
+      Entry: 3
+      Data: 1
+    - Name: Effect
+      Entry: 3
+      Data: 13
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4017,6 +5529,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 5
+    - Name: Target
+      Entry: 3
+      Data: 4
+    - Name: Effect
+      Entry: 3
+      Data: 20
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4067,6 +5597,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 2
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 3
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4111,6 +5659,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 5
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 21
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4161,6 +5727,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 7
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 22
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4205,6 +5789,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 6
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4255,6 +5857,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 5
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 23
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4299,6 +5919,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 0
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 5
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4349,6 +5987,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 24
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4393,6 +6049,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 1
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 25
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4443,6 +6117,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 26
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4487,6 +6179,24 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 1
+    - Name: Effect
+      Entry: 3
+      Data: 27
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4537,6 +6247,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 6
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 9
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4576,6 +6304,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 2
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -4631,6 +6377,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 2
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4670,6 +6434,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 2
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -4725,6 +6507,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 1
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4764,6 +6564,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 0
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
@@ -4819,6 +6637,24 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 0
+    - Name: EffectValue
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4858,6 +6694,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: Health
+      Entry: 7
+      Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Trigger
+      Entry: 3
+      Data: 8
+    - Name: Target
+      Entry: 3
+      Data: 0
+    - Name: Effect
+      Entry: 3
+      Data: 0
+    - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 

@@ -8,12 +8,6 @@ namespace Thirties.UnofficialBang
 {
     public class RolesDealingState : PreparationState
     {
-        [SerializeField]
-        private float dealCardDelay = 0.2f;
-
-        [SerializeField]
-        private float sceriffRevealDelay = 1.0f;
-
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
@@ -22,8 +16,6 @@ namespace Thirties.UnofficialBang
             {
                 GameManager.Instance.StartCoroutine(DealRoles());
             }
-
-            GameManager.Instance.RoleRevealing += OnRoleRevealing;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -33,8 +25,6 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            GameManager.Instance.RoleRevealing -= OnRoleRevealing;
-
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
 
@@ -53,24 +43,17 @@ namespace Thirties.UnofficialBang
                     revealRoleEventData = new RoleRevealingEventData { CardId = card.Id, PlayerId = player.ActorNumber };
                 }
 
-                yield return new WaitForSeconds(dealCardDelay);
+                yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
             }
 
             if (revealRoleEventData != null)
             {
                 _gameManager.SendEvent(PhotonEvent.RoleRevealing, revealRoleEventData);
 
-                yield return new WaitForSeconds(sceriffRevealDelay);
+                yield return new WaitForSeconds(_gameManager.AnimationSettings.RoleRevealDelay);
             }
-        }
 
-        private void OnRoleRevealing(RoleRevealingEventData eventData)
-        {
-            var card = _gameManager.Cards[eventData.CardId];
-            if (card.Class == CardClass.Role)
-            {
-                GoTo(FSMTrigger.Forward);
-            }
+            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
         }
     }
 }

@@ -33,19 +33,6 @@
         King
     }
 
-    public enum CardTrigger
-    {
-        Passive,
-        Played,
-        PlayedAgainst,
-        TurnStarted,
-        Hurt,
-        DrawPhaseStarted,
-        CardSelectionStarted,
-        Extracting,
-        CharacterDied
-    }
-
     public enum CardTarget
     {
         Self,

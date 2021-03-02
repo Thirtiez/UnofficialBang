@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
 using Photon.Realtime;
-using Sirenix.OdinInspector;
 using SplineMesh;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,14 +17,6 @@ namespace Thirties.UnofficialBang
 
         [SerializeField]
         private int playerNumber;
-
-        [SerializeField]
-        [SuffixLabel("s")]
-        private float bulletAnimationDuration = 0.5f;
-
-        [SerializeField]
-        [SuffixLabel("s")]
-        private float bulletAnimationDelay = 0.4f;
 
         [SerializeField]
         [Range(0, 1)]
@@ -157,7 +148,7 @@ namespace Thirties.UnofficialBang
             for (int i = 0; i < count; i++)
             {
                 GainBullet(bullets[i]);
-                yield return new WaitForSeconds(bulletAnimationDelay);
+                yield return new WaitForSeconds(_gameManager.AnimationSettings.BulletAnimationDelay);
             }
         }
 
@@ -165,14 +156,14 @@ namespace Thirties.UnofficialBang
         {
             bullet.gameObject.SetActive(true);
             bullet.transform
-                .DOScale(Vector3.one * 0.1f, bulletAnimationDuration)
+                .DOScale(Vector3.one * 0.1f, _gameManager.AnimationSettings.BulletAnimationDuration)
                 .SetEase(Ease.OutBack);
         }
 
         private void LoseBullet(GameObject bullet)
         {
             bullet.transform
-                .DOScale(Vector3.zero, bulletAnimationDuration)
+                .DOScale(Vector3.zero, _gameManager.AnimationSettings.BulletAnimationDuration)
                 .SetEase(Ease.InBack)
                 .OnComplete(() => bullet.gameObject.SetActive(false));
         }

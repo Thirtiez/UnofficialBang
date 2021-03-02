@@ -7,9 +7,6 @@ namespace Thirties.UnofficialBang
 {
     public class CardsDealingState : PreparationState
     {
-        [SerializeField]
-        private float dealCardDelay = 0.2f;
-
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
@@ -18,6 +15,8 @@ namespace Thirties.UnofficialBang
             {
                 _gameManager.StartCoroutine(DealCards());
             }
+
+            _gameManager.CurrentPlayer = _gameManager.Players[0];
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -45,16 +44,14 @@ namespace Thirties.UnofficialBang
                         var card = _gameManager.DrawPlayingCard();
 
                         _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = player.ActorNumber });
-                        yield return new WaitForSeconds(dealCardDelay);
+                        yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
 
                         keepDealing = true;
                     }
                 }
             }
 
-            _gameManager.CurrentPlayer = _gameManager.Players[0];
-
-            GoTo(FSMTrigger.Forward);
+            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
         }
     }
 }

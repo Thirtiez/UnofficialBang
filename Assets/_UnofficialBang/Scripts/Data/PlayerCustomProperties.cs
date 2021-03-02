@@ -7,9 +7,9 @@ namespace Thirties.UnofficialBang
     [Serializable]
     public class PlayerCustomProperties
     {
+        public int HandCount { get; set; }
         public int MaxHealth { get; set; }
         public int CurrentHealth { get; set; }
-        public int DistanceModifier { get; set; }
-        public int HandCount { get; set; }
+        public int BonusDistance { get; set; }
     }
 }

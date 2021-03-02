@@ -33,10 +33,6 @@ namespace Thirties.UnofficialBang
 
         [OdinSerialize]
         [DisplayAsString]
-        public CardTrigger Trigger { get; set; }
-
-        [OdinSerialize]
-        [DisplayAsString]
         public CardTarget Target { get; set; }
 
         [OdinSerialize]

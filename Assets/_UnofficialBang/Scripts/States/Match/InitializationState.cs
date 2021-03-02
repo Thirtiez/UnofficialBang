@@ -15,7 +15,7 @@ namespace Thirties.UnofficialBang
             {
                 _gameManager.InitializeDecks();
 
-                GoTo(FSMTrigger.Forward);
+                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
             }
         }
 
