@@ -32,4 +32,60 @@
         Queen,
         King
     }
+
+    public enum CardTrigger
+    {
+        Passive,
+        Played,
+        PlayedAgainst,
+        TurnStarted,
+        Hurt,
+        DrawPhaseStarted,
+        CardSelectionStarted,
+        Extracting,
+        CharacterDied
+    }
+
+    public enum CardTarget
+    {
+        Self,
+        Instigator,
+        Range,
+        FixedRange,
+        Anyone,
+        Everyone,
+        EveryoneElse,
+    }
+
+    public enum CardEffect
+    {
+        Sceriff,
+        Renegade,
+        Outlaw,
+        Barrel,
+        Dynamite,
+        Scope,
+        Mustang,
+        Prison,
+        Weapon,
+        Volcanic,
+        Bang,
+        Missed,
+        GainHealth,
+        DrawCard,
+        DiscardCard,
+        Duel,
+        GeneralStore,
+        Indians,
+        BlackJack,
+        CalamityJanet,
+        JesseJones,
+        KitCarlson,
+        LuckyDuke,
+        PedroRamirez,
+        SidKetchum,
+        SlabTheKiller,
+        SuzyLaFayette,
+        VultureSam
+    }
 }

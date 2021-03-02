@@ -31,6 +31,22 @@ namespace Thirties.UnofficialBang
         [DisplayAsString]
         public int? Health { get; set; }
 
+        [OdinSerialize]
+        [DisplayAsString]
+        public CardTrigger Trigger { get; set; }
+
+        [OdinSerialize]
+        [DisplayAsString]
+        public CardTarget Target { get; set; }
+
+        [OdinSerialize]
+        [DisplayAsString]
+        public CardEffect Effect { get; set; }
+
+        [OdinSerialize]
+        [DisplayAsString]
+        public int? EffectValue { get; set; }
+
         public bool IsSceriff => Name == "Sceriffo";
         public bool IsRenegade => Name == "Rinnegato";
         public bool IsOutlaw => Name == "Fuorilegge";
