@@ -20,15 +20,16 @@ namespace Photon.Realtime
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using ExitGames.Client.Photon;
 
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     using UnityEngine;
-    #endif
-    #if SUPPORTED_UNITY || NETFX_CORE
+#endif
+#if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
-    #endif
+#endif
 
 
     /// <summary>
@@ -39,6 +40,67 @@ namespace Photon.Realtime
     /// </remarks>
     public class Player
     {
+        #region Custom properties
+
+        public int MaxHealth
+        {
+            get => CustomProperties.ContainsKey("MaxHealth") ? (int)CustomProperties["MaxHealth"] : 0;
+            set => SetCustomProperties(new Hashtable { { "MaxHealth", value } });
+        }
+
+        public int CurrentHealth
+        {
+            get => CustomProperties.ContainsKey("CurrentHealth") ? (int)CustomProperties["CurrentHealth"] : 0;
+            set => SetCustomProperties(new Hashtable { { "CurrentHealth", value } });
+        }
+
+        public int BonusDistance
+        {
+            get => CustomProperties.ContainsKey("BonusDistance") ? (int)CustomProperties["BonusDistance"] : 0;
+            set => SetCustomProperties(new Hashtable { { "BonusDistance", value } });
+        }
+
+        public int[] HandCardIds
+        {
+            get => CustomProperties.ContainsKey("HandCardIds") ? ((int[])CustomProperties["HandCardIds"]) : new int[0];
+            set => SetCustomProperties(new Hashtable { { "HandCardIds", value } });
+        }
+
+        public int[] BoardCardIds
+        {
+            get => CustomProperties.ContainsKey("BoardCardIds") ? ((int[])CustomProperties["BoardCardIds"]) : new int[0];
+            set => SetCustomProperties(new Hashtable { { "BoardCardIds", value } });
+        }
+
+        public int CharacterCardId
+        {
+            get => CustomProperties.ContainsKey("CharacterCardId") ? (int)CustomProperties["CharacterCardId"] : 0;
+            set => SetCustomProperties(new Hashtable { { "CharacterCardId", value } });
+        }
+
+        public int RoleCardId
+        {
+            get => CustomProperties.ContainsKey("RoleCardId") ? (int)CustomProperties["RoleCardId"] : 0;
+            set => SetCustomProperties(new Hashtable { { "RoleCardId", value } });
+        }
+
+        public void ClearCustomProperties()
+        {
+            var customProperties = new Hashtable
+            {
+                {"MaxHealth", 0},
+                {"CurrentHealth", 0},
+                {"BonusDistance", 0},
+                {"HandCardIds", new int[0]},
+                {"BoardCardIds", new int[0]},
+                {"CharacterCardId", 0},
+                {"RoleCardId", 0},
+            };
+            SetCustomProperties(customProperties);
+        }
+
+        #endregion
+
         /// <summary>
         /// Used internally to identify the masterclient of a room.
         /// </summary>
@@ -291,7 +353,7 @@ namespace Photon.Realtime
         /// </summary>
         public override string ToString()
         {
-            return string.Format("#{0:00} '{1}'",this.ActorNumber, this.NickName);
+            return string.Format("#{0:00} '{1}'", this.ActorNumber, this.NickName);
         }
 
         /// <summary>

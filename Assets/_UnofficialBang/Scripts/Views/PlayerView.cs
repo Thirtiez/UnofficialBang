@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using SplineMesh;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -54,7 +55,7 @@ namespace Thirties.UnofficialBang
         private List<CardView> _boardCards = new List<CardView>();
 
         private GameManager _gameManager;
-        private Player _player;
+        private int _playerId;
 
         #endregion
 
@@ -82,15 +83,15 @@ namespace Thirties.UnofficialBang
 
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
+            _gameManager.OnStateEnter += OnStateEnter;
             _gameManager.OnStateExit += OnStateExit;
-
-            Configure();
         }
 
         protected void OnDisable()
         {
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
+            _gameManager.OnStateEnter += OnStateEnter;
             _gameManager.OnStateExit -= OnStateExit;
         }
 
@@ -100,19 +101,19 @@ namespace Thirties.UnofficialBang
 
         private void Configure()
         {
-            int playerCount = _gameManager.Players.Count;
+            int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
             bool isActive = EnableTable[playerCount].Contains(playerNumber);
             gameObject.SetActive(isActive);
 
             if (isActive)
             {
-                int localPlayerIndex = _gameManager.Players.IndexOf(PhotonNetwork.LocalPlayer);
+                int localPlayerIndex = Array.IndexOf(PhotonNetwork.CurrentRoom.TurnPlayerIds, PhotonNetwork.LocalPlayer.ActorNumber);
                 int playerOffset = EnableTable[playerCount].IndexOf(playerNumber);
                 int playerIndex = (localPlayerIndex + playerOffset) % playerCount;
-                _player = _gameManager.Players[playerIndex];
 
-                nicknameText.text = _player.NickName;
+                _playerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[playerIndex];
+                nicknameText.text = PhotonNetwork.CurrentRoom.GetPlayer(_playerId).NickName;
 
                 bullets.ForEach(b =>
                 {
@@ -174,7 +175,7 @@ namespace Thirties.UnofficialBang
 
         private void OnCardDealing(CardDealingEventData eventData)
         {
-            if (eventData.PlayerId == _player.ActorNumber)
+            if (eventData.PlayerId == _playerId)
             {
                 var cardData = _gameManager.Cards[eventData.CardId];
 
@@ -197,9 +198,17 @@ namespace Thirties.UnofficialBang
 
         private void OnRoleRevealing(RoleRevealingEventData eventData)
         {
-            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == _player.ActorNumber)
+            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == _playerId)
             {
                 _sideCards[0].Reveal();
+            }
+        }
+
+        private void OnStateEnter(BaseState state)
+        {
+            if (state is RolesDealingState)
+            {
+                Configure();
             }
         }
 
@@ -207,8 +216,8 @@ namespace Thirties.UnofficialBang
         {
             if (state is CharactersDealingState)
             {
-                int bulletCount = _gameManager.GetPlayerProperties(_player).CurrentHealth;
-                StartCoroutine(GainBulletRoutine(bulletCount));
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(_playerId);
+                StartCoroutine(GainBulletRoutine(player.CurrentHealth));
             }
         }
 

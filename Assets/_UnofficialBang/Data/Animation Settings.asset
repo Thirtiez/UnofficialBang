@@ -21,8 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  dealCardDelay: 0.2
+  dealCardDelay: 0.3
   dealCardDuration: 1
-  roleRevealDelay: 1
-  bulletAnimationDelay: 0.4
+  roleRevealDelay: 0.5
+  bulletAnimationDelay: 0.3
   bulletAnimationDuration: 0.5

@@ -11,9 +11,12 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            if (_gameManager.CurrentPlayer == PhotonNetwork.LocalPlayer)
+            Debug.Log($"Local player: {PhotonNetwork.LocalPlayer.ActorNumber} Current player: {PhotonNetwork.CurrentRoom.CurrentPlayerId}");
+
+            if (PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                switch (_gameManager.PlayerCharacter.Effect)
+                var card = _gameManager.Cards[PhotonNetwork.LocalPlayer.CharacterCardId];
+                switch (card.Effect)
                 {
                     case CardEffect.BlackJack:
                         //TODO BlackJack

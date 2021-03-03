@@ -1,7 +1,9 @@
 ﻿using ExitGames.Client.Photon;
+using ExitGames.Client.Photon.StructWrapping;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
+using Sirenix.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,15 +45,7 @@ namespace Thirties.UnofficialBang
 
         public static GameManager Instance { get; private set; }
 
-        public Player CurrentPlayer { get; set; }
-
         public List<CardData> Cards { get; private set; }
-        public List<Player> Players { get; private set; }
-
-        public List<CardData> PlayerHand { get; private set; }
-        public List<CardData> PlayerBoard { get; private set; }
-        public CardData PlayerCharacter { get; private set; }
-        public CardData PlayerRole { get; private set; }
 
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public ColorSettings ColorSettings => colorSettings;
@@ -72,15 +66,6 @@ namespace Thirties.UnofficialBang
 
         #endregion
 
-        #region Private fields
-
-        private List<CardData> _mainDeck;
-        private List<CardData> _rolesDeck;
-        private List<CardData> _charactersDeck;
-        private List<CardData> _discardPile;
-
-        #endregion
-
         #region Monobehaviour methods
 
         protected void Awake()
@@ -94,7 +79,6 @@ namespace Thirties.UnofficialBang
                 Instance = this;
 
                 Cards = baseCardDataTable.GetAll().OrderBy(x => x.Id).ToList();
-                Players = PhotonNetwork.PlayerList.OrderBy(x => x.ActorNumber).ToList();
             }
         }
 
@@ -102,16 +86,22 @@ namespace Thirties.UnofficialBang
         {
             PhotonNetwork.AddCallbackTarget(this);
 
-            CardDealing += OnCardDealing;
-            RoleRevealing += OnRoleRevealing;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CardDealing += OnCardDealing;
+                RoleRevealing += OnRoleRevealing;
+            }
         }
 
         private void OnDestroy()
         {
             PhotonNetwork.RemoveCallbackTarget(this);
 
-            CardDealing -= OnCardDealing;
-            RoleRevealing -= OnRoleRevealing;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CardDealing -= OnCardDealing;
+                RoleRevealing -= OnRoleRevealing;
+            }
         }
 
         #endregion
@@ -130,54 +120,31 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RaiseEvent(gameEvent, json, raiseEventOptions, sendOptions.Value);
         }
 
-        public void SetPlayerProperties(PlayerCustomProperties customProperties = null)
-        {
-            customProperties = customProperties ?? new PlayerCustomProperties();
-
-            var json = JsonConvert.SerializeObject(customProperties);
-            var hashtable = new Hashtable();
-            hashtable["json"] = json;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
-        }
-
-        public PlayerCustomProperties GetPlayerProperties(Player player = null)
-        {
-            player = player ?? PhotonNetwork.LocalPlayer;
-
-            if (player.CustomProperties.ContainsKey("json"))
-            {
-                var json = (string)player.CustomProperties["json"];
-                var customProperties = JsonConvert.DeserializeObject<PlayerCustomProperties>(json);
-                return customProperties;
-            }
-
-            return new PlayerCustomProperties();
-        }
-
         public void InitializePlayer()
         {
-            PlayerHand = new List<CardData>();
-            PlayerBoard = new List<CardData>();
-            PlayerCharacter = null;
-            PlayerRole = null;
-
-            SetPlayerProperties();
+            PhotonNetwork.LocalPlayer.ClearCustomProperties();
         }
 
-        public void InitializeDecks()
+        public void InitializeRoom()
         {
-            _mainDeck = Cards
+            PhotonNetwork.CurrentRoom.ClearCustomProperties();
+
+            PhotonNetwork.CurrentRoom.TurnPlayerIds = PhotonNetwork.PlayerList
+                .Select(p => p.ActorNumber)
+                .OrderBy(p => p)
+                .ToArray();
+
+            PhotonNetwork.CurrentRoom.MainDeckCardIds = Cards
                 .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
-                .ToList()
+                .Select(c => c.Id)
+                .ToArray()
                 .Shuffle();
 
-            _charactersDeck = Cards
+            PhotonNetwork.CurrentRoom.CharactersDeckCardIds = Cards
                 .Where(c => c.Class == CardClass.Character)
-                .ToList()
+                .Select(c => c.Id)
+                .ToArray()
                 .Shuffle();
-
-            _discardPile = new List<CardData>();
-            _rolesDeck = new List<CardData>();
 
             int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
             int outlawCount = playerCount == 2 ? 0 : playerCount / 2;
@@ -187,51 +154,65 @@ namespace Thirties.UnofficialBang
                 .Where(c => c.Class == CardClass.Role)
                 .ToList();
 
-            var baseRoles = roles.Where(r => r.IsRenegade || r.IsSceriff);
+            var rolesDeck = roles.Where(r => r.IsRenegade || r.IsSceriff).ToList();
             var outlaws = roles.Where(r => r.IsOutlaw).Take(outlawCount);
             var deputies = roles.Where(r => r.IsDeputy).Take(deputyCount);
 
-            _rolesDeck.AddRange(baseRoles);
-            _rolesDeck.AddRange(outlaws);
-            _rolesDeck.AddRange(deputies);
+            rolesDeck.AddRange(outlaws);
+            rolesDeck.AddRange(deputies);
 
-            _rolesDeck = _rolesDeck.Shuffle();
+            PhotonNetwork.CurrentRoom.RolesDeckCardIds = rolesDeck
+                .Select(c => c.Id)
+                .ToArray()
+                .Shuffle();
         }
 
         public CardData DrawPlayingCard()
         {
-            return DrawCard(_mainDeck);
+            var deck = PhotonNetwork.CurrentRoom.MainDeckCardIds;
+            var card = DrawCard(ref deck);
+            PhotonNetwork.CurrentRoom.MainDeckCardIds = deck;
+            return card;
         }
 
         public CardData DrawDiscardedCard()
         {
-            return DrawCard(_discardPile);
+            var deck = PhotonNetwork.CurrentRoom.DiscardDeckCardIds;
+            var card = DrawCard(ref deck);
+            PhotonNetwork.CurrentRoom.DiscardDeckCardIds = deck;
+            return card;
         }
 
         public CardData DrawCharacter()
         {
-            return DrawCard(_charactersDeck);
+            var deck = PhotonNetwork.CurrentRoom.CharactersDeckCardIds;
+            var card = DrawCard(ref deck);
+            PhotonNetwork.CurrentRoom.CharactersDeckCardIds = deck;
+            return card;
         }
 
         public CardData DrawRole()
         {
-            return DrawCard(_rolesDeck);
+            var deck = PhotonNetwork.CurrentRoom.RolesDeckCardIds;
+            var card = DrawCard(ref deck);
+            PhotonNetwork.CurrentRoom.RolesDeckCardIds = deck;
+            return card;
         }
 
         #endregion
 
         #region Private methods
 
-        private CardData DrawCard(List<CardData> deck)
+        private CardData DrawCard(ref int[] deckIds)
         {
-            CardData card = null;
-            if (deck.Count > 0)
+            if (deckIds.Length > 0)
             {
-                card = deck[0];
-                deck.RemoveAt(0);
+                var cardId = deckIds[0];
+                deckIds = deckIds.Skip(1).ToArray();
+                return Cards[cardId];
             }
 
-            return card;
+            return null;
         }
 
         #endregion
@@ -266,59 +247,52 @@ namespace Thirties.UnofficialBang
         private void OnCardDealing(CardDealingEventData eventData)
         {
             var card = Cards[eventData.CardId];
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
 
-            if (PhotonNetwork.LocalPlayer.ActorNumber == eventData.PlayerId)
+            switch (card.Class)
             {
-                var customProperties = GetPlayerProperties(PhotonNetwork.LocalPlayer);
-                switch (card.Class)
-                {
-                    case CardClass.Brown:
-                    case CardClass.Blue:
+                case CardClass.Brown:
+                case CardClass.Blue:
+                    player.HandCardIds = player.HandCardIds.AppendWith(card.Id).ToArray();
+                    break;
 
-                        PlayerHand.Add(card);
+                case CardClass.Character:
+                    var role = Cards[player.RoleCardId];
+                    var health = role.IsSceriff ? card.Health.Value + 1 : card.Health.Value;
+                    player.MaxHealth = health;
+                    player.CurrentHealth = health;
+                    player.CharacterCardId = card.Id;
+                    break;
 
-                        customProperties.HandCount = PlayerHand.Count;
-                        SetPlayerProperties(customProperties);
-                        break;
-
-                    case CardClass.Character:
-
-                        PlayerCharacter = card;
-
-                        customProperties.MaxHealth = card.Health.Value;
-                        if (PlayerRole.IsSceriff)
-                        {
-                            customProperties.MaxHealth++;
-                        }
-                        customProperties.CurrentHealth = customProperties.MaxHealth;
-                        SetPlayerProperties(customProperties);
-                        break;
-
-                    case CardClass.Role:
-
-                        PlayerRole = card;
-                        break;
-                }
-
+                case CardClass.Role:
+                    player.RoleCardId = card.Id;
+                    break;
             }
         }
 
         private void OnRoleRevealing(RoleRevealingEventData eventData)
         {
-            var card = Cards[eventData.CardId];
+            var players = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
 
+            var card = Cards[eventData.CardId];
             if (card.Class == CardClass.Role && card.IsSceriff)
             {
-                var player = Players.SingleOrDefault(p => p.ActorNumber == eventData.PlayerId);
-                var rotateAmount = Players.IndexOf(player);
+                var player = players.SingleOrDefault(p => p == eventData.PlayerId);
+                var rotateAmount = players.IndexOf(player);
 
                 for (int i = 0; i < rotateAmount; i++)
                 {
-                    var last = Players[Players.Count - 1];
-                    Players.RemoveAt(Players.Count - 1);
-                    Players.Insert(0, last);
+                    var last = players[players.Count - 1];
+                    players.RemoveAt(players.Count - 1);
+                    players.Insert(0, last);
                 }
             }
+
+            PhotonNetwork.CurrentRoom.TurnPlayerIds = players.ToArray();
+
+            string message = $"Player order: ";
+            players.ForEach(p => message += p + ",");
+            Debug.Log(message);
         }
 
         #endregion

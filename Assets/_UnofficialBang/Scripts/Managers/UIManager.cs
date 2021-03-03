@@ -110,7 +110,7 @@ namespace Thirties.UnofficialBang
             }
             else if (state is TurnState)
             {
-                headerText.text = $"È il turno di <color=#{_gameManager.ColorSettings.PlayerColor}>{_gameManager.CurrentPlayer.NickName}</color>";
+                headerText.text = $"È il turno di <color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color>";
             }
         }
 

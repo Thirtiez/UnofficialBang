@@ -13,7 +13,7 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.IsMasterClient)
             {
-                _gameManager.InitializeDecks();
+                _gameManager.InitializeRoom();
 
                 _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
             }

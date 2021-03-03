@@ -9,17 +9,17 @@ namespace Thirties.UnofficialBang
 {
     public static class Extensions
     {
-        public static List<T> Shuffle<T>(this List<T> list)
+        public static T[] Shuffle<T>(this T[] array)
         {
-            int count = list.Count;
+            int count = array.Length;
             for (var i = 0; i < count - 1; ++i)
             {
                 int random = UnityEngine.Random.Range(i, count);
-                var temp = list[i];
-                list[i] = list[random];
-                list[random] = temp;
+                var temp = array[i];
+                array[i] = array[random];
+                array[random] = temp;
             }
-            return list;
+            return array;
         }
     }
 }

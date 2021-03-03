@@ -15,8 +15,6 @@ namespace Thirties.UnofficialBang
             {
                 _gameManager.StartCoroutine(DealCards());
             }
-
-            _gameManager.CurrentPlayer = _gameManager.Players[0];
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -36,20 +34,22 @@ namespace Thirties.UnofficialBang
             {
                 keepDealing = false;
 
-                foreach (Player player in _gameManager.Players)
+                foreach (int playerId in PhotonNetwork.CurrentRoom.TurnPlayerIds)
                 {
-                    var playerProperties = _gameManager.GetPlayerProperties(player);
-                    if (playerProperties.HandCount < playerProperties.MaxHealth)
+                    var player = PhotonNetwork.CurrentRoom.GetPlayer(playerId);
+                    if (player.HandCardIds.Length < player.MaxHealth)
                     {
                         var card = _gameManager.DrawPlayingCard();
 
-                        _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = player.ActorNumber });
+                        _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = playerId });
                         yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
 
                         keepDealing = true;
                     }
                 }
             }
+
+            PhotonNetwork.CurrentRoom.CurrentPlayerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[0];
 
             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
         }

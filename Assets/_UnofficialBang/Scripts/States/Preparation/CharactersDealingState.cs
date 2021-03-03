@@ -29,14 +29,16 @@ namespace Thirties.UnofficialBang
 
         private IEnumerator DealCharacters()
         {
-            foreach (Player player in _gameManager.Players)
+            foreach (int playerId in PhotonNetwork.CurrentRoom.TurnPlayerIds)
             {
                 var card = _gameManager.DrawCharacter();
 
-                _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = player.ActorNumber });
+                _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = playerId });
 
                 yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
             }
+
+            yield return new WaitForSeconds(_gameManager.AnimationSettings.RoleRevealDelay);
 
             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
         }

@@ -10,13 +10,13 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            if (_gameManager.CurrentPlayer == PhotonNetwork.LocalPlayer)
+            if (PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                if (_gameManager.PlayerBoard.Any(c => c.Effect == CardEffect.Dynamite))
+                if (PhotonNetwork.LocalPlayer.BoardCardIds.Any(c => _gameManager.Cards[c].Effect == CardEffect.Dynamite))
                 {
                     //TODO Dynamite
                 }
-                else if (_gameManager.PlayerBoard.Any(c => c.Effect == CardEffect.Prison))
+                else if (PhotonNetwork.LocalPlayer.BoardCardIds.Any(c => _gameManager.Cards[c].Effect == CardEffect.Prison))
                 {
                     //TODO Prison
                 }
