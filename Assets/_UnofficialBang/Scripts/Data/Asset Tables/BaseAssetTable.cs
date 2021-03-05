@@ -44,7 +44,7 @@ namespace Thirties.UnofficialBang
                     resources.Add(asset);
                 }
             }
-            Debug.Log("<color=yellow>LOADED: " + resources.Count + " " + typeof(T) + "s</color>");
+            Debug.Log($"<color=yellow>Loaded: {resources.Count} {typeof(T)}s</color>");
         }
 
 #endif

@@ -1,16 +1,13 @@
 ﻿using ExitGames.Client.Photon;
-using ExitGames.Client.Photon.StructWrapping;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using Sirenix.Utilities;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Thirties.UnofficialBang
 {
@@ -50,6 +47,8 @@ namespace Thirties.UnofficialBang
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public ColorSettings ColorSettings => colorSettings;
         public AnimationSettings AnimationSettings => animationSettings;
+
+        public bool IsLocalPlayerTurn => PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber;
 
         #endregion
 
@@ -289,10 +288,6 @@ namespace Thirties.UnofficialBang
             }
 
             PhotonNetwork.CurrentRoom.TurnPlayerIds = players.ToArray();
-
-            string message = $"Player order: ";
-            players.ForEach(p => message += p + ",");
-            Debug.Log(message);
         }
 
         #endregion

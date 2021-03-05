@@ -10,7 +10,7 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
-            if (PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
+            if (_gameManager.IsLocalPlayerTurn)
             {
                 if (PhotonNetwork.LocalPlayer.BoardCardIds.Any(c => _gameManager.Cards[c].Effect == CardEffect.Dynamite))
                 {

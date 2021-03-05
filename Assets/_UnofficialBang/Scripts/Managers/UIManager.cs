@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
@@ -54,6 +55,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Transform commandsContainer;
 
+        [SerializeField]
+        private CommandElementUI commandElementPrefab;
+
         #endregion
 
         #region Private fields
@@ -80,11 +84,11 @@ namespace Thirties.UnofficialBang
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
             confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
 
-            exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
-            exitModal.gameObject.SetActive(false);
             cardZoomImage.gameObject.SetActive(false);
-            commandSection.gameObject.SetActive(false);
-            header.gameObject.SetActive(true);
+            exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+            exitModal.SetActive(false);
+            header.SetActive(true);
+            commandSection.SetActive(false);
         }
 
         private void OnDestroy()
@@ -110,7 +114,31 @@ namespace Thirties.UnofficialBang
             }
             else if (state is TurnState)
             {
-                headerText.text = $"È il turno di <color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color>";
+                if (_gameManager.IsLocalPlayerTurn)
+                {
+                    headerText.text = $"È il <color=#{_gameManager.ColorSettings.PlayerColor}>tuo</color> turno";
+
+                    if (state is CardSelectionState)
+                    {
+                        instructionsText.text = "Gioca una carta o passa";
+
+                        var passCommand = Instantiate(commandElementPrefab, commandsContainer);
+                        passCommand.Configure("Passa", () =>
+                        {
+                            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.DiscardPhase });
+                        });
+
+                        commandSection.SetActive(true);
+                    }
+                    else
+                    {
+                        commandSection.SetActive(false);
+                    }
+                }
+                else
+                {
+                    headerText.text = $"È il turno di <color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color>";
+                }
             }
         }
 
