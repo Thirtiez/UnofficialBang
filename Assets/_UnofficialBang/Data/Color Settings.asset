@@ -26,3 +26,4 @@ MonoBehaviour:
   characterCardColor: {r: 0.6627451, g: 0.6509804, b: 0.46274513, a: 1}
   roleCardColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   playerColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
+  cardHighlight: {r: 0.07450981, g: 0.8666667, b: 0.047058824, a: 0.5019608}

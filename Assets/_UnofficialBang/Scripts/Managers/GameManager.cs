@@ -60,7 +60,7 @@ namespace Thirties.UnofficialBang
         public UnityAction<CardDealingEventData> CardDealing { get; set; }
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
 
-        public UnityAction<CardView> CardMouseOverEnter { get; set; }
+        public UnityAction<CardMouseOverEnterEventData> CardMouseOverEnter { get; set; }
         public UnityAction CardMouseOverExit { get; set; }
 
         #endregion

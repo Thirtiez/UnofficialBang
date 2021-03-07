@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +7,13 @@ namespace Thirties.UnofficialBang
 {
     public class CardView : MonoBehaviour
     {
+        #region Inspector fields
+
         [SerializeField]
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer cardSpriteRenderer;
+
+        [SerializeField]
+        private SpriteRenderer highlightSpriteRenderer;
 
         [SerializeField]
         private Sprite cardBack;
@@ -17,36 +21,86 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Sprite roleBack;
 
+        #endregion
+
+        #region Public properties
+
         public CardData CardData { get; private set; }
 
-        private bool isCovered = false;
-        private bool isAnimating = false;
+        #endregion
+
+        #region Private fields
+
+        private GameManager _gameManager;
+
+        private bool _isCovered = false;
+        private bool _isAnimating = false;
+        private bool _isPlayable = false;
+
+        #endregion
+
+        #region MonoBehaviour callbacks
 
         protected void OnMouseEnter()
         {
-            if (!isCovered && !isAnimating)
+            if (!_isCovered && !_isAnimating)
             {
-                GameManager.Instance.CardMouseOverEnter(this);
+                _gameManager.CardMouseOverEnter(new CardMouseOverEnterEventData { CardView = this, IsPlayable = _isPlayable});
 
-                spriteRenderer.enabled = false;
+                cardSpriteRenderer.gameObject.SetActive(false);
             }
         }
 
         protected void OnMouseExit()
         {
-            if (!isCovered && !isAnimating)
+            if (!_isCovered && !_isAnimating)
             {
-                GameManager.Instance.CardMouseOverExit();
+                _gameManager.CardMouseOverExit();
 
-                spriteRenderer.enabled = true;
+                cardSpriteRenderer.gameObject.SetActive(true);
             }
         }
 
+        protected void OnMouseDown()
+        {
+            if (_isPlayable)
+            {
+                // TODO OnMouseDown
+
+                Debug.Log("OnMouseDown");
+            }
+        }
+
+        protected void OnMouseDrag()
+        {
+            if (_isPlayable)
+            {
+                // TODO OnMouseDrag
+
+                Debug.Log("OnMouseDrag");
+            }
+        }
+
+        protected void OnMouseUp()
+        {
+            if (_isPlayable)
+            {
+                // TODO OnMouseUp
+
+                Debug.Log("OnMouseUp");
+            }
+        }
+
+        #endregion
+
+        #region Public methods
+
         public void Configure(CardData cardData, bool isCovered)
         {
-            CardData = cardData;
+            _gameManager = GameManager.Instance;
+            _isCovered = isCovered;
 
-            this.isCovered = isCovered;
+            CardData = cardData;
 
             if (isCovered)
             {
@@ -56,27 +110,30 @@ namespace Thirties.UnofficialBang
             {
                 Reveal();
             }
+
+            highlightSpriteRenderer.color = _gameManager.ColorSettings.CardHighlight;
+            highlightSpriteRenderer.gameObject.SetActive(false);
         }
 
         public void Reveal()
         {
-            isCovered = false;
+            _isCovered = false;
 
-            spriteRenderer.sprite = GameManager.Instance?.CardSpriteTable?.Get(CardData.Sprite);
+            cardSpriteRenderer.sprite = _gameManager.CardSpriteTable.Get(CardData.Sprite);
         }
 
         public void Hide()
         {
-            isCovered = true;
+            _isCovered = true;
 
-            spriteRenderer.sprite = CardData.Class == CardClass.Role ? roleBack : cardBack;
+            cardSpriteRenderer.sprite = CardData.Class == CardClass.Role ? roleBack : cardBack;
         }
 
         public void MoveTo(Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            isAnimating = true;
+            _isAnimating = true;
 
-            float duration = GameManager.Instance.AnimationSettings.DealCardDuration;
+            float duration = _gameManager.AnimationSettings.DealCardDuration;
 
             transform
                 .DOLocalMove(position, duration)
@@ -87,7 +144,16 @@ namespace Thirties.UnofficialBang
             transform
                 .DOScale(Vector3.one, duration)
                 .SetEase(Ease.OutQuint)
-                .OnComplete(() => isAnimating = false);
+                .OnComplete(() => _isAnimating = false);
         }
+
+        public void SetPlayable(bool isPlayable)
+        {
+            _isPlayable = isPlayable;
+
+            highlightSpriteRenderer.gameObject.SetActive(isPlayable);
+        }
+
+        #endregion
     }
 }

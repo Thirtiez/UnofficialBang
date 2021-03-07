@@ -16,18 +16,18 @@ namespace Thirties.UnofficialBang
                 var character = _gameManager.Cards[PhotonNetwork.LocalPlayer.CharacterCardId];
                 switch (character.Effect)
                 {
-                    case CardEffect.BlackJack:
-                        //TODO BlackJack
-                        break;
-                    case CardEffect.JesseJones:
-                        //TODO JesseJones
-                        break;
-                    case CardEffect.KitCarlson:
-                        //TODO KitCarlson
-                        break;
-                    case CardEffect.PedroRamirez:
-                        //TODO PedroRamirez
-                        break;
+                    //case CardEffect.BlackJack:
+                    //    //TODO BlackJack
+                    //    break;
+                    //case CardEffect.JesseJones:
+                    //    //TODO JesseJones
+                    //    break;
+                    //case CardEffect.KitCarlson:
+                    //    //TODO KitCarlson
+                    //    break;
+                    //case CardEffect.PedroRamirez:
+                    //    //TODO PedroRamirez
+                    //    break;
                     default:
                         _gameManager.StartCoroutine(DrawCards());
                         break;

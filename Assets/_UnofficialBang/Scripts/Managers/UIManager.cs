@@ -34,7 +34,13 @@ namespace Thirties.UnofficialBang
         [Header("Card Zoom")]
 
         [SerializeField]
+        private RectTransform cardZoom;
+
+        [SerializeField]
         private Image cardZoomImage;
+
+        [SerializeField]
+        private Image highlightZoomImage;
 
         [Header("Header")]
 
@@ -84,7 +90,9 @@ namespace Thirties.UnofficialBang
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
             confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
 
-            cardZoomImage.gameObject.SetActive(false);
+            highlightZoomImage.color = _gameManager.ColorSettings.CardHighlight;
+
+            cardZoom.gameObject.SetActive(false);
             exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
             exitModal.SetActive(false);
             header.SetActive(true);
@@ -116,7 +124,7 @@ namespace Thirties.UnofficialBang
             {
                 if (_gameManager.IsLocalPlayerTurn)
                 {
-                    headerText.text = $"È il <color=#{_gameManager.ColorSettings.PlayerColor}>tuo</color> turno";
+                    headerText.text = $"È il <b><color=#{_gameManager.ColorSettings.PlayerColor}>tuo</color></b> turno";
 
                     if (state is CardSelectionState)
                     {
@@ -137,7 +145,7 @@ namespace Thirties.UnofficialBang
                 }
                 else
                 {
-                    headerText.text = $"È il turno di <color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color>";
+                    headerText.text = $"È il turno di <b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color></b>";
                 }
             }
         }
@@ -196,27 +204,28 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.LoadLevel("Main");
         }
 
-        private void OnCardMouseOverEnter(CardView cardView)
+        private void OnCardMouseOverEnter(CardMouseOverEnterEventData eventData)
         {
-            cardZoomImage.sprite = _gameManager.CardSpriteTable.Get(cardView.CardData.Sprite);
-            cardZoomImage.gameObject.SetActive(true);
+            highlightZoomImage.gameObject.SetActive(eventData.IsPlayable);
+            cardZoomImage.sprite = _gameManager.CardSpriteTable.Get(eventData.CardView.CardData.Sprite);
 
-            var screenPosition = Camera.main.WorldToScreenPoint(cardView.transform.position);
+            var screenPosition = Camera.main.WorldToScreenPoint(eventData.CardView.transform.position);
             //bool left = screenPosition.x < Screen.width / 2;
             bool bottom = screenPosition.y < Screen.height / 2;
-
             var anchor = new Vector2(0.5f, bottom ? 0 : 1);
-            cardZoomImage.rectTransform.anchorMin = anchor;
-            cardZoomImage.rectTransform.anchorMax = anchor;
-            cardZoomImage.rectTransform.pivot = anchor;
+            cardZoom.anchorMin = anchor;
+            cardZoom.anchorMax = anchor;
+            cardZoom.pivot = anchor;
+            cardZoom.transform.position = screenPosition;
 
-            cardZoomImage.transform.position = screenPosition;
+            cardZoom.gameObject.SetActive(true);
         }
 
         private void OnCardMouseOverExit()
         {
             cardZoomImage.sprite = null;
-            cardZoomImage.gameObject.SetActive(false);
+
+            cardZoom.gameObject.SetActive(false);
         }
 
         #endregion

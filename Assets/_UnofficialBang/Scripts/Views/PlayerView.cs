@@ -1,10 +1,10 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
-using Photon.Realtime;
 using SplineMesh;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -56,6 +56,9 @@ namespace Thirties.UnofficialBang
 
         private GameManager _gameManager;
         private int _playerId;
+
+        private CardView _roleCard => _sideCards[0];
+        private CardView _characterCard => _sideCards[1];
 
         #endregion
 
@@ -169,6 +172,31 @@ namespace Thirties.UnofficialBang
                 .OnComplete(() => bullet.gameObject.SetActive(false));
         }
 
+        private void ConfigurePlayableCards()
+        {
+            var excludedEffects = new List<CardEffect>();
+
+            var equipments = PhotonNetwork.LocalPlayer.BoardCardIds
+                .Select(c => _gameManager.Cards[c])
+                .Where(c => c.Effect == CardEffect.Barrel
+                    || c.Effect == CardEffect.Scope
+                    || c.Effect == CardEffect.Mustang)
+                .ToList();
+            if (equipments.Any())
+            {
+                excludedEffects.AddRange(equipments.Select(c => c.Effect));
+            }
+
+            if (_characterCard.CardData.Effect != CardEffect.CalamityJanet)
+            {
+                excludedEffects.Add(CardEffect.Missed);
+            }
+
+            _handCards.ForEach(c => c.SetPlayable(!excludedEffects.Contains(c.CardData.Effect)));
+
+            _characterCard.SetPlayable(_characterCard.CardData.Effect == CardEffect.SidKetchum);
+        }
+
         #endregion
 
         #region Event handlers
@@ -200,7 +228,7 @@ namespace Thirties.UnofficialBang
         {
             if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == _playerId)
             {
-                _sideCards[0].Reveal();
+                _roleCard.Reveal();
             }
         }
 
@@ -209,6 +237,10 @@ namespace Thirties.UnofficialBang
             if (state is RolesDealingState)
             {
                 Configure();
+            }
+            else if (state is CardSelectionState && _playerId == PhotonNetwork.LocalPlayer.ActorNumber && _gameManager.IsLocalPlayerTurn)
+            {
+                ConfigurePlayableCards();
             }
         }
 

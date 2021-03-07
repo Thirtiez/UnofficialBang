@@ -47,6 +47,7 @@
     public enum CardEffect
     {
         Sceriff,
+        Deputy,
         Renegade,
         Outlaw,
         Barrel,
@@ -57,10 +58,12 @@
         Weapon,
         Volcanic,
         Bang,
+        Damage,
         Missed,
-        GainHealth,
-        DrawCard,
-        DiscardCard,
+        Beer,
+        Cure,
+        Draw,
+        Discard,
         Duel,
         GeneralStore,
         Indians,

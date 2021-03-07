@@ -8,6 +8,8 @@ namespace Thirties.UnofficialBang
     [CreateAssetMenu(menuName = "Color Settings")]
     public class ColorSettings : SerializedScriptableObject
     {
+        [Header("Text")]
+
         [SerializeField]
         private Color brownCardColor;
 
@@ -23,10 +25,16 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Color playerColor;
 
+        [Header("Cards")]
+        [SerializeField]
+        private Color cardHighlight;
+
         public string BrownCardColor => ColorUtility.ToHtmlStringRGBA(brownCardColor);
         public string BlueCardColor => ColorUtility.ToHtmlStringRGBA(blueCardColor);
         public string CharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
         public string RoleCardColor => ColorUtility.ToHtmlStringRGBA(roleCardColor);
         public string PlayerColor => ColorUtility.ToHtmlStringRGBA(playerColor);
+
+        public Color CardHighlight => cardHighlight;
     }
 }
