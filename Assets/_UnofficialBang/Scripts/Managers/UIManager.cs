@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
@@ -85,12 +84,14 @@ namespace Thirties.UnofficialBang
             _gameManager.RoleRevealing += OnRoleRevealing;
             _gameManager.CardMouseOverEnter += OnCardMouseOverEnter;
             _gameManager.CardMouseOverExit += OnCardMouseOverExit;
+            _gameManager.CardSelected += OnCardSelected;
+            _gameManager.CardCanceled += OnCardCanceled;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
             confirmExitButton.onClick.AddListener(OnConfirmExitButtonClicked);
 
-            highlightZoomImage.color = _gameManager.ColorSettings.CardHighlight;
+            highlightZoomImage.color = _gameManager.ColorSettings.CardPlayable;
 
             cardZoom.gameObject.SetActive(false);
             exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
@@ -108,6 +109,8 @@ namespace Thirties.UnofficialBang
             _gameManager.RoleRevealing -= OnRoleRevealing;
             _gameManager.CardMouseOverEnter -= OnCardMouseOverEnter;
             _gameManager.CardMouseOverExit -= OnCardMouseOverExit;
+            _gameManager.CardSelected -= OnCardSelected;
+            _gameManager.CardCanceled -= OnCardCanceled;
         }
 
         #endregion
@@ -227,6 +230,19 @@ namespace Thirties.UnofficialBang
 
             cardZoom.gameObject.SetActive(false);
         }
+
+        private void OnCardSelected(CardSelectedEventData eventData)
+        {
+            OnCardMouseOverExit();
+
+            commandSection.SetActive(false);
+        }
+
+        private void OnCardCanceled()
+        {
+            commandSection.SetActive(true);
+        }
+
 
         #endregion
     }

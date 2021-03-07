@@ -33,9 +33,14 @@ namespace Thirties.UnofficialBang
 
         private GameManager _gameManager;
 
+        private Vector3 _snappedPosition;
+        private Quaternion _snappedRotation;
+        private Vector3 _snappedScale;
+
         private bool _isCovered = false;
         private bool _isAnimating = false;
         private bool _isPlayable = false;
+        private bool _isReady = false;
 
         #endregion
 
@@ -45,9 +50,9 @@ namespace Thirties.UnofficialBang
         {
             if (!_isCovered && !_isAnimating)
             {
-                _gameManager.CardMouseOverEnter(new CardMouseOverEnterEventData { CardView = this, IsPlayable = _isPlayable});
-
                 cardSpriteRenderer.gameObject.SetActive(false);
+
+                _gameManager.CardMouseOverEnter(new CardMouseOverEnterEventData { CardView = this, IsPlayable = _isPlayable });
             }
         }
 
@@ -55,9 +60,9 @@ namespace Thirties.UnofficialBang
         {
             if (!_isCovered && !_isAnimating)
             {
-                _gameManager.CardMouseOverExit();
-
                 cardSpriteRenderer.gameObject.SetActive(true);
+
+                _gameManager.CardMouseOverExit();
             }
         }
 
@@ -65,9 +70,13 @@ namespace Thirties.UnofficialBang
         {
             if (_isPlayable)
             {
-                // TODO OnMouseDown
+                _isAnimating = true;
 
-                Debug.Log("OnMouseDown");
+                transform.rotation = Quaternion.identity;
+
+                cardSpriteRenderer.gameObject.SetActive(true);
+
+                _gameManager.CardSelected(new CardSelectedEventData { CardData = CardData });
             }
         }
 
@@ -75,9 +84,12 @@ namespace Thirties.UnofficialBang
         {
             if (_isPlayable)
             {
-                // TODO OnMouseDrag
+                var newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                newPosition.z = -1f;
 
-                Debug.Log("OnMouseDrag");
+                transform.position = newPosition;
+
+                // TODO targeting
             }
         }
 
@@ -85,9 +97,20 @@ namespace Thirties.UnofficialBang
         {
             if (_isPlayable)
             {
-                // TODO OnMouseUp
+                _isAnimating = false;
 
-                Debug.Log("OnMouseUp");
+                if (_isReady)
+                {
+                    // TODO resolution
+
+                    _isReady = false;
+                }
+                else
+                {
+                    MoveTo(_snappedPosition, _snappedRotation, _snappedScale);
+
+                    _gameManager.CardCanceled();
+                }
             }
         }
 
@@ -111,7 +134,7 @@ namespace Thirties.UnofficialBang
                 Reveal();
             }
 
-            highlightSpriteRenderer.color = _gameManager.ColorSettings.CardHighlight;
+            highlightSpriteRenderer.color = _gameManager.ColorSettings.CardPlayable;
             highlightSpriteRenderer.gameObject.SetActive(false);
         }
 
@@ -135,6 +158,8 @@ namespace Thirties.UnofficialBang
 
             float duration = _gameManager.AnimationSettings.DealCardDuration;
 
+            transform.position = new Vector3(transform.position.x, transform.position.y, position.z);
+
             transform
                 .DOLocalMove(position, duration)
                 .SetEase(Ease.OutQuint);
@@ -145,6 +170,10 @@ namespace Thirties.UnofficialBang
                 .DOScale(Vector3.one, duration)
                 .SetEase(Ease.OutQuint)
                 .OnComplete(() => _isAnimating = false);
+
+            _snappedPosition = position;
+            _snappedRotation = rotation;
+            _snappedScale = scale;
         }
 
         public void SetPlayable(bool isPlayable)

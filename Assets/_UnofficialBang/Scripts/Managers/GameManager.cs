@@ -62,6 +62,8 @@ namespace Thirties.UnofficialBang
 
         public UnityAction<CardMouseOverEnterEventData> CardMouseOverEnter { get; set; }
         public UnityAction CardMouseOverExit { get; set; }
+        public UnityAction<CardSelectedEventData> CardSelected { get; set; }
+        public UnityAction CardCanceled { get; set; }
 
         #endregion
 
