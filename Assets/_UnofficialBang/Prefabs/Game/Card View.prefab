@@ -131,6 +131,7 @@ MonoBehaviour:
   highlightSpriteRenderer: {fileID: 4758296485799721695}
   cardBack: {fileID: 21300000, guid: a0ee449fa8b69d34a9089655249596e3, type: 3}
   roleBack: {fileID: 21300000, guid: dfd3c6756dd8aee4db411424a1c3d0a3, type: 3}
+  cardCollider: {fileID: 1868739080062251167}
 --- !u!61 &1868739080062251167
 BoxCollider2D:
   m_ObjectHideFlags: 0

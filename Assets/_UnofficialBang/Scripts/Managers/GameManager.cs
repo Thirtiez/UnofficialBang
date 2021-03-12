@@ -1,4 +1,5 @@
 ﻿using ExitGames.Client.Photon;
+using ExitGames.Client.Photon.StructWrapping;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
@@ -60,10 +61,12 @@ namespace Thirties.UnofficialBang
         public UnityAction<CardDealingEventData> CardDealing { get; set; }
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
 
-        public UnityAction<CardMouseOverEnterEventData> CardMouseOverEnter { get; set; }
-        public UnityAction CardMouseOverExit { get; set; }
+        public UnityAction<CardHoverEnterEventData> CardHoverEnter { get; set; }
+        public UnityAction CardHoverExit { get; set; }
         public UnityAction<CardSelectedEventData> CardSelected { get; set; }
         public UnityAction CardCanceled { get; set; }
+
+        public UnityAction<CardPlayingEventData> CardPlaying { get; set; }
 
         #endregion
 
@@ -155,9 +158,9 @@ namespace Thirties.UnofficialBang
                 .Where(c => c.Class == CardClass.Role)
                 .ToList();
 
-            var rolesDeck = roles.Where(r => r.IsRenegade || r.IsSceriff).ToList();
-            var outlaws = roles.Where(r => r.IsOutlaw).Take(outlawCount);
-            var deputies = roles.Where(r => r.IsDeputy).Take(deputyCount);
+            var rolesDeck = roles.Where(r => r.Effect == CardEffect.Renegade || r.Effect == CardEffect.Sceriff).ToList();
+            var outlaws = roles.Where(r => r.Effect == CardEffect.Outlaw).Take(outlawCount);
+            var deputies = roles.Where(r => r.Effect == CardEffect.Deputy).Take(deputyCount);
 
             rolesDeck.AddRange(outlaws);
             rolesDeck.AddRange(deputies);
@@ -242,6 +245,11 @@ namespace Thirties.UnofficialBang
                     var roleRevealingEventData = JsonConvert.DeserializeObject<RoleRevealingEventData>(json);
                     RoleRevealing?.Invoke(roleRevealingEventData);
                     break;
+
+                case PhotonEvent.CardPlaying:
+                    var cardPlayingEventData = JsonConvert.DeserializeObject<CardPlayingEventData>(json);
+                    CardPlaying?.Invoke(cardPlayingEventData);
+                    break;
             }
         }
 
@@ -259,10 +267,11 @@ namespace Thirties.UnofficialBang
 
                 case CardClass.Character:
                     var role = Cards[player.RoleCardId];
-                    var health = role.IsSceriff ? card.Health.Value + 1 : card.Health.Value;
+                    var health = role.Effect == CardEffect.Sceriff ? card.Health.Value + 1 : card.Health.Value;
                     player.MaxHealth = health;
                     player.CurrentHealth = health;
                     player.CharacterCardId = card.Id;
+                    player.Range = card.Effect == CardEffect.Mustang ? 2 : 1;
                     break;
 
                 case CardClass.Role:
@@ -276,7 +285,7 @@ namespace Thirties.UnofficialBang
             var players = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
 
             var card = Cards[eventData.CardId];
-            if (card.Class == CardClass.Role && card.IsSceriff)
+            if (card.Class == CardClass.Role && card.Effect == CardEffect.Sceriff)
             {
                 var player = players.SingleOrDefault(p => p == eventData.PlayerId);
                 var rotateAmount = players.IndexOf(player);

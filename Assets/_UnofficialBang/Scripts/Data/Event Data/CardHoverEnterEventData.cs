@@ -1,6 +1,6 @@
 ﻿namespace Thirties.UnofficialBang
 {
-    public class CardMouseOverEnterEventData : BaseEventData
+    public class CardHoverEnterEventData : BaseEventData
     {
         public CardView CardView { get; set; }
 

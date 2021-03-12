@@ -38,7 +38,7 @@ namespace Thirties.UnofficialBang
 
                 _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = playerId });
 
-                if (card.IsSceriff)
+                if (card.Effect == CardEffect.Sceriff)
                 {
                     revealRoleEventData = new RoleRevealingEventData { CardId = card.Id, PlayerId = playerId };
                 }

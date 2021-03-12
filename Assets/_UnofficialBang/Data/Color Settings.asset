@@ -28,3 +28,5 @@ MonoBehaviour:
   playerColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   cardPlayable: {r: 0, g: 1, b: 0, a: 0.7529412}
   cardReady: {r: 0, g: 1, b: 1, a: 0.7529412}
+  areaPlayable: {r: 1, g: 1, b: 1, a: 0.2509804}
+  areaReady: {r: 1, g: 1, b: 1, a: 0.5019608}

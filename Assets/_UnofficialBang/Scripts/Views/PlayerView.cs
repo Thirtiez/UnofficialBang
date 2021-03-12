@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using SplineMesh;
 using System;
 using System.Collections;
@@ -14,22 +15,18 @@ namespace Thirties.UnofficialBang
     {
         #region Inspector fields
 
-        [Header("Parameters")]
+        [Header("Player")]
 
         [SerializeField]
         private int playerNumber;
 
         [SerializeField]
-        [Range(0, 1)]
-        private float cardPreferredDistance = 0.2f;
+        private TMP_Text nicknameText;
 
         [SerializeField]
-        private CardView cardPrefab;
+        private List<GameObject> bullets;
 
-        [Header("References")]
-
-        [SerializeField]
-        private Transform deckTransform;
+        [Header("Splines")]
 
         [SerializeField]
         private Spline sideSpline;
@@ -40,11 +37,31 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Spline boardSpline;
 
-        [SerializeField]
-        private TMP_Text nicknameText;
+        [Header("Cards")]
 
         [SerializeField]
-        private List<GameObject> bullets;
+        [Range(0, 1)]
+        private float cardPreferredDistance = 0.2f;
+
+        [SerializeField]
+        private CardView cardPrefab;
+
+        [SerializeField]
+        private Transform deckTransform;
+
+        [Header("Area")]
+
+        [SerializeField]
+        private SpriteRenderer areaMask;
+
+        [SerializeField]
+        private Collider2D areaCollider;
+
+        #endregion
+
+        #region Public properties
+
+        public int PlayerId { get; private set; }
 
         #endregion
 
@@ -55,7 +72,9 @@ namespace Thirties.UnofficialBang
         private List<CardView> _boardCards = new List<CardView>();
 
         private GameManager _gameManager;
-        private int _playerId;
+        private int _playerDistance;
+
+        private bool _isPlayable = false;
 
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
@@ -84,18 +103,31 @@ namespace Thirties.UnofficialBang
         {
             _gameManager = GameManager.Instance;
 
-            _gameManager.CardDealing += OnCardDealing;
-            _gameManager.RoleRevealing += OnRoleRevealing;
             _gameManager.OnStateEnter += OnStateEnter;
             _gameManager.OnStateExit += OnStateExit;
+            _gameManager.CardDealing += OnCardDealing;
+            _gameManager.RoleRevealing += OnRoleRevealing;
+            _gameManager.CardSelected += OnCardSelected;
+            _gameManager.CardCanceled += OnCardCanceled;
         }
 
         protected void OnDisable()
         {
+            _gameManager.OnStateEnter -= OnStateEnter;
+            _gameManager.OnStateExit -= OnStateExit;
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
-            _gameManager.OnStateEnter += OnStateEnter;
-            _gameManager.OnStateExit -= OnStateExit;
+            _gameManager.CardSelected -= OnCardSelected;
+            _gameManager.CardCanceled -= OnCardCanceled;
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void SetAreaReady(bool isReady)
+        {
+            areaMask.color = isReady ? _gameManager.ColorSettings.AreaReady : _gameManager.ColorSettings.AreaPlayable;
         }
 
         #endregion
@@ -115,14 +147,18 @@ namespace Thirties.UnofficialBang
                 int playerOffset = EnableTable[playerCount].IndexOf(playerNumber);
                 int playerIndex = (localPlayerIndex + playerOffset) % playerCount;
 
-                _playerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[playerIndex];
-                nicknameText.text = PhotonNetwork.CurrentRoom.GetPlayer(_playerId).NickName;
+                _playerDistance = playerOffset > playerCount / 2 ? playerCount - playerOffset : playerOffset;
+                PlayerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[playerIndex];
+                nicknameText.text = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId).NickName;
 
                 bullets.ForEach(b =>
                 {
                     b.gameObject.SetActive(false);
                     b.transform.localScale = Vector3.zero;
                 });
+
+                areaMask.gameObject.SetActive(false);
+                areaCollider.enabled = false;
             }
         }
 
@@ -197,13 +233,42 @@ namespace Thirties.UnofficialBang
             _characterCard.SetPlayable(_characterCard.CardData.Effect == CardEffect.SidKetchum);
         }
 
+        private void SetAreaPlayable(bool isPlayable)
+        {
+            _isPlayable = isPlayable;
+
+            areaMask.gameObject.SetActive(_isPlayable);
+            areaCollider.enabled = _isPlayable;
+        }
+
         #endregion
 
         #region Event handlers
 
+        private void OnStateEnter(BaseState state)
+        {
+            if (state is RolesDealingState)
+            {
+                Configure();
+            }
+            else if (state is CardSelectionState && PlayerId == PhotonNetwork.LocalPlayer.ActorNumber && _gameManager.IsLocalPlayerTurn)
+            {
+                ConfigurePlayableCards();
+            }
+        }
+
+        private void OnStateExit(BaseState state)
+        {
+            if (state is CharactersDealingState)
+            {
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
+                StartCoroutine(GainBulletRoutine(player.CurrentHealth));
+            }
+        }
+
         private void OnCardDealing(CardDealingEventData eventData)
         {
-            if (eventData.PlayerId == _playerId)
+            if (eventData.PlayerId == PlayerId)
             {
                 var cardData = _gameManager.Cards[eventData.CardId];
 
@@ -226,31 +291,35 @@ namespace Thirties.UnofficialBang
 
         private void OnRoleRevealing(RoleRevealingEventData eventData)
         {
-            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == _playerId)
+            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == PlayerId)
             {
                 _roleCard.Reveal();
             }
         }
 
-        private void OnStateEnter(BaseState state)
+        private void OnCardSelected(CardSelectedEventData eventData)
         {
-            if (state is RolesDealingState)
+            var card = eventData.CardData;
+            if (playerNumber == 0)
             {
-                Configure();
+                if (card.Class == CardClass.Blue && card.Target == CardTarget.Self)
+                {
+                    SetAreaPlayable(true);
+                }
             }
-            else if (state is CardSelectionState && _playerId == PhotonNetwork.LocalPlayer.ActorNumber && _gameManager.IsLocalPlayerTurn)
+            else if (_playerDistance <= eventData.Range)
             {
-                ConfigurePlayableCards();
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
+
+                SetAreaPlayable(_playerDistance + player.BonusDistance <= eventData.Range);
             }
+
+            areaMask.color = _gameManager.ColorSettings.AreaPlayable;
         }
 
-        private void OnStateExit(BaseState state)
+        private void OnCardCanceled()
         {
-            if (state is CharactersDealingState)
-            {
-                var player = PhotonNetwork.CurrentRoom.GetPlayer(_playerId);
-                StartCoroutine(GainBulletRoutine(player.CurrentHealth));
-            }
+            SetAreaPlayable(false);
         }
 
         #endregion

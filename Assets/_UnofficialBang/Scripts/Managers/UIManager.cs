@@ -82,8 +82,8 @@ namespace Thirties.UnofficialBang
             _gameManager.OnStateEnter += OnStateEnter;
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
-            _gameManager.CardMouseOverEnter += OnCardMouseOverEnter;
-            _gameManager.CardMouseOverExit += OnCardMouseOverExit;
+            _gameManager.CardHoverEnter += OnCardHoverEnter;
+            _gameManager.CardHoverExit += OnCardHoverExit;
             _gameManager.CardSelected += OnCardSelected;
             _gameManager.CardCanceled += OnCardCanceled;
 
@@ -107,8 +107,8 @@ namespace Thirties.UnofficialBang
             _gameManager.OnStateEnter -= OnStateEnter;
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
-            _gameManager.CardMouseOverEnter -= OnCardMouseOverEnter;
-            _gameManager.CardMouseOverExit -= OnCardMouseOverExit;
+            _gameManager.CardHoverEnter -= OnCardHoverEnter;
+            _gameManager.CardHoverExit -= OnCardHoverExit;
             _gameManager.CardSelected -= OnCardSelected;
             _gameManager.CardCanceled -= OnCardCanceled;
         }
@@ -181,7 +181,7 @@ namespace Thirties.UnofficialBang
         {
             var card = _gameManager.Cards[eventData.CardId];
             var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            string message = card.IsSceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
+            string message = card.Effect == CardEffect.Sceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
 
             gameLog.Log(message, card, player);
         }
@@ -207,7 +207,7 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.LoadLevel("Main");
         }
 
-        private void OnCardMouseOverEnter(CardMouseOverEnterEventData eventData)
+        private void OnCardHoverEnter(CardHoverEnterEventData eventData)
         {
             highlightZoomImage.gameObject.SetActive(eventData.IsPlayable);
             cardZoomImage.sprite = _gameManager.CardSpriteTable.Get(eventData.CardView.CardData.Sprite);
@@ -224,7 +224,7 @@ namespace Thirties.UnofficialBang
             cardZoom.gameObject.SetActive(true);
         }
 
-        private void OnCardMouseOverExit()
+        private void OnCardHoverExit()
         {
             cardZoomImage.sprite = null;
 
@@ -233,7 +233,7 @@ namespace Thirties.UnofficialBang
 
         private void OnCardSelected(CardSelectedEventData eventData)
         {
-            OnCardMouseOverExit();
+            OnCardHoverExit();
 
             commandSection.SetActive(false);
         }
@@ -242,7 +242,6 @@ namespace Thirties.UnofficialBang
         {
             commandSection.SetActive(true);
         }
-
 
         #endregion
     }

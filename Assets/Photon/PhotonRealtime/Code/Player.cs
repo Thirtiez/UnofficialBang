@@ -59,6 +59,12 @@ namespace Photon.Realtime
             set => SetCustomProperties(new Hashtable { { "BonusDistance", value } });
         }
 
+        public int Range
+        {
+            get => CustomProperties.ContainsKey("Range") ? (int)CustomProperties["Range"] : 0;
+            set => SetCustomProperties(new Hashtable { { "Range", value } });
+        }
+
         public int[] HandCardIds
         {
             get => CustomProperties.ContainsKey("HandCardIds") ? ((int[])CustomProperties["HandCardIds"]) : new int[0];
@@ -90,6 +96,7 @@ namespace Photon.Realtime
                 {"MaxHealth", 0},
                 {"CurrentHealth", 0},
                 {"BonusDistance", 0},
+                {"Range", 1},
                 {"HandCardIds", new int[0]},
                 {"BoardCardIds", new int[0]},
                 {"CharacterCardId", 0},

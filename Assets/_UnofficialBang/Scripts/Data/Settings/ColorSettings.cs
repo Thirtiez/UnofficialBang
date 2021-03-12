@@ -33,6 +33,14 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Color cardReady;
 
+        [Header("Areas")]
+
+        [SerializeField]
+        private Color areaPlayable;
+
+        [SerializeField]
+        private Color areaReady;
+
         public string BrownCardColor => ColorUtility.ToHtmlStringRGBA(brownCardColor);
         public string BlueCardColor => ColorUtility.ToHtmlStringRGBA(blueCardColor);
         public string CharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
@@ -41,5 +49,7 @@ namespace Thirties.UnofficialBang
 
         public Color CardPlayable => cardPlayable;
         public Color CardReady => cardReady;
+        public Color AreaPlayable => areaPlayable;
+        public Color AreaReady => areaReady;
     }
 }

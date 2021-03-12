@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,9 @@ namespace Thirties.UnofficialBang
         private bool _isAnimating = false;
         private bool _isPlayable = false;
         private bool _isReady = false;
+        private bool _isDragging = false;
+
+        private PlayerView _currentPlayerView;
 
         #endregion
 
@@ -48,70 +52,130 @@ namespace Thirties.UnofficialBang
 
         protected void OnMouseEnter()
         {
-            if (!_isCovered && !_isAnimating)
+            if (!_isCovered && !_isAnimating && !_isDragging)
             {
                 cardSpriteRenderer.gameObject.SetActive(false);
 
-                _gameManager.CardMouseOverEnter(new CardMouseOverEnterEventData { CardView = this, IsPlayable = _isPlayable });
+                _gameManager.CardHoverEnter?.Invoke(new CardHoverEnterEventData { CardView = this, IsPlayable = _isPlayable });
             }
         }
 
         protected void OnMouseExit()
         {
-            if (!_isCovered && !_isAnimating)
+            if (!_isCovered && !_isAnimating && !_isDragging)
             {
                 cardSpriteRenderer.gameObject.SetActive(true);
 
-                _gameManager.CardMouseOverExit();
+                _gameManager.CardHoverExit?.Invoke();
             }
         }
 
         protected void OnMouseDown()
         {
-            if (_isPlayable)
+            if (_isPlayable && !_isAnimating && !_isDragging)
             {
-                _isAnimating = true;
+                _isDragging = true;
 
                 transform.rotation = Quaternion.identity;
 
                 cardSpriteRenderer.gameObject.SetActive(true);
 
-                _gameManager.CardSelected(new CardSelectedEventData { CardData = CardData });
+                int? range = null;
+
+                switch (CardData.Target)
+                {
+                    case CardTarget.Range:
+                        range = PhotonNetwork.LocalPlayer.Range;
+                        break;
+
+                    case CardTarget.FixedRange:
+                        range = CardData.EffectValue.Value;
+                        break;
+
+                    case CardTarget.Anyone:
+                        range = PhotonNetwork.CurrentRoom.PlayerCount;
+                        break;
+                }
+
+                _gameManager.CardSelected?.Invoke(new CardSelectedEventData { CardData = CardData, Range = range });
             }
         }
 
         protected void OnMouseDrag()
         {
-            if (_isPlayable)
+            if (_isPlayable && _isDragging)
             {
                 var newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 newPosition.z = -1f;
 
                 transform.position = newPosition;
 
-                // TODO targeting
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Area View"));
+                if (hit.collider != null)
+                {
+                    var playerView = hit.transform.GetComponent<PlayerView>();
+                    if (playerView != null)
+                    {
+                        if (_currentPlayerView != null && _currentPlayerView != playerView)
+                        {
+                            _currentPlayerView.SetAreaReady(false);
+                        }
+
+                        _currentPlayerView = playerView;
+                        _currentPlayerView.SetAreaReady(true);
+
+                        SetReady(true);
+                    }
+                }
+                else
+                {
+                    _currentPlayerView?.SetAreaReady(false);
+
+                    SetReady(false);
+                }
             }
         }
 
         protected void OnMouseUp()
         {
-            if (_isPlayable)
+            if (_isPlayable && _isDragging)
             {
-                _isAnimating = false;
+                _isDragging = false;
 
-                if (_isReady)
+                if (_isReady && _currentPlayerView != null)
                 {
-                    // TODO resolution
+                    SetReady(false);
 
-                    _isReady = false;
+                    _currentPlayerView.SetAreaReady(false);
+
+                    _gameManager.SendEvent(PhotonEvent.CardPlaying, new CardPlayingEventData
+                    {
+                        InstigatorId = PhotonNetwork.LocalPlayer.ActorNumber,
+                        TargetId = _currentPlayerView.PlayerId,
+                        CardId = CardData.Id
+                    });
+
+                    Destroy(gameObject);
                 }
                 else
                 {
                     MoveTo(_snappedPosition, _snappedRotation, _snappedScale);
-
-                    _gameManager.CardCanceled();
                 }
+
+                _gameManager.CardCanceled?.Invoke();
             }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void SetReady(bool isReady)
+        {
+            _isReady = isReady;
+
+            highlightSpriteRenderer.color = isReady ? _gameManager.ColorSettings.CardReady : _gameManager.ColorSettings.CardPlayable;
         }
 
         #endregion
