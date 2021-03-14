@@ -198,7 +198,7 @@ MonoBehaviour:
       Data: 
     - Name: Target
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: Effect
       Entry: 3
       Data: 5
@@ -446,7 +446,7 @@ MonoBehaviour:
       Data: 
     - Name: Target
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: Effect
       Entry: 3
       Data: 8
@@ -508,7 +508,7 @@ MonoBehaviour:
       Data: 
     - Name: Target
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: Effect
       Entry: 3
       Data: 8
@@ -570,7 +570,7 @@ MonoBehaviour:
       Data: 
     - Name: Target
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: Effect
       Entry: 3
       Data: 8

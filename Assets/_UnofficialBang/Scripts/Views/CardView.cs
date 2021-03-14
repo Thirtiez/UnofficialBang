@@ -44,7 +44,7 @@ namespace Thirties.UnofficialBang
         private bool _isReady = false;
         private bool _isDragging = false;
 
-        private PlayerView _currentPlayerView;
+        private AreaView _currentAreaView;
 
         #endregion
 
@@ -114,23 +114,23 @@ namespace Thirties.UnofficialBang
                 var hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Area View"));
                 if (hit.collider != null)
                 {
-                    var playerView = hit.transform.GetComponent<PlayerView>();
-                    if (playerView != null)
+                    var areaView = hit.transform.GetComponent<AreaView>();
+                    if (areaView != null)
                     {
-                        if (_currentPlayerView != null && _currentPlayerView != playerView)
+                        if (_currentAreaView != null && _currentAreaView != areaView)
                         {
-                            _currentPlayerView.SetAreaReady(false);
+                            _currentAreaView.SetReady(false);
                         }
 
-                        _currentPlayerView = playerView;
-                        _currentPlayerView.SetAreaReady(true);
+                        _currentAreaView = areaView;
+                        _currentAreaView.SetReady(true);
 
                         SetReady(true);
                     }
                 }
                 else
                 {
-                    _currentPlayerView?.SetAreaReady(false);
+                    _currentAreaView?.SetReady(false);
 
                     SetReady(false);
                 }
@@ -143,16 +143,16 @@ namespace Thirties.UnofficialBang
             {
                 _isDragging = false;
 
-                if (_isReady && _currentPlayerView != null)
+                if (_isReady && _currentAreaView != null)
                 {
                     SetReady(false);
 
-                    _currentPlayerView.SetAreaReady(false);
+                    _currentAreaView.SetReady(false);
 
                     _gameManager.SendEvent(PhotonEvent.CardPlaying, new CardPlayingEventData
                     {
                         InstigatorId = PhotonNetwork.LocalPlayer.ActorNumber,
-                        TargetId = _currentPlayerView.PlayerId,
+                        TargetId = _currentAreaView.TargetId,
                         CardId = CardData.Id
                     });
 

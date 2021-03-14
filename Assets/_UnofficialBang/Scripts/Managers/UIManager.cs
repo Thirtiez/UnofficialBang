@@ -79,7 +79,7 @@ namespace Thirties.UnofficialBang
 
             PhotonNetwork.AddCallbackTarget(this);
 
-            _gameManager.OnStateEnter += OnStateEnter;
+            _gameManager.StateEnter += OnStateEnter;
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
             _gameManager.CardHoverEnter += OnCardHoverEnter;
@@ -104,7 +104,7 @@ namespace Thirties.UnofficialBang
         {
             PhotonNetwork.RemoveCallbackTarget(this);
 
-            _gameManager.OnStateEnter -= OnStateEnter;
+            _gameManager.StateEnter -= OnStateEnter;
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
             _gameManager.CardHoverEnter -= OnCardHoverEnter;

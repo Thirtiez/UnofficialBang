@@ -55,8 +55,8 @@ namespace Thirties.UnofficialBang
 
         #region Events
 
-        public UnityAction<BaseState> OnStateEnter { get; set; }
-        public UnityAction<BaseState> OnStateExit { get; set; }
+        public UnityAction<BaseState> StateEnter { get; set; }
+        public UnityAction<BaseState> StateExit { get; set; }
 
         public UnityAction<CardDealingEventData> CardDealing { get; set; }
         public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }

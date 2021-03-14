@@ -1,6 +1,5 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
-using Photon.Realtime;
 using SplineMesh;
 using System;
 using System.Collections;
@@ -11,7 +10,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class PlayerView : MonoBehaviour
+    public class PlayerView : BaseView
     {
         #region Inspector fields
 
@@ -49,19 +48,12 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Transform deckTransform;
 
-        [Header("Area")]
-
-        [SerializeField]
-        private SpriteRenderer areaMask;
-
-        [SerializeField]
-        private Collider2D areaCollider;
-
         #endregion
 
         #region Public properties
 
         public int PlayerId { get; private set; }
+        public int PlayerDistance { get; private set; }
 
         #endregion
 
@@ -72,9 +64,6 @@ namespace Thirties.UnofficialBang
         private List<CardView> _boardCards = new List<CardView>();
 
         private GameManager _gameManager;
-        private int _playerDistance;
-
-        private bool _isPlayable = false;
 
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
@@ -103,31 +92,18 @@ namespace Thirties.UnofficialBang
         {
             _gameManager = GameManager.Instance;
 
-            _gameManager.OnStateEnter += OnStateEnter;
-            _gameManager.OnStateExit += OnStateExit;
+            _gameManager.StateEnter += OnStateEnter;
+            _gameManager.StateExit += OnStateExit;
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
-            _gameManager.CardSelected += OnCardSelected;
-            _gameManager.CardCanceled += OnCardCanceled;
         }
 
         protected void OnDisable()
         {
-            _gameManager.OnStateEnter -= OnStateEnter;
-            _gameManager.OnStateExit -= OnStateExit;
+            _gameManager.StateEnter -= OnStateEnter;
+            _gameManager.StateExit -= OnStateExit;
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
-            _gameManager.CardSelected -= OnCardSelected;
-            _gameManager.CardCanceled -= OnCardCanceled;
-        }
-
-        #endregion
-
-        #region Public methods
-
-        public void SetAreaReady(bool isReady)
-        {
-            areaMask.color = isReady ? _gameManager.ColorSettings.AreaReady : _gameManager.ColorSettings.AreaPlayable;
         }
 
         #endregion
@@ -147,7 +123,7 @@ namespace Thirties.UnofficialBang
                 int playerOffset = EnableTable[playerCount].IndexOf(playerNumber);
                 int playerIndex = (localPlayerIndex + playerOffset) % playerCount;
 
-                _playerDistance = playerOffset > playerCount / 2 ? playerCount - playerOffset : playerOffset;
+                PlayerDistance = playerOffset > playerCount / 2 ? playerCount - playerOffset : playerOffset;
                 PlayerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[playerIndex];
                 nicknameText.text = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId).NickName;
 
@@ -156,9 +132,6 @@ namespace Thirties.UnofficialBang
                     b.gameObject.SetActive(false);
                     b.transform.localScale = Vector3.zero;
                 });
-
-                areaMask.gameObject.SetActive(false);
-                areaCollider.enabled = false;
             }
         }
 
@@ -233,14 +206,6 @@ namespace Thirties.UnofficialBang
             _characterCard.SetPlayable(_characterCard.CardData.Effect == CardEffect.SidKetchum);
         }
 
-        private void SetAreaPlayable(bool isPlayable)
-        {
-            _isPlayable = isPlayable;
-
-            areaMask.gameObject.SetActive(_isPlayable);
-            areaCollider.enabled = _isPlayable;
-        }
-
         #endregion
 
         #region Event handlers
@@ -295,31 +260,6 @@ namespace Thirties.UnofficialBang
             {
                 _roleCard.Reveal();
             }
-        }
-
-        private void OnCardSelected(CardSelectedEventData eventData)
-        {
-            var card = eventData.CardData;
-            if (playerNumber == 0)
-            {
-                if (card.Class == CardClass.Blue && card.Target == CardTarget.Self)
-                {
-                    SetAreaPlayable(true);
-                }
-            }
-            else if (_playerDistance <= eventData.Range)
-            {
-                var player = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
-
-                SetAreaPlayable(_playerDistance + player.BonusDistance <= eventData.Range);
-            }
-
-            areaMask.color = _gameManager.ColorSettings.AreaPlayable;
-        }
-
-        private void OnCardCanceled()
-        {
-            SetAreaPlayable(false);
         }
 
         #endregion
