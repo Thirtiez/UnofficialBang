@@ -24,9 +24,9 @@ namespace Thirties.UnofficialBang
 
         #endregion
 
-        #region 
+        #region Public properties
 
-        public int? TargetId => view is PlayerView playerView ? playerView.PlayerId : (int?)null;
+        public int TargetId => view is PlayerView playerView ? playerView.PlayerId : -1;
 
         #endregion
 
@@ -84,15 +84,16 @@ namespace Thirties.UnofficialBang
 
             if (view is PlayerView playerView)
             {
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(playerView.PlayerId);
+                if (!player.IsAlive) return;
+
                 int distance = playerView.PlayerDistance;
                 if (distance == 0)
                 {
                     SetPlayable(card.Class == CardClass.Blue && card.Target == CardTarget.Self);
                 }
-                else if (distance <= eventData.Range)
+                else
                 {
-                    var player = PhotonNetwork.CurrentRoom.GetPlayer(playerView.PlayerId);
-
                     SetPlayable(distance + player.BonusDistance <= eventData.Range);
                 }
             }

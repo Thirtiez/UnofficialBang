@@ -1,4 +1,6 @@
 ﻿using Photon.Pun;
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
@@ -14,16 +16,14 @@ namespace Thirties.UnofficialBang
                 var character = _gameManager.Cards[PhotonNetwork.LocalPlayer.CharacterCardId];
                 switch (character.Effect)
                 {
-                    case CardEffect.CalamityJanet:
-                        //TODO CalamityJanet
-                        break;
-                    case CardEffect.SidKetchum:
-                        //TODO SidKetchum
-                        break;
                     case CardEffect.SuzyLaFayette:
                         //TODO SuzyLaFayette
                         break;
-                        break;
+                }
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _gameManager.CardPlaying += OnCardPlaying;
                 }
             }
         }
@@ -35,7 +35,17 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            _gameManager.CardPlaying -= OnCardPlaying;
+
             base.OnStateExit(animator, stateInfo, layerIndex);
+        }
+
+        private void OnCardPlaying(CardPlayingEventData eventData)
+        {
+            PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
+            PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;
+
+            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
         }
     }
 }

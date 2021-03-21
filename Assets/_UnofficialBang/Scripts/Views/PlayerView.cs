@@ -68,6 +68,8 @@ namespace Thirties.UnofficialBang
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
 
+        private bool isLocalPlayer => playerNumber == 0;
+
         #endregion
 
         #region Constants
@@ -206,6 +208,13 @@ namespace Thirties.UnofficialBang
             _characterCard.SetPlayable(_characterCard.CardData.Effect == CardEffect.SidKetchum);
         }
 
+        private void ResetPlayableCards()
+        {
+            _handCards.ForEach(c => c.SetPlayable(false));
+
+            _characterCard.SetPlayable(false);
+        }
+
         #endregion
 
         #region Event handlers
@@ -216,9 +225,21 @@ namespace Thirties.UnofficialBang
             {
                 Configure();
             }
-            else if (state is CardSelectionState && PlayerId == PhotonNetwork.LocalPlayer.ActorNumber && _gameManager.IsLocalPlayerTurn)
+            else if (isLocalPlayer && PhotonNetwork.LocalPlayer.IsAlive)
             {
-                ConfigurePlayableCards();
+                if (state is CardSelectionState && _gameManager.IsLocalPlayerTurn)
+                {
+                    ConfigurePlayableCards();
+                }
+                else if (state is CardResolutionState && _gameManager.IsLocalPlayerTarget)
+                {
+                    // TODO target
+                    Debug.Log("I am the target");
+                }
+                else
+                {
+                    ResetPlayableCards();
+                }
             }
         }
 
@@ -260,6 +281,15 @@ namespace Thirties.UnofficialBang
             {
                 _roleCard.Reveal();
             }
+        }
+
+        private void OnCardPlaying(CardPlayingEventData eventData)
+        {
+            var newHandCardIds = _handCards.Where(c => c.CardData.Id != eventData.CardId).ToList();
+            _handCards = newHandCardIds;
+
+            //TODO card animation
+            //TODO hand cards refresh
         }
 
         #endregion

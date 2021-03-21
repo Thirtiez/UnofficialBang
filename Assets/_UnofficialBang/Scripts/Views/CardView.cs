@@ -149,13 +149,25 @@ namespace Thirties.UnofficialBang
 
                     _currentAreaView.SetReady(false);
 
-                    _gameManager.SendEvent(PhotonEvent.CardPlaying, new CardPlayingEventData
+                    var eventData = new CardPlayingEventData
                     {
                         InstigatorId = PhotonNetwork.LocalPlayer.ActorNumber,
                         TargetId = _currentAreaView.TargetId,
                         CardId = CardData.Id
-                    });
+                    };
 
+                    if (CardData.Target == CardTarget.Everyone)
+                    {
+                        eventData.TargetId = PhotonNetwork.LocalPlayer.ActorNumber;
+                    }
+                    else if (CardData.Target == CardTarget.EveryoneElse)
+                    {
+                        eventData.TargetId = _gameManager.NextLivingPlayerId;
+                    }
+
+                    _gameManager.SendEvent(PhotonEvent.CardPlaying, eventData);
+
+                    //TODO Don't destroy and animate
                     Destroy(gameObject);
                 }
                 else

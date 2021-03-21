@@ -86,6 +86,7 @@ namespace Thirties.UnofficialBang
             _gameManager.CardHoverExit += OnCardHoverExit;
             _gameManager.CardSelected += OnCardSelected;
             _gameManager.CardCanceled += OnCardCanceled;
+            _gameManager.CardPlaying += OnCardPlaying;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
@@ -111,6 +112,7 @@ namespace Thirties.UnofficialBang
             _gameManager.CardHoverExit -= OnCardHoverExit;
             _gameManager.CardSelected -= OnCardSelected;
             _gameManager.CardCanceled -= OnCardCanceled;
+            _gameManager.CardPlaying -= OnCardPlaying;
         }
 
         #endregion
@@ -180,10 +182,33 @@ namespace Thirties.UnofficialBang
         private void OnRoleRevealing(RoleRevealingEventData eventData)
         {
             var card = _gameManager.Cards[eventData.CardId];
-            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
             string message = card.Effect == CardEffect.Sceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
 
-            gameLog.Log(message, card, player);
+            gameLog.Log(message, card, instigator);
+        }
+
+        private void OnCardPlaying(CardPlayingEventData eventData)
+        {
+            var card = _gameManager.Cards[eventData.CardId];
+            var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.InstigatorId);
+
+            switch (card.Target)
+            {
+                default:
+                case CardTarget.Self:
+                case CardTarget.Everyone:
+                case CardTarget.EveryoneElse:
+                    gameLog.Log("{1} gioca {0}", card, instigator);
+                    break;
+                case CardTarget.Instigator:
+                case CardTarget.Range:
+                case CardTarget.FixedRange:
+                case CardTarget.Anyone:
+                    var target = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
+                    gameLog.Log("{1} gioca {0} contro {2}", card, instigator, target);
+                    break;
+            }
         }
 
         #endregion

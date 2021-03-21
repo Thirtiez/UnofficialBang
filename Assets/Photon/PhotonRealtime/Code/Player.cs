@@ -53,6 +53,8 @@ namespace Photon.Realtime
             set => SetCustomProperties(new Hashtable { { "CurrentHealth", value } });
         }
 
+        public bool IsAlive => CurrentHealth > 0;
+
         public int BonusDistance
         {
             get => CustomProperties.ContainsKey("BonusDistance") ? (int)CustomProperties["BonusDistance"] : 0;

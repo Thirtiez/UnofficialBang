@@ -1,5 +1,4 @@
 ﻿using ExitGames.Client.Photon;
-using ExitGames.Client.Photon.StructWrapping;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
@@ -50,6 +49,21 @@ namespace Thirties.UnofficialBang
         public AnimationSettings AnimationSettings => animationSettings;
 
         public bool IsLocalPlayerTurn => PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber;
+        public bool IsLocalPlayerTarget => PhotonNetwork.CurrentRoom.CurrentTargetId == PhotonNetwork.LocalPlayer.ActorNumber;
+
+        public int NextLivingPlayerId {
+            get {
+                var turnPlayerIds = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
+                int index = turnPlayerIds.IndexOf(PhotonNetwork.CurrentRoom.CurrentPlayerId);
+
+                do
+                {
+                    index = (index + 1) % turnPlayerIds.Count;
+                } while (!PhotonNetwork.CurrentRoom.GetPlayer(index).IsAlive);
+
+                return turnPlayerIds[index];
+            }
+        }
 
         #endregion
 
@@ -94,6 +108,7 @@ namespace Thirties.UnofficialBang
             {
                 CardDealing += OnCardDealing;
                 RoleRevealing += OnRoleRevealing;
+                CardPlaying += OnCardPlaying;
             }
         }
 
@@ -105,6 +120,7 @@ namespace Thirties.UnofficialBang
             {
                 CardDealing -= OnCardDealing;
                 RoleRevealing -= OnRoleRevealing;
+                CardPlaying -= OnCardPlaying;
             }
         }
 
@@ -299,6 +315,13 @@ namespace Thirties.UnofficialBang
             }
 
             PhotonNetwork.CurrentRoom.TurnPlayerIds = players.ToArray();
+        }
+
+        private void OnCardPlaying(CardPlayingEventData eventData)
+        {
+            var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.InstigatorId);
+            var newHandCardIds = instigator.HandCardIds.Where(c => c != eventData.CardId).ToArray();
+            instigator.HandCardIds = newHandCardIds;
         }
 
         #endregion
