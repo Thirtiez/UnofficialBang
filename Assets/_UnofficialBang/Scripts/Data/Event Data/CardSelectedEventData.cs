@@ -4,6 +4,6 @@
     {
         public CardData CardData { get; set; }
 
-        public int? Range { get; set; }
+        public int Range { get; set; }
     }
 }

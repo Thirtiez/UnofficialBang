@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class PlayerView : BaseView
+    public class PlayerView : MonoBehaviour
     {
         #region Inspector fields
 
@@ -54,6 +54,9 @@ namespace Thirties.UnofficialBang
 
         public int PlayerId { get; private set; }
         public int PlayerDistance { get; private set; }
+        public bool IsLocalPlayer => playerNumber == 0;
+        public bool IsCurrentPlayer => PlayerId == PhotonNetwork.CurrentRoom.CurrentPlayerId;
+        public bool IsCurrentTarget => PlayerId == PhotonNetwork.CurrentRoom.CurrentTargetId;
 
         #endregion
 
@@ -68,7 +71,6 @@ namespace Thirties.UnofficialBang
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
 
-        private bool isLocalPlayer => playerNumber == 0;
 
         #endregion
 
@@ -98,6 +100,7 @@ namespace Thirties.UnofficialBang
             _gameManager.StateExit += OnStateExit;
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
+            _gameManager.CardPlaying += OnCardPlaying;
         }
 
         protected void OnDisable()
@@ -106,6 +109,7 @@ namespace Thirties.UnofficialBang
             _gameManager.StateExit -= OnStateExit;
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
+            _gameManager.CardPlaying -= OnCardPlaying;
         }
 
         #endregion
@@ -225,18 +229,25 @@ namespace Thirties.UnofficialBang
             {
                 Configure();
             }
-            else if (isLocalPlayer && PhotonNetwork.LocalPlayer.IsAlive)
+            else if (state is CardSelectionState && IsLocalPlayer)
             {
-                if (state is CardSelectionState && _gameManager.IsLocalPlayerTurn)
+                if (_gameManager.IsLocalPlayerTurn)
                 {
                     ConfigurePlayableCards();
                 }
-                else if (state is CardResolutionState && _gameManager.IsLocalPlayerTarget)
+                else
                 {
-                    // TODO target
+                    ResetPlayableCards();
+                }
+            }
+            else if (state is CardResolutionState)
+            {
+                if (_gameManager.IsLocalPlayerTarget)
+                {
+                    //TODO target
                     Debug.Log("I am the target");
                 }
-                else
+                else if (IsLocalPlayer)
                 {
                     ResetPlayableCards();
                 }
@@ -277,7 +288,7 @@ namespace Thirties.UnofficialBang
 
         private void OnRoleRevealing(RoleRevealingEventData eventData)
         {
-            if (eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber && eventData.PlayerId == PlayerId)
+            if (!IsLocalPlayer && eventData.PlayerId == PlayerId)
             {
                 _roleCard.Reveal();
             }

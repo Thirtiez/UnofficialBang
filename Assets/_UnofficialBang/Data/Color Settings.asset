@@ -30,3 +30,4 @@ MonoBehaviour:
   cardReady: {r: 0.89019614, g: 0.42352945, b: 0.32941177, a: 1}
   areaPlayable: {r: 1, g: 1, b: 1, a: 0.2509804}
   areaReady: {r: 1, g: 1, b: 1, a: 0.5019608}
+  areaTurn: {r: 0.89019614, g: 0.42352945, b: 0.32941177, a: 1}

@@ -80,7 +80,7 @@ namespace Thirties.UnofficialBang
 
                 cardSpriteRenderer.gameObject.SetActive(true);
 
-                int? range = null;
+                int range = 0;
 
                 switch (CardData.Target)
                 {
@@ -167,7 +167,7 @@ namespace Thirties.UnofficialBang
 
                     _gameManager.SendEvent(PhotonEvent.CardPlaying, eventData);
 
-                    //TODO Don't destroy and animate
+                    //TODO Don't destroy but animate
                     Destroy(gameObject);
                 }
                 else

@@ -1,18 +1,19 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    public class AreaView : BaseView
+    public class AreaView : MonoBehaviour
     {
         #region Inspector fields
 
         [Header("View")]
 
         [SerializeField]
-        private BaseView view;
+        private PlayerView playerView;
 
         [Header("Area")]
 
@@ -26,7 +27,7 @@ namespace Thirties.UnofficialBang
 
         #region Public properties
 
-        public int TargetId => view is PlayerView playerView ? playerView.PlayerId : -1;
+        public int TargetId => playerView.PlayerId;
 
         #endregion
 
@@ -42,6 +43,8 @@ namespace Thirties.UnofficialBang
         {
             _gameManager = GameManager.Instance;
 
+            _gameManager.StateEnter += OnStateEnter;
+
             _gameManager.CardSelected += OnCardSelected;
             _gameManager.CardCanceled += OnCardCanceled;
 
@@ -51,6 +54,7 @@ namespace Thirties.UnofficialBang
 
         protected void OnDisable()
         {
+            _gameManager.StateEnter -= OnStateEnter;
             _gameManager.CardSelected -= OnCardSelected;
             _gameManager.CardCanceled -= OnCardCanceled;
         }
@@ -61,6 +65,8 @@ namespace Thirties.UnofficialBang
 
         public void SetReady(bool isReady)
         {
+            if (playerView.IsCurrentPlayer) return;
+
             areaMask.color = isReady ? _gameManager.ColorSettings.AreaReady : _gameManager.ColorSettings.AreaPlayable;
         }
 
@@ -70,40 +76,38 @@ namespace Thirties.UnofficialBang
 
         private void SetPlayable(bool isPlayable)
         {
-            areaMask.enabled = isPlayable;
+            areaMask.enabled = playerView.IsCurrentPlayer || isPlayable;
             areaCollider.enabled = isPlayable;
+        }
+
+        private void SetColor(bool isCurrentPlayer)
+        {
+            areaMask.enabled = isCurrentPlayer;
+            areaMask.color = isCurrentPlayer ? _gameManager.ColorSettings.AreaTurn : _gameManager.ColorSettings.AreaPlayable;
         }
 
         #endregion
 
         #region Event handlers
 
+        private void OnStateEnter(BaseState state)
+        {
+            SetColor((state is CardSelectionState && playerView.IsCurrentPlayer) || (state is CardResolutionState && playerView.IsCurrentTarget));
+        }
+
         private void OnCardSelected(CardSelectedEventData eventData)
         {
-            var card = eventData.CardData;
+            int distance = playerView.PlayerDistance;
 
-            if (view is PlayerView playerView)
+            if (playerView.IsCurrentPlayer)
+            {
+                SetPlayable(eventData.Range == 0);
+            }
+            else
             {
                 var player = PhotonNetwork.CurrentRoom.GetPlayer(playerView.PlayerId);
-                if (!player.IsAlive) return;
-
-                int distance = playerView.PlayerDistance;
-                if (distance == 0)
-                {
-                    SetPlayable(card.Class == CardClass.Blue && card.Target == CardTarget.Self);
-                }
-                else
-                {
-                    SetPlayable(distance + player.BonusDistance <= eventData.Range);
-                }
+                SetPlayable(player.IsAlive && distance + player.BonusDistance <= eventData.Range);
             }
-            else if (view is DeckView)
-            {
-                SetPlayable(card.Class == CardClass.Brown &&
-                    (card.Target == CardTarget.Everyone || card.Target == CardTarget.EveryoneElse || card.Target == CardTarget.Self));
-            }
-
-            areaMask.color = _gameManager.ColorSettings.AreaPlayable;
         }
 
         private void OnCardCanceled()

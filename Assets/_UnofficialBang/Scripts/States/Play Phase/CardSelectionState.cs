@@ -20,12 +20,9 @@ namespace Thirties.UnofficialBang
                         //TODO SuzyLaFayette
                         break;
                 }
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    _gameManager.CardPlaying += OnCardPlaying;
-                }
             }
+
+            _gameManager.CardPlaying += OnCardPlaying;
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -45,7 +42,10 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
             PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;
 
-            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
+            }
         }
     }
 }
