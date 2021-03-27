@@ -52,12 +52,6 @@ namespace Thirties.UnofficialBang
         [Header("Command Section")]
 
         [SerializeField]
-        private GameObject commandSection;
-
-        [SerializeField]
-        private TMP_Text instructionsText;
-
-        [SerializeField]
         private Transform commandsContainer;
 
         [SerializeField]
@@ -68,6 +62,8 @@ namespace Thirties.UnofficialBang
         #region Private fields
 
         private GameManager _gameManager;
+
+        private List<CommandElementUI> _commands = new List<CommandElementUI>();
 
         #endregion
 
@@ -96,9 +92,9 @@ namespace Thirties.UnofficialBang
 
             cardZoom.gameObject.SetActive(false);
             exitButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+            commandsContainer.gameObject.SetActive(false);
             exitModal.SetActive(false);
             header.SetActive(true);
-            commandSection.SetActive(false);
         }
 
         private void OnDestroy()
@@ -127,13 +123,22 @@ namespace Thirties.UnofficialBang
             }
             else if (state is TurnState)
             {
-                if (_gameManager.IsLocalPlayerTurn)
+                string currentPlayer = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color></b>";
+                if (state is TurnStartState)
                 {
-                    headerText.text = $"È il <b><color=#{_gameManager.ColorSettings.PlayerColor}>tuo</color></b> turno";
-
-                    if (state is CardSelectionState)
+                    headerText.text = _gameManager.IsLocalPlayerTurn ? "Iniziando il tuo turno..."
+                        : $"{currentPlayer} sta iniziando il turno...";
+                }
+                else if (state is DrawPhaseState)
+                {
+                    headerText.text = _gameManager.IsLocalPlayerTurn ? "Pescando..."
+                        : $"{currentPlayer} sta pescando...";
+                }
+                else if (state is CardSelectionState)
+                {
+                    if (_gameManager.IsLocalPlayerTurn)
                     {
-                        instructionsText.text = "Gioca una carta o passa";
+                        headerText.text = "Puoi giocare una carta o passare";
 
                         var passCommand = Instantiate(commandElementPrefab, commandsContainer);
                         passCommand.Configure("Passa", () =>
@@ -141,16 +146,51 @@ namespace Thirties.UnofficialBang
                             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.DiscardPhase });
                         });
 
-                        commandSection.SetActive(true);
+                        _commands.ForEach(c => Destroy(c.gameObject));
+                        _commands.Add(passCommand);
+
+                        commandsContainer.gameObject.SetActive(true);
                     }
                     else
                     {
-                        commandSection.SetActive(false);
+                        headerText.text = $"{currentPlayer} può giocare una carta o passare";
+
+                        commandsContainer.gameObject.SetActive(false);
                     }
                 }
-                else
+                else if (state is CardResolutionState)
                 {
-                    headerText.text = $"È il turno di <b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color></b>";
+                    string currentTarget = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentTarget.NickName}</color></b>";
+
+                    var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
+                    if (card.Class == CardClass.Blue) return;
+
+                    string missed = $"<b><color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color></b>";
+                    string bang = $"<b><color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color></b>";
+                    string damage = $"<b><color=#{_gameManager.ColorSettings.DamageColor}>danno</color></b>";
+
+                    switch (card.Effect)
+                    {
+                        case CardEffect.Bang:
+                        case CardEffect.Damage:
+                        case CardEffect.Missed:
+                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {missed} o ricevere un {damage}"
+                                : $"{currentTarget} deve giocare un {missed} o ricevere un {damage}";
+                            break;
+                        case CardEffect.Duel:
+                        case CardEffect.Indians:
+                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {bang} o ricevere un {damage}"
+                                : $"{currentTarget} devi giocare un {bang} o ricevere un {damage}";
+                            break;
+                        case CardEffect.Discard:
+                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"
+                                : $"{currentTarget} può scegliere una carta da scartare";
+                            break;
+                        case CardEffect.GeneralStore:
+                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi scegliere una carta"
+                                : $"{currentTarget} deve scegliere una carta";
+                            break;
+                    }
                 }
             }
         }
@@ -238,7 +278,6 @@ namespace Thirties.UnofficialBang
             cardZoomImage.sprite = _gameManager.CardSpriteTable.Get(eventData.CardView.CardData.Sprite);
 
             var screenPosition = Camera.main.WorldToScreenPoint(eventData.CardView.transform.position);
-            //bool left = screenPosition.x < Screen.width / 2;
             bool bottom = screenPosition.y < Screen.height / 2;
             var anchor = new Vector2(0.5f, bottom ? 0 : 1);
             cardZoom.anchorMin = anchor;
@@ -260,12 +299,12 @@ namespace Thirties.UnofficialBang
         {
             OnCardHoverExit();
 
-            commandSection.SetActive(false);
+            commandsContainer.gameObject.SetActive(false);
         }
 
         private void OnCardCanceled()
         {
-            commandSection.SetActive(true);
+            commandsContainer.gameObject.SetActive(false);
         }
 
         #endregion

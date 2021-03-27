@@ -25,6 +25,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Color playerColor;
 
+        [SerializeField]
+        private Color damageColor;
+
         [Header("Cards")]
 
         [SerializeField]
@@ -49,6 +52,7 @@ namespace Thirties.UnofficialBang
         public string CharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
         public string RoleCardColor => ColorUtility.ToHtmlStringRGBA(roleCardColor);
         public string PlayerColor => ColorUtility.ToHtmlStringRGBA(playerColor);
+        public string DamageColor => ColorUtility.ToHtmlStringRGBA(damageColor);
 
         public Color CardPlayable => cardPlayable;
         public Color CardReady => cardReady;
