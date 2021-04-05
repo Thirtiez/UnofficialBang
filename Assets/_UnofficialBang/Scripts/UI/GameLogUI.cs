@@ -66,9 +66,9 @@ namespace Thirties.UnofficialBang
                 }
             }
 
-            string cardName = $"<b><color=#{cardColor}>{card?.Name}</color></b>";
-            string targetName = $"<b><color=#{colorSettings.PlayerColor}>{target?.NickName}</color></b>";
-            string instigatorName = $"<b><color=#{colorSettings.PlayerColor}>{instigator?.NickName}</color></b>";
+            string cardName = $"<color=#{cardColor}>{card?.Name}</color>";
+            string targetName = $"<color=#{colorSettings.PlayerColor}>{target?.NickName}</color>";
+            string instigatorName = $"<color=#{colorSettings.PlayerColor}>{instigator?.NickName}</color>";
 
             message = string.Format(message, cardName, targetName, instigatorName);
             _messages.Add(message);

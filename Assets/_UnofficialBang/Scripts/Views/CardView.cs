@@ -166,9 +166,6 @@ namespace Thirties.UnofficialBang
                     }
 
                     _gameManager.SendEvent(PhotonEvent.CardPlaying, eventData);
-
-                    //TODO Don't destroy but animate
-                    Destroy(gameObject);
                 }
                 else
                 {
@@ -207,14 +204,14 @@ namespace Thirties.UnofficialBang
             }
             else
             {
-                Reveal();
+                Show();
             }
 
             highlightSpriteRenderer.color = _gameManager.ColorSettings.CardPlayable;
             highlightSpriteRenderer.gameObject.SetActive(false);
         }
 
-        public void Reveal()
+        public void Show()
         {
             _isCovered = false;
 

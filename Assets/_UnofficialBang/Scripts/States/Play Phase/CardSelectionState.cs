@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
@@ -22,7 +20,10 @@ namespace Thirties.UnofficialBang
                 }
             }
 
-            _gameManager.CardPlaying += OnCardPlaying;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _gameManager.CardPlaying += OnCardPlaying;
+            }
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -42,10 +43,7 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
             PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
-            }
+            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
         }
     }
 }

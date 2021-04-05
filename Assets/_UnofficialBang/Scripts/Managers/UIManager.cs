@@ -165,9 +165,9 @@ namespace Thirties.UnofficialBang
                     var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
                     if (card.Class == CardClass.Blue) return;
 
-                    string missed = $"<b><color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color></b>";
-                    string bang = $"<b><color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color></b>";
-                    string damage = $"<b><color=#{_gameManager.ColorSettings.DamageColor}>danno</color></b>";
+                    string missed = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color>";
+                    string bang = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color>";
+                    string damage = $"<color=#{_gameManager.ColorSettings.DamageColor}>danno</color>";
 
                     switch (card.Effect)
                     {
@@ -180,7 +180,7 @@ namespace Thirties.UnofficialBang
                         case CardEffect.Duel:
                         case CardEffect.Indians:
                             headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {bang} o ricevere un {damage}"
-                                : $"{currentTarget} devi giocare un {bang} o ricevere un {damage}";
+                                : $"{currentTarget} deve giocare un {bang} o ricevere un {damage}";
                             break;
                         case CardEffect.Discard:
                             headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"

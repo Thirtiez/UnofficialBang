@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Sirenix.Utilities;
 using SplineMesh;
 using System;
 using System.Collections;
@@ -7,11 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Thirties.UnofficialBang
 {
     public class PlayerView : MonoBehaviour
     {
+        #region Static events
+
+        private static UnityAction<CardView, int> equipToTarget;
+
+        #endregion
+
         #region Inspector fields
 
         [Header("Player")]
@@ -45,8 +53,13 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private CardView cardPrefab;
 
+        [Header("Deck")]
+
         [SerializeField]
         private Transform deckTransform;
+
+        [SerializeField]
+        private Transform discardTransform;
 
         #endregion
 
@@ -62,15 +75,16 @@ namespace Thirties.UnofficialBang
 
         #region Private fields
 
+        private GameManager _gameManager;
+
         private List<CardView> _sideCards = new List<CardView>();
         private List<CardView> _handCards = new List<CardView>();
         private List<CardView> _boardCards = new List<CardView>();
 
-        private GameManager _gameManager;
+        private List<CardView> _discardedCards = new List<CardView>();
 
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
-
 
         #endregion
 
@@ -101,6 +115,8 @@ namespace Thirties.UnofficialBang
             _gameManager.CardDealing += OnCardDealing;
             _gameManager.RoleRevealing += OnRoleRevealing;
             _gameManager.CardPlaying += OnCardPlaying;
+
+            equipToTarget += OnDealToBoard;
         }
 
         protected void OnDisable()
@@ -110,6 +126,8 @@ namespace Thirties.UnofficialBang
             _gameManager.CardDealing -= OnCardDealing;
             _gameManager.RoleRevealing -= OnRoleRevealing;
             _gameManager.CardPlaying -= OnCardPlaying;
+
+            equipToTarget -= OnDealToBoard;
         }
 
         #endregion
@@ -148,6 +166,30 @@ namespace Thirties.UnofficialBang
 
             cardList.Add(card);
 
+            RefreshSpline(targetSpline, cardList);
+        }
+
+        private void DiscardCard(CardView card)
+        {
+            _discardedCards.FirstOrDefault()?.MoveTo(new Vector3(0, 0, 0.1f), Quaternion.identity, Vector3.one);
+
+            _discardedCards.Insert(0, card);
+            _discardedCards.Skip(2)?.ForEach(c => Destroy(c.gameObject));
+            _discardedCards = _discardedCards.Take(2).ToList();
+
+            card.transform.SetParent(discardTransform);
+            card.MoveTo(Vector3.zero, Quaternion.identity, Vector3.one);
+        }
+
+        private void EquipCard(CardView card)
+        {
+            _boardCards.Add(card);
+            card.transform.SetParent(boardSpline.transform);
+            RefreshSpline(boardSpline, _boardCards);
+        }
+
+        private void RefreshSpline(Spline targetSpline, List<CardView> cardList)
+        {
             float possibleDistance = 1f / cardList.Count;
             float distance = possibleDistance >= cardPreferredDistance ? cardPreferredDistance : possibleDistance;
             float startTime = (1 - (distance * (cardList.Count - 1))) * 0.5f;
@@ -290,17 +332,46 @@ namespace Thirties.UnofficialBang
         {
             if (!IsLocalPlayer && eventData.PlayerId == PlayerId)
             {
-                _roleCard.Reveal();
+                _roleCard.Show();
             }
         }
 
         private void OnCardPlaying(CardPlayingEventData eventData)
         {
-            var newHandCardIds = _handCards.Where(c => c.CardData.Id != eventData.CardId).ToList();
-            _handCards = newHandCardIds;
+            if (IsCurrentPlayer)
+            {
+                var card = _handCards.SingleOrDefault(c => c.CardData.Id == eventData.CardId);
+                card.SetPlayable(false);
+                card.Show();
 
-            //TODO card animation
-            //TODO hand cards refresh
+                _handCards.Remove(card);
+                RefreshSpline(handSpline, _handCards);
+
+                switch (card.CardData.Class)
+                {
+                    default:
+                    case CardClass.Brown:
+                        DiscardCard(card);
+                        break;
+                    case CardClass.Blue:
+                        if (card.CardData.Target == CardTarget.Self)
+                        {
+                            EquipCard(card);
+                        }
+                        else
+                        {
+                            equipToTarget.Invoke(card, eventData.TargetId);
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void OnDealToBoard(CardView card, int targetId)
+        {
+            if (PlayerId != targetId) return;
+
+            EquipCard(card);
         }
 
         #endregion
