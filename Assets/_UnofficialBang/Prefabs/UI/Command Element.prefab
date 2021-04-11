@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6054451315053182851}
   - component: {fileID: 6097961987712056204}
   m_Layer: 5
-  m_Name: Command Button
+  m_Name: Command Element
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3394451571045667135
 CanvasRenderer:
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Salta
+  m_text: Ricevi danno
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 040548499c329a34e9a72eaf81394992, type: 2}
   m_sharedMaterial: {fileID: -5478282438122475803, guid: 040548499c329a34e9a72eaf81394992,
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

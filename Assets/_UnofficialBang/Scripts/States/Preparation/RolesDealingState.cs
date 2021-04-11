@@ -30,17 +30,17 @@ namespace Thirties.UnofficialBang
 
         private IEnumerator DealRoles()
         {
-            RoleRevealingEventData revealRoleEventData = null;
+            RevealingRoleEventData revealRoleEventData = null;
 
             foreach (int playerId in PhotonNetwork.CurrentRoom.TurnPlayerIds)
             {
                 var card = _gameManager.DrawRole();
 
-                _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = playerId });
+                _gameManager.SendEvent(PhotonEvent.DealingCard, new DealingCardEventData { CardId = card.Id, PlayerId = playerId });
 
                 if (card.Effect == CardEffect.Sceriff)
                 {
-                    revealRoleEventData = new RoleRevealingEventData { CardId = card.Id, PlayerId = playerId };
+                    revealRoleEventData = new RevealingRoleEventData { CardId = card.Id, PlayerId = playerId };
                 }
 
                 yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
@@ -48,7 +48,7 @@ namespace Thirties.UnofficialBang
 
             if (revealRoleEventData != null)
             {
-                _gameManager.SendEvent(PhotonEvent.RoleRevealing, revealRoleEventData);
+                _gameManager.SendEvent(PhotonEvent.RevealingRole, revealRoleEventData);
 
                 yield return new WaitForSeconds(_gameManager.AnimationSettings.RoleRevealDelay);
             }

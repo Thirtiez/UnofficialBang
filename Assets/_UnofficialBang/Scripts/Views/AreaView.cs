@@ -95,7 +95,7 @@ namespace Thirties.UnofficialBang
             SetColor((state is CardSelectionState && playerView.IsCurrentPlayer) || (state is CardResolutionState && playerView.IsCurrentTarget));
         }
 
-        private void OnCardSelected(CardSelectedEventData eventData)
+        private void OnCardSelected(SelectingCardEventData eventData)
         {
             int distance = playerView.PlayerDistance;
 

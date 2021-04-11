@@ -22,7 +22,7 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.IsMasterClient)
             {
-                _gameManager.CardPlaying += OnCardPlaying;
+                _gameManager.PlayingCard += OnPlayingCard;
             }
         }
 
@@ -33,12 +33,12 @@ namespace Thirties.UnofficialBang
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _gameManager.CardPlaying -= OnCardPlaying;
+            _gameManager.PlayingCard -= OnPlayingCard;
 
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
 
-        private void OnCardPlaying(CardPlayingEventData eventData)
+        private void OnPlayingCard(PlayingCardEventData eventData)
         {
             PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
             PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;

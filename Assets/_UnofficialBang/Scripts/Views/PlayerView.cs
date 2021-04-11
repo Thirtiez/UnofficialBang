@@ -16,7 +16,7 @@ namespace Thirties.UnofficialBang
     {
         #region Static events
 
-        private static UnityAction<CardView, int> equipToTarget;
+        private static UnityAction<CardView, int> equipCardToPlayer;
 
         #endregion
 
@@ -112,22 +112,22 @@ namespace Thirties.UnofficialBang
 
             _gameManager.StateEnter += OnStateEnter;
             _gameManager.StateExit += OnStateExit;
-            _gameManager.CardDealing += OnCardDealing;
-            _gameManager.RoleRevealing += OnRoleRevealing;
-            _gameManager.CardPlaying += OnCardPlaying;
+            _gameManager.DealingCard += OnDealingCard;
+            _gameManager.RevealingRole += OnRevealingRole;
+            _gameManager.PlayingCard += OnPlayingCard;
 
-            equipToTarget += OnDealToBoard;
+            equipCardToPlayer += OnEquipCardToPlayer;
         }
 
         protected void OnDisable()
         {
             _gameManager.StateEnter -= OnStateEnter;
             _gameManager.StateExit -= OnStateExit;
-            _gameManager.CardDealing -= OnCardDealing;
-            _gameManager.RoleRevealing -= OnRoleRevealing;
-            _gameManager.CardPlaying -= OnCardPlaying;
+            _gameManager.DealingCard -= OnDealingCard;
+            _gameManager.RevealingRole -= OnRevealingRole;
+            _gameManager.PlayingCard -= OnPlayingCard;
 
-            equipToTarget -= OnDealToBoard;
+            equipCardToPlayer -= OnEquipCardToPlayer;
         }
 
         #endregion
@@ -282,17 +282,9 @@ namespace Thirties.UnofficialBang
                     ResetPlayableCards();
                 }
             }
-            else if (state is CardResolutionState)
+            else if (state is CardResolutionState && IsLocalPlayer)
             {
-                if (_gameManager.IsLocalPlayerTarget)
-                {
-                    //TODO target
-                    Debug.Log("I am the target");
-                }
-                else if (IsLocalPlayer)
-                {
-                    ResetPlayableCards();
-                }
+                ResetPlayableCards();
             }
         }
 
@@ -305,7 +297,7 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnCardDealing(CardDealingEventData eventData)
+        private void OnDealingCard(DealingCardEventData eventData)
         {
             if (eventData.PlayerId == PlayerId)
             {
@@ -328,7 +320,7 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        private void OnRevealingRole(RevealingRoleEventData eventData)
         {
             if (!IsLocalPlayer && eventData.PlayerId == PlayerId)
             {
@@ -336,7 +328,7 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnCardPlaying(CardPlayingEventData eventData)
+        private void OnPlayingCard(PlayingCardEventData eventData)
         {
             if (IsCurrentPlayer)
             {
@@ -360,14 +352,29 @@ namespace Thirties.UnofficialBang
                         }
                         else
                         {
-                            equipToTarget.Invoke(card, eventData.TargetId);
+                            equipCardToPlayer.Invoke(card, eventData.TargetId);
                         }
                         break;
                 }
             }
         }
 
-        private void OnDealToBoard(CardView card, int targetId)
+        private void OnTakingDamage(TakingDamageEventData eventData)
+        {
+            //TODO
+        }
+
+        private void OnGainingHealth(GainingHealthEventData eventData)
+        {
+            //TODO
+        }
+
+        private void OnDiscardingCard(DiscardingCardEventData eventData)
+        {
+            //TODO
+        }
+
+        private void OnEquipCardToPlayer(CardView card, int targetId)
         {
             if (PlayerId != targetId) return;
 

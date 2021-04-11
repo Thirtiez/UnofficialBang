@@ -50,7 +50,7 @@ namespace Thirties.UnofficialBang
             for (int i = 0; i < 2; i++)
             {
                 var card = _gameManager.DrawPlayingCard();
-                _gameManager.SendEvent(PhotonEvent.CardDealing, new CardDealingEventData { CardId = card.Id, PlayerId = PhotonNetwork.LocalPlayer.ActorNumber });
+                _gameManager.SendEvent(PhotonEvent.DealingCard, new DealingCardEventData { CardId = card.Id, PlayerId = PhotonNetwork.LocalPlayer.ActorNumber });
 
                 yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
             }

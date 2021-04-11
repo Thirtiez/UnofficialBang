@@ -4665,13 +4665,13 @@ MonoBehaviour:
       Data: 3
     - Name: Effect
       Entry: 3
-      Data: 16
+      Data: 21
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
-      Entry: 3
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4727,13 +4727,13 @@ MonoBehaviour:
       Data: 3
     - Name: Effect
       Entry: 3
-      Data: 16
+      Data: 21
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
-      Entry: 3
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4789,13 +4789,13 @@ MonoBehaviour:
       Data: 3
     - Name: Effect
       Entry: 3
-      Data: 16
+      Data: 21
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
-      Entry: 3
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -4851,13 +4851,13 @@ MonoBehaviour:
       Data: 3
     - Name: Effect
       Entry: 3
-      Data: 16
+      Data: 21
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
-      Entry: 3
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -5099,7 +5099,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 21
+      Data: 22
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5161,7 +5161,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 22
+      Data: 23
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5223,7 +5223,7 @@ MonoBehaviour:
       Data: 1
     - Name: Effect
       Entry: 3
-      Data: 16
+      Data: 24
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5285,7 +5285,7 @@ MonoBehaviour:
       Data: 4
     - Name: Effect
       Entry: 3
-      Data: 23
+      Data: 25
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5409,7 +5409,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 24
+      Data: 26
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5471,7 +5471,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 25
+      Data: 27
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5595,7 +5595,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 26
+      Data: 28
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5719,7 +5719,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 27
+      Data: 29
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5781,7 +5781,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 28
+      Data: 30
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5843,7 +5843,7 @@ MonoBehaviour:
       Data: 0
     - Name: Effect
       Entry: 3
-      Data: 29
+      Data: 31
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib
@@ -5905,7 +5905,7 @@ MonoBehaviour:
       Data: 1
     - Name: Effect
       Entry: 3
-      Data: 30
+      Data: 32
     - Name: EffectValue
       Entry: 7
       Data: System.Nullable`1[[System.Int32, mscorlib]], mscorlib

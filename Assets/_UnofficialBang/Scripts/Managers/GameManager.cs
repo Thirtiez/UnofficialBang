@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using Sirenix.Utilities;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -72,15 +72,17 @@ namespace Thirties.UnofficialBang
         public UnityAction<BaseState> StateEnter { get; set; }
         public UnityAction<BaseState> StateExit { get; set; }
 
-        public UnityAction<CardDealingEventData> CardDealing { get; set; }
-        public UnityAction<RoleRevealingEventData> RoleRevealing { get; set; }
+        public UnityAction<DealingCardEventData> DealingCard { get; set; }
+        public UnityAction<RevealingRoleEventData> RevealingRole { get; set; }
+        public UnityAction<PlayingCardEventData> PlayingCard { get; set; }
+        public UnityAction<TakingDamageEventData> TakingDamage { get; set; }
+        public UnityAction<GainingHealthEventData> GainingHealth { get; set; }
+        public UnityAction<DiscardingCardEventData> DiscardingCard { get; set; }
 
         public UnityAction<CardHoverEnterEventData> CardHoverEnter { get; set; }
         public UnityAction CardHoverExit { get; set; }
-        public UnityAction<CardSelectedEventData> CardSelected { get; set; }
+        public UnityAction<SelectingCardEventData> CardSelected { get; set; }
         public UnityAction CardCanceled { get; set; }
-
-        public UnityAction<CardPlayingEventData> CardPlaying { get; set; }
 
         #endregion
 
@@ -106,9 +108,12 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.IsMasterClient)
             {
-                CardDealing += OnCardDealing;
-                RoleRevealing += OnRoleRevealing;
-                CardPlaying += OnCardPlaying;
+                DealingCard += OnDealingCard;
+                RevealingRole += OnRevealingRole;
+                PlayingCard += OnPlayingCard;
+                TakingDamage += OnTakingDamage;
+                GainingHealth += OnGainingHealth;
+                DiscardingCard += OnDiscardingCard;
             }
         }
 
@@ -118,9 +123,12 @@ namespace Thirties.UnofficialBang
 
             if (PhotonNetwork.IsMasterClient)
             {
-                CardDealing -= OnCardDealing;
-                RoleRevealing -= OnRoleRevealing;
-                CardPlaying -= OnCardPlaying;
+                DealingCard -= OnDealingCard;
+                RevealingRole -= OnRevealingRole;
+                PlayingCard -= OnPlayingCard;
+                TakingDamage -= OnTakingDamage;
+                GainingHealth -= OnGainingHealth;
+                DiscardingCard -= OnDiscardingCard;
             }
         }
 
@@ -252,24 +260,39 @@ namespace Thirties.UnofficialBang
                     fsm.SetTrigger(changingStateEventData.Trigger);
                     break;
 
-                case PhotonEvent.CardDealing:
-                    var cardDealingEventData = JsonConvert.DeserializeObject<CardDealingEventData>(json);
-                    CardDealing?.Invoke(cardDealingEventData);
+                case PhotonEvent.DealingCard:
+                    var cardDealingEventData = JsonConvert.DeserializeObject<DealingCardEventData>(json);
+                    DealingCard?.Invoke(cardDealingEventData);
                     break;
 
-                case PhotonEvent.RoleRevealing:
-                    var roleRevealingEventData = JsonConvert.DeserializeObject<RoleRevealingEventData>(json);
-                    RoleRevealing?.Invoke(roleRevealingEventData);
+                case PhotonEvent.RevealingRole:
+                    var roleRevealingEventData = JsonConvert.DeserializeObject<RevealingRoleEventData>(json);
+                    RevealingRole?.Invoke(roleRevealingEventData);
                     break;
 
-                case PhotonEvent.CardPlaying:
-                    var cardPlayingEventData = JsonConvert.DeserializeObject<CardPlayingEventData>(json);
-                    CardPlaying?.Invoke(cardPlayingEventData);
+                case PhotonEvent.PlayingCard:
+                    var cardPlayingEventData = JsonConvert.DeserializeObject<PlayingCardEventData>(json);
+                    PlayingCard?.Invoke(cardPlayingEventData);
+                    break;
+
+                case PhotonEvent.TakingDamage:
+                    var takingDamageEventData = JsonConvert.DeserializeObject<TakingDamageEventData>(json);
+                    TakingDamage?.Invoke(takingDamageEventData);
+                    break;
+
+                case PhotonEvent.GainingHealth:
+                    var gainingHealthEventData = JsonConvert.DeserializeObject<GainingHealthEventData>(json);
+                    GainingHealth?.Invoke(gainingHealthEventData);
+                    break;
+
+                case PhotonEvent.DiscardingCard:
+                    var discardingCardEventData = JsonConvert.DeserializeObject<DiscardingCardEventData>(json);
+                    DiscardingCard?.Invoke(discardingCardEventData);
                     break;
             }
         }
 
-        private void OnCardDealing(CardDealingEventData eventData)
+        private void OnDealingCard(DealingCardEventData eventData)
         {
             var card = Cards[eventData.CardId];
             var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
@@ -296,7 +319,7 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        private void OnRevealingRole(RevealingRoleEventData eventData)
         {
             var players = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
 
@@ -317,11 +340,47 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.CurrentRoom.TurnPlayerIds = players.ToArray();
         }
 
-        private void OnCardPlaying(CardPlayingEventData eventData)
+        private void OnPlayingCard(PlayingCardEventData eventData)
         {
             var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.InstigatorId);
             var newHandCardIds = instigator.HandCardIds.Where(c => c != eventData.CardId).ToArray();
             instigator.HandCardIds = newHandCardIds;
+        }
+
+        private void OnTakingDamage(TakingDamageEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            player.CurrentHealth = Math.Max(0, player.CurrentHealth - eventData.Damage);
+
+            if (player.CurrentHealth == 0)
+            {
+                //TODO elimination
+            }
+        }
+
+        private void OnGainingHealth(GainingHealthEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            player.CurrentHealth = Math.Min(player.CurrentHealth + 1, player.MaxHealth);
+        }
+
+        private void OnDiscardingCard(DiscardingCardEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            var card = Cards[eventData.CardId];
+
+            if (eventData.IsFromHand)
+            {
+                player.HandCardIds = player.HandCardIds.Where(c => c != card.Id).ToArray();
+            }
+            else
+            {
+                player.BoardCardIds = player.BoardCardIds.Where(c => c != card.Id).ToArray();
+                if (card.Effect == CardEffect.Weapon)
+                {
+                    player.Range -= card.EffectValue.Value;
+                }
+            }
         }
 
         #endregion

@@ -76,13 +76,13 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.AddCallbackTarget(this);
 
             _gameManager.StateEnter += OnStateEnter;
-            _gameManager.CardDealing += OnCardDealing;
-            _gameManager.RoleRevealing += OnRoleRevealing;
+            _gameManager.DealingCard += OnDealingCard;
+            _gameManager.RevealingRole += OnRevealingRole;
             _gameManager.CardHoverEnter += OnCardHoverEnter;
             _gameManager.CardHoverExit += OnCardHoverExit;
             _gameManager.CardSelected += OnCardSelected;
             _gameManager.CardCanceled += OnCardCanceled;
-            _gameManager.CardPlaying += OnCardPlaying;
+            _gameManager.PlayingCard += OnPlayingCard;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
@@ -102,13 +102,13 @@ namespace Thirties.UnofficialBang
             PhotonNetwork.RemoveCallbackTarget(this);
 
             _gameManager.StateEnter -= OnStateEnter;
-            _gameManager.CardDealing -= OnCardDealing;
-            _gameManager.RoleRevealing -= OnRoleRevealing;
+            _gameManager.DealingCard -= OnDealingCard;
+            _gameManager.RevealingRole -= OnRevealingRole;
             _gameManager.CardHoverEnter -= OnCardHoverEnter;
             _gameManager.CardHoverExit -= OnCardHoverExit;
             _gameManager.CardSelected -= OnCardSelected;
             _gameManager.CardCanceled -= OnCardCanceled;
-            _gameManager.CardPlaying -= OnCardPlaying;
+            _gameManager.PlayingCard -= OnPlayingCard;
         }
 
         #endregion
@@ -134,68 +134,91 @@ namespace Thirties.UnofficialBang
                     headerText.text = _gameManager.IsLocalPlayerTurn ? "Pescando..."
                         : $"{currentPlayer} sta pescando...";
                 }
-                else if (state is CardSelectionState)
+                else if (state is PlayPhaseState)
                 {
-                    if (_gameManager.IsLocalPlayerTurn)
+                    if (state is CardSelectionState)
                     {
-                        headerText.text = "Puoi giocare una carta o passare";
-
-                        var passCommand = Instantiate(commandElementPrefab, commandsContainer);
-                        passCommand.Configure("Passa", () =>
+                        if (_gameManager.IsLocalPlayerTurn)
                         {
-                            _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.DiscardPhase });
-                        });
+                            headerText.text = "Puoi giocare una carta o passare";
+
+                            _commands.ForEach(c => Destroy(c.gameObject));
+                            _commands.Clear();
+
+                            var passCommand = Instantiate(commandElementPrefab, commandsContainer);
+                            passCommand.Configure("Passa", () =>
+                            {
+                                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.DiscardPhase });
+                            });
+
+                            _commands.Add(passCommand);
+
+                            commandsContainer.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            headerText.text = $"{currentPlayer} può giocare una carta o passare";
+
+                            commandsContainer.gameObject.SetActive(false);
+                        }
+                    }
+                    else if (state is CardResolutionState)
+                    {
+                        commandsContainer.gameObject.SetActive(false);
 
                         _commands.ForEach(c => Destroy(c.gameObject));
-                        _commands.Add(passCommand);
+                        _commands.Clear();
 
-                        commandsContainer.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        headerText.text = $"{currentPlayer} può giocare una carta o passare";
+                        var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
+                        if (card.Class == CardClass.Blue) return;
 
-                        commandsContainer.gameObject.SetActive(false);
-                    }
-                }
-                else if (state is CardResolutionState)
-                {
-                    string currentTarget = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentTarget.NickName}</color></b>";
+                        string currentTarget = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentTarget.NickName}</color></b>";
+                        string missed = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color>";
+                        string bang = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color>";
+                        string damage = $"<color=#{_gameManager.ColorSettings.DamageColor}>danno</color>";
 
-                    var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
-                    if (card.Class == CardClass.Blue) return;
+                        switch (card.Effect)
+                        {
+                            case CardEffect.Bang:
+                            case CardEffect.Damage:
+                            case CardEffect.Missed:
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {missed} o ricevere un {damage}"
+                                    : $"{currentTarget} deve giocare un {missed} o ricevere un {damage}";
 
-                    string missed = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color>";
-                    string bang = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color>";
-                    string damage = $"<color=#{_gameManager.ColorSettings.DamageColor}>danno</color>";
+                                if (_gameManager.IsLocalPlayerTarget)
+                                {
+                                    commandsContainer.gameObject.SetActive(true);
 
-                    switch (card.Effect)
-                    {
-                        case CardEffect.Bang:
-                        case CardEffect.Damage:
-                        case CardEffect.Missed:
-                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {missed} o ricevere un {damage}"
-                                : $"{currentTarget} deve giocare un {missed} o ricevere un {damage}";
-                            break;
-                        case CardEffect.Duel:
-                        case CardEffect.Indians:
-                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {bang} o ricevere un {damage}"
-                                : $"{currentTarget} deve giocare un {bang} o ricevere un {damage}";
-                            break;
-                        case CardEffect.Discard:
-                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"
-                                : $"{currentTarget} può scegliere una carta da scartare";
-                            break;
-                        case CardEffect.GeneralStore:
-                            headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi scegliere una carta"
-                                : $"{currentTarget} deve scegliere una carta";
-                            break;
+                                    var damageCommand = Instantiate(commandElementPrefab, commandsContainer);
+                                    damageCommand.Configure("Ricevi danno", () =>
+                                    {
+                                        commandsContainer.gameObject.SetActive(false);
+                                        _gameManager.SendEvent(PhotonEvent.TakingDamage, new TakingDamageEventData { PlayerId = PhotonNetwork.LocalPlayer.ActorNumber, Damage = 1 });
+                                    });
+                                    _commands.Add(damageCommand);
+                                }
+                                break;
+
+                            case CardEffect.Duel:
+                            case CardEffect.Indians:
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {bang} o ricevere un {damage}"
+                                    : $"{currentTarget} deve giocare un {bang} o ricevere un {damage}";
+                                break;
+                            case CardEffect.Discard:
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"
+                                    : $"{currentTarget} può scegliere una carta da scartare";
+                                break;
+                            case CardEffect.GeneralStore:
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi scegliere una carta"
+                                    : $"{currentTarget} deve scegliere una carta";
+                                break;
+                        }
                     }
                 }
             }
         }
 
-        private void OnCardDealing(CardDealingEventData eventData)
+        private void OnDealingCard(DealingCardEventData eventData)
         {
             if (eventData.PlayerId == PhotonNetwork.LocalPlayer.ActorNumber)
             {
@@ -219,7 +242,7 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void OnRoleRevealing(RoleRevealingEventData eventData)
+        private void OnRevealingRole(RevealingRoleEventData eventData)
         {
             var card = _gameManager.Cards[eventData.CardId];
             var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
@@ -228,7 +251,7 @@ namespace Thirties.UnofficialBang
             gameLog.Log(message, card, instigator);
         }
 
-        private void OnCardPlaying(CardPlayingEventData eventData)
+        private void OnPlayingCard(PlayingCardEventData eventData)
         {
             var card = _gameManager.Cards[eventData.CardId];
             var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.InstigatorId);
@@ -295,7 +318,7 @@ namespace Thirties.UnofficialBang
             cardZoom.gameObject.SetActive(false);
         }
 
-        private void OnCardSelected(CardSelectedEventData eventData)
+        private void OnCardSelected(SelectingCardEventData eventData)
         {
             OnCardHoverExit();
 
@@ -304,7 +327,7 @@ namespace Thirties.UnofficialBang
 
         private void OnCardCanceled()
         {
-            commandsContainer.gameObject.SetActive(false);
+            commandsContainer.gameObject.SetActive(true);
         }
 
         #endregion

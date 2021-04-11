@@ -97,7 +97,7 @@ namespace Thirties.UnofficialBang
                         break;
                 }
 
-                _gameManager.CardSelected?.Invoke(new CardSelectedEventData { CardData = CardData, Range = range });
+                _gameManager.CardSelected?.Invoke(new SelectingCardEventData { CardData = CardData, Range = range });
             }
         }
 
@@ -149,7 +149,7 @@ namespace Thirties.UnofficialBang
 
                     _currentAreaView.SetReady(false);
 
-                    var eventData = new CardPlayingEventData
+                    var eventData = new PlayingCardEventData
                     {
                         InstigatorId = PhotonNetwork.LocalPlayer.ActorNumber,
                         TargetId = _currentAreaView.TargetId,
@@ -165,7 +165,7 @@ namespace Thirties.UnofficialBang
                         eventData.TargetId = _gameManager.NextLivingPlayerId;
                     }
 
-                    _gameManager.SendEvent(PhotonEvent.CardPlaying, eventData);
+                    _gameManager.SendEvent(PhotonEvent.PlayingCard, eventData);
                 }
                 else
                 {
