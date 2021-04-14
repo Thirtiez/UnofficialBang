@@ -27,6 +27,7 @@ MonoBehaviour:
   roleCardColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   playerColor: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   damageColor: {r: 0.89019614, g: 0.42352945, b: 0.32941177, a: 1}
+  cureColor: {r: 0.8235295, g: 0.6745098, b: 0.4039216, a: 1}
   cardPlayable: {r: 1, g: 0.85098046, b: 0.37647063, a: 1}
   cardReady: {r: 0.89019614, g: 0.42352945, b: 0.32941177, a: 1}
   areaPlayable: {r: 1, g: 1, b: 1, a: 0.2509804}

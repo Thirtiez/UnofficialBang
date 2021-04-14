@@ -39,38 +39,8 @@ namespace Thirties.UnofficialBang
 
         #region Public methods
 
-        public void Log(string message, CardData card = null, Player target = null, Player instigator = null)
+        public void Log(string message)
         {
-            var colorSettings = GameManager.Instance.ColorSettings;
-            string cardColor = null;
-
-            if (card != null)
-            {
-                switch (card.Class)
-                {
-                    case CardClass.Brown:
-                        cardColor = colorSettings.BrownCardColor;
-                        break;
-
-                    case CardClass.Blue:
-                        cardColor = colorSettings.BlueCardColor;
-                        break;
-
-                    case CardClass.Character:
-                        cardColor = colorSettings.CharacterCardColor;
-                        break;
-
-                    case CardClass.Role:
-                        cardColor = colorSettings.RoleCardColor;
-                        break;
-                }
-            }
-
-            string cardName = $"<color=#{cardColor}>{card?.Name}</color>";
-            string targetName = $"<color=#{colorSettings.PlayerColor}>{target?.NickName}</color>";
-            string instigatorName = $"<color=#{colorSettings.PlayerColor}>{instigator?.NickName}</color>";
-
-            message = string.Format(message, cardName, targetName, instigatorName);
             _messages.Add(message);
 
             var logElement = Instantiate(logElementPrefab, scrollRect.content);

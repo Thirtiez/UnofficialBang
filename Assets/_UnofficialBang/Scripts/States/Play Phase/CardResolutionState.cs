@@ -46,7 +46,7 @@ namespace Thirties.UnofficialBang
 
                     case CardEffect.Cure:
                     case CardEffect.Beer:
-                        _gameManager.SendEvent(PhotonEvent.GainingHealth, new GainingHealthEventData { PlayerId = targetPlayer.ActorNumber, Health = 1 });
+                        _gameManager.SendEvent(PhotonEvent.GainingHealth, new GainingHealthEventData { PlayerId = targetPlayer.ActorNumber, Amount = 1 });
                         break;
 
                     case CardEffect.Draw:

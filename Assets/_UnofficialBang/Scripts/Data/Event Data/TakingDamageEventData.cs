@@ -3,6 +3,6 @@
     public class TakingDamageEventData : BaseEventData
     {
         public int PlayerId { get; set; }
-        public int Damage { get; set; }
+        public int Amount { get; set; }
     }
 }

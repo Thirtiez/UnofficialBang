@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -65,6 +66,13 @@ namespace Thirties.UnofficialBang
 
         private List<CommandElementUI> _commands = new List<CommandElementUI>();
 
+        private string _currentPlayerNickname => _gameManager.ColorSettings.Colorize(PhotonNetwork.CurrentRoom.CurrentPlayer.NickName, TextColorization.PlayerColor);
+        private string _currentTargetNickname => _gameManager.ColorSettings.Colorize(PhotonNetwork.CurrentRoom.CurrentTarget.NickName, TextColorization.PlayerColor);
+        private string _missedText => _gameManager.ColorSettings.Colorize("Mancato", TextColorization.BrownCard);
+        private string _bangText => _gameManager.ColorSettings.Colorize("Bang!", TextColorization.BrownCard);
+        private string _damageText => _gameManager.ColorSettings.Colorize("danno", TextColorization.DamageColor);
+        private string _cureText => _gameManager.ColorSettings.Colorize("cura", TextColorization.CureColor);
+
         #endregion
 
         #region Monobehaviour methods
@@ -83,6 +91,9 @@ namespace Thirties.UnofficialBang
             _gameManager.CardSelected += OnCardSelected;
             _gameManager.CardCanceled += OnCardCanceled;
             _gameManager.PlayingCard += OnPlayingCard;
+            _gameManager.TakingDamage += OnTakingDamage;
+            _gameManager.GainingHealth += OnGainingHealth;
+            _gameManager.DiscardingCard += OnDiscardingCard;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
@@ -109,6 +120,9 @@ namespace Thirties.UnofficialBang
             _gameManager.CardSelected -= OnCardSelected;
             _gameManager.CardCanceled -= OnCardCanceled;
             _gameManager.PlayingCard -= OnPlayingCard;
+            _gameManager.TakingDamage -= OnTakingDamage;
+            _gameManager.GainingHealth -= OnGainingHealth;
+            _gameManager.DiscardingCard -= OnDiscardingCard;
         }
 
         #endregion
@@ -123,16 +137,15 @@ namespace Thirties.UnofficialBang
             }
             else if (state is TurnState)
             {
-                string currentPlayer = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentPlayer.NickName}</color></b>";
                 if (state is TurnStartState)
                 {
                     headerText.text = _gameManager.IsLocalPlayerTurn ? "Iniziando il tuo turno..."
-                        : $"{currentPlayer} sta iniziando il turno...";
+                        : $"{_currentPlayerNickname} sta iniziando il turno...";
                 }
                 else if (state is DrawPhaseState)
                 {
                     headerText.text = _gameManager.IsLocalPlayerTurn ? "Pescando..."
-                        : $"{currentPlayer} sta pescando...";
+                        : $"{_currentPlayerNickname} sta pescando...";
                 }
                 else if (state is PlayPhaseState)
                 {
@@ -157,7 +170,7 @@ namespace Thirties.UnofficialBang
                         }
                         else
                         {
-                            headerText.text = $"{currentPlayer} può giocare una carta o passare";
+                            headerText.text = $"{_currentPlayerNickname} può giocare una carta o passare";
 
                             commandsContainer.gameObject.SetActive(false);
                         }
@@ -172,45 +185,51 @@ namespace Thirties.UnofficialBang
                         var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
                         if (card.Class == CardClass.Blue) return;
 
-                        string currentTarget = $"<b><color=#{_gameManager.ColorSettings.PlayerColor}>{PhotonNetwork.CurrentRoom.CurrentTarget.NickName}</color></b>";
-                        string missed = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Mancato</color>";
-                        string bang = $"<color=#{_gameManager.ColorSettings.BrownCardColor}>Bang!</color>";
-                        string damage = $"<color=#{_gameManager.ColorSettings.DamageColor}>danno</color>";
+
 
                         switch (card.Effect)
                         {
                             case CardEffect.Bang:
                             case CardEffect.Damage:
                             case CardEffect.Missed:
-                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {missed} o ricevere un {damage}"
-                                    : $"{currentTarget} deve giocare un {missed} o ricevere un {damage}";
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {_missedText} o ricevere 1 {_damageText}"
+                                    : $"{_currentTargetNickname} deve giocare un {_missedText} o ricevere 1 {_damageText}";
 
                                 if (_gameManager.IsLocalPlayerTarget)
                                 {
                                     commandsContainer.gameObject.SetActive(true);
 
                                     var damageCommand = Instantiate(commandElementPrefab, commandsContainer);
-                                    damageCommand.Configure("Ricevi danno", () =>
-                                    {
-                                        commandsContainer.gameObject.SetActive(false);
-                                        _gameManager.SendEvent(PhotonEvent.TakingDamage, new TakingDamageEventData { PlayerId = PhotonNetwork.LocalPlayer.ActorNumber, Damage = 1 });
-                                    });
+                                    damageCommand.Configure("Ricevi 1 danno", () =>
+                                        _gameManager.SendEvent(PhotonEvent.TakingDamage, new TakingDamageEventData { PlayerId = PhotonNetwork.LocalPlayer.ActorNumber, Amount = 1 }));
                                     _commands.Add(damageCommand);
                                 }
                                 break;
 
                             case CardEffect.Duel:
                             case CardEffect.Indians:
-                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {bang} o ricevere un {damage}"
-                                    : $"{currentTarget} deve giocare un {bang} o ricevere un {damage}";
+                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi giocare un {_bangText} o ricevere 1 {_damageText}"
+                                    : $"{_currentTargetNickname} deve giocare un {_bangText} o ricevere 1 {_damageText}";
+
+                                if (_gameManager.IsLocalPlayerTarget)
+                                {
+                                    commandsContainer.gameObject.SetActive(true);
+
+                                    var damageCommand = Instantiate(commandElementPrefab, commandsContainer);
+                                    damageCommand.Configure("Ricevi 1 danno", () =>
+                                        _gameManager.SendEvent(PhotonEvent.TakingDamage, new TakingDamageEventData { PlayerId = PhotonNetwork.LocalPlayer.ActorNumber, Amount = 1 }));
+                                    _commands.Add(damageCommand);
+                                }
                                 break;
+
                             case CardEffect.Discard:
                                 headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"
-                                    : $"{currentTarget} può scegliere una carta da scartare";
+                                    : $"{_currentTargetNickname} può scegliere una carta da scartare";
                                 break;
+
                             case CardEffect.GeneralStore:
                                 headerText.text = _gameManager.IsLocalPlayerTarget ? $"Devi scegliere una carta"
-                                    : $"{currentTarget} deve scegliere una carta";
+                                    : $"{_currentTargetNickname} deve scegliere una carta";
                                 break;
                         }
                     }
@@ -227,16 +246,19 @@ namespace Thirties.UnofficialBang
                 switch (card.Class)
                 {
                     case CardClass.Brown:
+                        gameLog.Log($"Hai pescato una carta {_gameManager.ColorSettings.Colorize(card.Name, TextColorization.BrownCard)}");
+                        break;
+
                     case CardClass.Blue:
-                        gameLog.Log("Hai pescato la carta {0}", card);
+                        gameLog.Log($"Hai pescato una carta {_gameManager.ColorSettings.Colorize(card.Name, TextColorization.BlueCard)}");
                         break;
 
                     case CardClass.Character:
-                        gameLog.Log("Hai pescato il personaggio {0}", card);
+                        gameLog.Log($"Hai pescato il personaggio {_gameManager.ColorSettings.Colorize(card.Name, TextColorization.CharacterCard)}");
                         break;
 
                     case CardClass.Role:
-                        gameLog.Log("Hai pescato il ruolo {0}", card);
+                        gameLog.Log($"Hai pescato il ruolo {_gameManager.ColorSettings.Colorize(card.Name, TextColorization.RoleCard)}");
                         break;
                 }
             }
@@ -245,10 +267,12 @@ namespace Thirties.UnofficialBang
         private void OnRevealingRole(RevealingRoleEventData eventData)
         {
             var card = _gameManager.Cards[eventData.CardId];
-            var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            string message = card.Effect == CardEffect.Sceriff ? "{1} è lo {0}!" : "{1} era un {0}!";
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
 
-            gameLog.Log(message, card, instigator);
+            string characterName = _gameManager.ColorSettings.Colorize(card.Name, TextColorization.CharacterCard);
+            string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+
+            gameLog.Log(card.Effect == CardEffect.Sceriff ? $"{playerName} è lo {characterName}!" : $"{playerName} era un {characterName}!");
         }
 
         private void OnPlayingCard(PlayingCardEventData eventData)
@@ -256,22 +280,55 @@ namespace Thirties.UnofficialBang
             var card = _gameManager.Cards[eventData.CardId];
             var instigator = PhotonNetwork.CurrentRoom.GetPlayer(eventData.InstigatorId);
 
+            var cardColorization = card.Class == CardClass.Blue ? TextColorization.BlueCard : TextColorization.BrownCard;
+            string cardName = _gameManager.ColorSettings.Colorize(card.Name, cardColorization);
+            string instigatorName = _gameManager.ColorSettings.Colorize(instigator.NickName, TextColorization.PlayerColor);
+
             switch (card.Target)
             {
                 default:
                 case CardTarget.Self:
                 case CardTarget.Everyone:
                 case CardTarget.EveryoneElse:
-                    gameLog.Log("{1} gioca {0}", card, instigator);
+                    gameLog.Log($"{instigatorName} gioca {cardName}");
                     break;
                 case CardTarget.Instigator:
                 case CardTarget.Range:
                 case CardTarget.FixedRange:
                 case CardTarget.Anyone:
                     var target = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
-                    gameLog.Log("{1} gioca {0} contro {2}", card, instigator, target);
+                    string targetName = _gameManager.ColorSettings.Colorize(target.NickName, TextColorization.PlayerColor);
+                    gameLog.Log($"{instigatorName} gioca {cardName} contro {targetName}");
                     break;
             }
+        }
+
+        private void OnTakingDamage(TakingDamageEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+
+            gameLog.Log($"{playerName} riceve {eventData.Amount} {_damageText}");
+        }
+
+        private void OnGainingHealth(GainingHealthEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+
+            gameLog.Log($"{playerName} riceve {eventData.Amount} {_cureText}");
+        }
+
+        private void OnDiscardingCard(DiscardingCardEventData eventData)
+        {
+            var card = _gameManager.Cards[eventData.CardId];
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+
+            var cardColorization = card.Class == CardClass.Blue ? TextColorization.BlueCard : TextColorization.BrownCard;
+            string cardName = _gameManager.ColorSettings.Colorize(card.Name, cardColorization);
+
+            gameLog.Log($"{playerName} scarta una carta {cardName}");
         }
 
         #endregion

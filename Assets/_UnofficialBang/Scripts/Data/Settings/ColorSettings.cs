@@ -5,6 +5,17 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
+    public enum TextColorization
+    {
+        BrownCard,
+        BlueCard,
+        CharacterCard,
+        RoleCard,
+        PlayerColor,
+        DamageColor,
+        CureColor,
+    }
+
     [CreateAssetMenu(menuName = "Color Settings")]
     public class ColorSettings : SerializedScriptableObject
     {
@@ -28,6 +39,9 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Color damageColor;
 
+        [SerializeField]
+        private Color cureColor;
+
         [Header("Cards")]
 
         [SerializeField]
@@ -47,17 +61,41 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Color areaTurn;
 
-        public string BrownCardColor => ColorUtility.ToHtmlStringRGBA(brownCardColor);
-        public string BlueCardColor => ColorUtility.ToHtmlStringRGBA(blueCardColor);
-        public string CharacterCardColor => ColorUtility.ToHtmlStringRGBA(characterCardColor);
-        public string RoleCardColor => ColorUtility.ToHtmlStringRGBA(roleCardColor);
-        public string PlayerColor => ColorUtility.ToHtmlStringRGBA(playerColor);
-        public string DamageColor => ColorUtility.ToHtmlStringRGBA(damageColor);
-
         public Color CardPlayable => cardPlayable;
         public Color CardReady => cardReady;
         public Color AreaPlayable => areaPlayable;
         public Color AreaReady => areaReady;
         public Color AreaTurn => areaTurn;
+
+        public string Colorize(string text, TextColorization colorization)
+        {
+            var color = Color.white;
+            switch (colorization)
+            {
+                case TextColorization.BrownCard:
+                    color = brownCardColor;
+                    break;
+                case TextColorization.BlueCard:
+                    color = blueCardColor;
+                    break;
+                case TextColorization.CharacterCard:
+                    color = characterCardColor;
+                    break;
+                case TextColorization.RoleCard:
+                    color = roleCardColor;
+                    break;
+                case TextColorization.PlayerColor:
+                    color = playerColor;
+                    break;
+                case TextColorization.DamageColor:
+                    color = damageColor;
+                    break;
+                case TextColorization.CureColor:
+                    color = cureColor;
+                    break;
+            }
+
+            return $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{text}</color>";
+        }
     }
 }

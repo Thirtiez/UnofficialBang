@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using Sirenix.Utilities;
 using SplineMesh;
 using System;
@@ -83,6 +84,7 @@ namespace Thirties.UnofficialBang
 
         private List<CardView> _discardedCards = new List<CardView>();
 
+        private Player _player => PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
         private CardView _roleCard => _sideCards[0];
         private CardView _characterCard => _sideCards[1];
 
@@ -115,6 +117,9 @@ namespace Thirties.UnofficialBang
             _gameManager.DealingCard += OnDealingCard;
             _gameManager.RevealingRole += OnRevealingRole;
             _gameManager.PlayingCard += OnPlayingCard;
+            _gameManager.TakingDamage += OnTakingDamage;
+            _gameManager.GainingHealth += OnGainingHealth;
+            _gameManager.DiscardingCard += OnDiscardingCard;
 
             equipCardToPlayer += OnEquipCardToPlayer;
         }
@@ -126,6 +131,9 @@ namespace Thirties.UnofficialBang
             _gameManager.DealingCard -= OnDealingCard;
             _gameManager.RevealingRole -= OnRevealingRole;
             _gameManager.PlayingCard -= OnPlayingCard;
+            _gameManager.TakingDamage -= OnTakingDamage;
+            _gameManager.GainingHealth -= OnGainingHealth;
+            _gameManager.DiscardingCard -= OnDiscardingCard;
 
             equipCardToPlayer -= OnEquipCardToPlayer;
         }
@@ -149,7 +157,7 @@ namespace Thirties.UnofficialBang
 
                 PlayerDistance = playerOffset > playerCount / 2 ? playerCount - playerOffset : playerOffset;
                 PlayerId = PhotonNetwork.CurrentRoom.TurnPlayerIds[playerIndex];
-                nicknameText.text = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId).NickName;
+                nicknameText.text = _player.NickName;
 
                 bullets.ForEach(b =>
                 {
@@ -204,25 +212,36 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private IEnumerator GainBulletRoutine(int count)
+        private IEnumerator GainBulletRoutine(int from, int to)
         {
-            for (int i = 0; i < count; i++)
+            for (int i = from; i < to; i++)
             {
-                GainBullet(bullets[i]);
+                GainBullet(i);
                 yield return new WaitForSeconds(_gameManager.AnimationSettings.BulletAnimationDelay);
             }
         }
 
-        private void GainBullet(GameObject bullet)
+        private void GainBullet(int index)
         {
+            var bullet = bullets[index];
             bullet.gameObject.SetActive(true);
             bullet.transform
                 .DOScale(Vector3.one * 0.1f, _gameManager.AnimationSettings.BulletAnimationDuration)
                 .SetEase(Ease.OutBack);
         }
 
-        private void LoseBullet(GameObject bullet)
+        private IEnumerator LoseBulletRoutine(int from, int to)
         {
+            for (int i = from; i >= to; i--)
+            {
+                LoseBullet(i);
+                yield return new WaitForSeconds(_gameManager.AnimationSettings.BulletAnimationDelay);
+            }
+        }
+
+        private void LoseBullet(int index)
+        {
+            var bullet = bullets[index];
             bullet.transform
                 .DOScale(Vector3.zero, _gameManager.AnimationSettings.BulletAnimationDuration)
                 .SetEase(Ease.InBack)
@@ -292,8 +311,7 @@ namespace Thirties.UnofficialBang
         {
             if (state is CharactersDealingState)
             {
-                var player = PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
-                StartCoroutine(GainBulletRoutine(player.CurrentHealth));
+                StartCoroutine(GainBulletRoutine(0, _player.CurrentHealth));
             }
         }
 
@@ -361,17 +379,43 @@ namespace Thirties.UnofficialBang
 
         private void OnTakingDamage(TakingDamageEventData eventData)
         {
-            //TODO
+            int currentHealth = _player.CurrentHealth;
+            if (eventData.Amount > 1)
+            {
+                StartCoroutine(LoseBulletRoutine(currentHealth, currentHealth - eventData.Amount));
+            }
+            else
+            {
+                LoseBullet(currentHealth - eventData.Amount);
+            }
         }
 
         private void OnGainingHealth(GainingHealthEventData eventData)
         {
-            //TODO
+            int currentHealth = _player.CurrentHealth;
+            if (eventData.Amount > 1)
+            {
+                StartCoroutine(GainBulletRoutine(currentHealth, currentHealth + eventData.Amount));
+            }
+            else
+            {
+                LoseBullet(currentHealth + eventData.Amount);
+            }
         }
 
         private void OnDiscardingCard(DiscardingCardEventData eventData)
         {
-            //TODO
+            var cardList = eventData.IsFromHand ? _handCards : _boardCards;
+            var spline = eventData.IsFromHand ? handSpline : boardSpline;
+
+            var card = cardList.SingleOrDefault(c => c.CardData.Id == eventData.CardId);
+            card.SetPlayable(false);
+            card.Show();
+
+            cardList.Remove(card);
+            RefreshSpline(spline, cardList);
+
+            DiscardCard(card);
         }
 
         private void OnEquipCardToPlayer(CardView card, int targetId)

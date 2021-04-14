@@ -350,7 +350,7 @@ namespace Thirties.UnofficialBang
         private void OnTakingDamage(TakingDamageEventData eventData)
         {
             var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            player.CurrentHealth = Math.Max(0, player.CurrentHealth - eventData.Damage);
+            player.CurrentHealth = Math.Max(0, player.CurrentHealth - eventData.Amount);
 
             if (player.CurrentHealth == 0)
             {
