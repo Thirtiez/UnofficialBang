@@ -18,6 +18,7 @@ namespace Thirties.UnofficialBang
 
             _gameManager = GameManager.Instance;
 
+            _gameManager.CurrentState = this;
             _gameManager.StateEnter?.Invoke(this);
         }
 

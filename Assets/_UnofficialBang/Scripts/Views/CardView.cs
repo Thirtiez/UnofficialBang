@@ -117,20 +117,15 @@ namespace Thirties.UnofficialBang
                     var areaView = hit.transform.GetComponent<AreaView>();
                     if (areaView != null)
                     {
-                        if (_currentAreaView != null && _currentAreaView != areaView)
-                        {
-                            _currentAreaView.SetReady(false);
-                        }
-
                         _currentAreaView = areaView;
-                        _currentAreaView.SetReady(true);
+                        _currentAreaView.SetHighlight(true);
 
                         SetReady(true);
                     }
                 }
                 else
                 {
-                    _currentAreaView?.SetReady(false);
+                    _currentAreaView?.SetHighlight(false);
 
                     SetReady(false);
                 }
@@ -147,7 +142,7 @@ namespace Thirties.UnofficialBang
                 {
                     SetReady(false);
 
-                    _currentAreaView.SetReady(false);
+                    _currentAreaView.SetHighlight(false);
 
                     var eventData = new PlayingCardEventData
                     {

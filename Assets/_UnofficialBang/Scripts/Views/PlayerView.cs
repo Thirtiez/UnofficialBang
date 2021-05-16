@@ -71,6 +71,9 @@ namespace Thirties.UnofficialBang
         public bool IsLocalPlayer => playerNumber == 0;
         public bool IsCurrentPlayer => PlayerId == PhotonNetwork.CurrentRoom.CurrentPlayerId;
         public bool IsCurrentTarget => PlayerId == PhotonNetwork.CurrentRoom.CurrentTargetId;
+        public bool IsCurrentPlayerOrTarget =>
+            (_gameManager.CurrentState is CardSelectionState && IsCurrentPlayer) ||
+            (_gameManager.CurrentState is CardResolutionState && IsCurrentTarget);
 
         #endregion
 
@@ -358,7 +361,7 @@ namespace Thirties.UnofficialBang
 
         private void OnPlayingCard(PlayingCardEventData eventData)
         {
-            if (IsCurrentPlayer)
+            if (IsCurrentPlayerOrTarget)
             {
                 var card = _handCards.SingleOrDefault(c => c.CardData.Id == eventData.CardId);
                 card.SetPlayable(false);

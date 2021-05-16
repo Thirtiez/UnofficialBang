@@ -49,7 +49,7 @@ namespace Thirties.UnofficialBang
             _gameManager.CardCanceled += OnCardCanceled;
 
             SetPlayable(false);
-            SetReady(false);
+            SetHighlight(false);
         }
 
         protected void OnDisable()
@@ -63,27 +63,30 @@ namespace Thirties.UnofficialBang
 
         #region Public methods
 
-        public void SetReady(bool isReady)
+        public void SetHighlight(bool value)
         {
-            if (playerView.IsCurrentPlayer) return;
+            if (playerView.IsCurrentPlayerOrTarget) return;
 
-            areaMask.color = isReady ? _gameManager.ColorSettings.AreaReady : _gameManager.ColorSettings.AreaPlayable;
+            SetColor(value ? _gameManager.ColorSettings.AreaReady : _gameManager.ColorSettings.AreaPlayable);
         }
 
         #endregion
 
         #region Private methods
 
+        private void SetVisible(bool value)
+        {
+            areaMask.enabled = value;
+        }
+
         private void SetPlayable(bool isPlayable)
         {
-            areaMask.enabled = playerView.IsCurrentPlayer || isPlayable;
             areaCollider.enabled = isPlayable;
         }
 
-        private void SetColor(bool isCurrentPlayer)
+        private void SetColor(Color color)
         {
-            areaMask.enabled = isCurrentPlayer;
-            areaMask.color = isCurrentPlayer ? _gameManager.ColorSettings.AreaTurn : _gameManager.ColorSettings.AreaPlayable;
+            areaMask.color = color;
         }
 
         #endregion
@@ -92,27 +95,31 @@ namespace Thirties.UnofficialBang
 
         private void OnStateEnter(BaseState state)
         {
-            SetColor((state is CardSelectionState && playerView.IsCurrentPlayer) || (state is CardResolutionState && playerView.IsCurrentTarget));
+            SetColor(playerView.IsCurrentPlayerOrTarget ? _gameManager.ColorSettings.AreaTurn : _gameManager.ColorSettings.AreaPlayable);
+            SetVisible(playerView.IsCurrentPlayerOrTarget);
         }
 
         private void OnCardSelected(SelectingCardEventData eventData)
         {
             int distance = playerView.PlayerDistance;
 
-            if (playerView.IsCurrentPlayer)
+            if (playerView.IsCurrentPlayerOrTarget)
             {
                 SetPlayable(eventData.Range == 0);
             }
             else
             {
                 var player = PhotonNetwork.CurrentRoom.GetPlayer(playerView.PlayerId);
-                SetPlayable(player.IsAlive && distance + player.BonusDistance <= eventData.Range);
+                bool isPlayable = player.IsAlive && distance + player.BonusDistance <= eventData.Range;
+                SetPlayable(isPlayable);
+                SetVisible(isPlayable);
             }
         }
 
         private void OnCardCanceled()
         {
             SetPlayable(false);
+            SetVisible(playerView.IsCurrentPlayerOrTarget);
         }
 
         #endregion

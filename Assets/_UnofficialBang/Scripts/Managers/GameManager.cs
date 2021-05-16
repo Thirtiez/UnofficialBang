@@ -50,6 +50,7 @@ namespace Thirties.UnofficialBang
         public static GameManager Instance { get; private set; }
 
         public List<CardData> Cards { get; private set; }
+        public BaseState CurrentState { get; set; }
 
         public CardSpriteTable CardSpriteTable => cardSpriteTable;
         public ColorSettings ColorSettings => colorSettings;
