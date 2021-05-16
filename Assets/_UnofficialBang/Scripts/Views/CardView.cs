@@ -81,8 +81,14 @@ namespace Thirties.UnofficialBang
                 cardSpriteRenderer.gameObject.SetActive(true);
 
                 int range = 0;
+                var target = CardData.Target;
 
-                switch (CardData.Target)
+                if (CardData.Effect == CardEffect.Bang && _gameManager.CurrentState is CardResolutionState)
+                {
+                    target = CardTarget.Self;
+                }
+
+                switch (target)
                 {
                     case CardTarget.Range:
                         range = PhotonNetwork.LocalPlayer.Range;

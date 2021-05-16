@@ -280,6 +280,11 @@ namespace Thirties.UnofficialBang
             string cardName = _gameManager.ColorSettings.Colorize(card.Name, cardColorization);
             string instigatorName = _gameManager.ColorSettings.Colorize(instigator.NickName, TextColorization.PlayerColor);
 
+            if (card.Effect == CardEffect.Bang && _gameManager.CurrentState is CardResolutionState)
+            {
+                card.Target = CardTarget.Self;
+            }
+
             switch (card.Target)
             {
                 default:

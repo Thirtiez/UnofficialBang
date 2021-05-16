@@ -93,7 +93,7 @@ namespace Thirties.UnofficialBang
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
 
-        private void GoForward()
+        private void GoForward(bool tookDamage = false)
         {
             int trigger = FSMTrigger.Forward;
 
@@ -107,6 +107,13 @@ namespace Thirties.UnofficialBang
                     PhotonNetwork.CurrentRoom.CurrentTargetId = nextTarget;
                 }
             }
+            else if (!tookDamage && card.Effect == CardEffect.Duel)
+            {
+                PhotonNetwork.CurrentRoom.CurrentTargetId = PhotonNetwork.CurrentRoom.LastDuelTargetId;
+                PhotonNetwork.CurrentRoom.LastDuelTargetId = PhotonNetwork.LocalPlayer.ActorNumber;
+
+                trigger = FSMTrigger.CardResolution;
+            }
 
             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = trigger });
         }
@@ -118,7 +125,7 @@ namespace Thirties.UnofficialBang
 
         private void OnTakingDamage(TakingDamageEventData eventData)
         {
-            GoForward();
+            GoForward(true);
         }
     }
 }

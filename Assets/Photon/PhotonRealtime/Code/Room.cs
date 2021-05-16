@@ -61,7 +61,12 @@ namespace Photon.Realtime
             get => CustomProperties.ContainsKey("CurrentCardId") ? (int)CustomProperties["CurrentCardId"] : 0;
             set => SetCustomProperties(new Hashtable { { "CurrentCardId", value } });
         }
-        
+
+        public int LastDuelTargetId {
+            get => CustomProperties.ContainsKey("LastDuelTargetId") ? (int)CustomProperties["LastDuelTargetId"] : 0;
+            set => SetCustomProperties(new Hashtable { { "LastDuelTargetId", value } });
+        }
+
         public int[] TurnPlayerIds
         {
             get => CustomProperties.ContainsKey("PlayerIds") ? ((int[])CustomProperties["PlayerIds"]) : new int[0];
