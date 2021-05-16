@@ -392,6 +392,8 @@ namespace Thirties.UnofficialBang
 
         private void OnTakingDamage(TakingDamageEventData eventData)
         {
+            if (_player.ActorNumber != eventData.PlayerId) return;
+
             int currentHealth = _player.CurrentHealth;
             if (eventData.Amount > 1)
             {
@@ -405,6 +407,8 @@ namespace Thirties.UnofficialBang
 
         private void OnGainingHealth(GainingHealthEventData eventData)
         {
+            if (_player.ActorNumber != eventData.PlayerId) return;
+
             int currentHealth = _player.CurrentHealth;
             if (eventData.Amount > 1)
             {
