@@ -395,13 +395,17 @@ namespace Thirties.UnofficialBang
             if (_player.ActorNumber != eventData.PlayerId) return;
 
             int currentHealth = _player.CurrentHealth;
+            int newHealth = currentHealth - eventData.Amount;
+
+            if (newHealth > _player.MaxHealth) return;
+
             if (eventData.Amount > 1)
             {
-                StartCoroutine(LoseBulletRoutine(currentHealth, currentHealth - eventData.Amount));
+                StartCoroutine(LoseBulletRoutine(currentHealth, newHealth));
             }
             else
             {
-                LoseBullet(currentHealth - eventData.Amount);
+                LoseBullet(newHealth);
             }
         }
 
@@ -410,13 +414,17 @@ namespace Thirties.UnofficialBang
             if (_player.ActorNumber != eventData.PlayerId) return;
 
             int currentHealth = _player.CurrentHealth;
+            int newHealth = currentHealth + eventData.Amount;
+
+            if (newHealth > _player.MaxHealth) return;
+
             if (eventData.Amount > 1)
             {
-                StartCoroutine(GainBulletRoutine(currentHealth, currentHealth + eventData.Amount));
+                StartCoroutine(GainBulletRoutine(currentHealth, newHealth - 1));
             }
             else
             {
-                LoseBullet(currentHealth + eventData.Amount);
+                GainBullet(newHealth - 1);
             }
         }
 

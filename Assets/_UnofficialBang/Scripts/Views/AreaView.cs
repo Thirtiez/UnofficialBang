@@ -49,7 +49,7 @@ namespace Thirties.UnofficialBang
             _gameManager.CardCanceled += OnCardCanceled;
 
             SetPlayable(false);
-            SetHighlight(false);
+            SetVisible(false);
         }
 
         protected void OnDisable()
