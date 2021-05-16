@@ -157,7 +157,7 @@ namespace Thirties.UnofficialBang
                     }
                     else if (CardData.Target == CardTarget.EveryoneElse)
                     {
-                        eventData.TargetId = _gameManager.NextLivingPlayerId;
+                        eventData.TargetId = _gameManager.GetNextLivingPlayerId();
                     }
 
                     _gameManager.SendEvent(PhotonEvent.PlayingCard, eventData);

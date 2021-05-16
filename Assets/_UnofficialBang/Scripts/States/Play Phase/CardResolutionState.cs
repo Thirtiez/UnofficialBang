@@ -100,7 +100,7 @@ namespace Thirties.UnofficialBang
             var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
             if (card.Target == CardTarget.Everyone || card.Target == CardTarget.EveryoneElse)
             {
-                var nextTarget = _gameManager.NextLivingPlayerId;
+                var nextTarget = _gameManager.GetNextLivingPlayerId(PhotonNetwork.LocalPlayer.ActorNumber);
                 if (nextTarget != PhotonNetwork.CurrentRoom.CurrentPlayerId)
                 {
                     trigger = FSMTrigger.CardResolution;

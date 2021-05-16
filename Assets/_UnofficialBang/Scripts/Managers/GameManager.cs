@@ -59,20 +59,6 @@ namespace Thirties.UnofficialBang
         public bool IsLocalPlayerTurn => PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.LocalPlayer.ActorNumber;
         public bool IsLocalPlayerTarget => PhotonNetwork.CurrentRoom.CurrentTargetId == PhotonNetwork.LocalPlayer.ActorNumber;
 
-        public int NextLivingPlayerId {
-            get {
-                var turnPlayerIds = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
-                int index = turnPlayerIds.IndexOf(PhotonNetwork.CurrentRoom.CurrentPlayerId);
-
-                do
-                {
-                    index = (index + 1) % turnPlayerIds.Count;
-                } while (!PhotonNetwork.CurrentRoom.GetPlayer(index).IsAlive);
-
-                return turnPlayerIds[index];
-            }
-        }
-
         #endregion
 
         #region Events
@@ -248,6 +234,19 @@ namespace Thirties.UnofficialBang
             var card = DrawCard(ref deck);
             PhotonNetwork.CurrentRoom.RolesDeckCardIds = deck;
             return card;
+        }
+
+        public int GetNextLivingPlayerId(int? fromPlayer = null)
+        {
+            var turnPlayerIds = PhotonNetwork.CurrentRoom.TurnPlayerIds.ToList();
+            int index = turnPlayerIds.IndexOf(fromPlayer ?? PhotonNetwork.CurrentRoom.CurrentPlayerId);
+
+            do
+            {
+                index = (index + 1) % turnPlayerIds.Count;
+            } while (!PhotonNetwork.CurrentRoom.GetPlayer(turnPlayerIds[index]).IsAlive);
+
+            return turnPlayerIds[index];
         }
 
         #endregion
