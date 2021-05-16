@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -184,8 +182,6 @@ namespace Thirties.UnofficialBang
 
                         var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
                         if (card.Class == CardClass.Blue) return;
-
-
 
                         switch (card.Effect)
                         {

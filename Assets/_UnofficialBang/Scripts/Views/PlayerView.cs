@@ -248,36 +248,57 @@ namespace Thirties.UnofficialBang
                 .OnComplete(() => bullet.gameObject.SetActive(false));
         }
 
-        private void ConfigurePlayableCards()
+        private void ConfigurePlayableCards(BaseState state)
         {
-            var excludedEffects = new List<CardEffect>();
-
-            var equipments = PhotonNetwork.LocalPlayer.BoardCardIds
-                .Select(c => _gameManager.Cards[c])
-                .Where(c => c.Effect == CardEffect.Barrel
-                    || c.Effect == CardEffect.Scope
-                    || c.Effect == CardEffect.Mustang)
-                .ToList();
-            if (equipments.Any())
+            if (_gameManager.IsLocalPlayerTurn && state is CardSelectionState)
             {
-                excludedEffects.AddRange(equipments.Select(c => c.Effect));
-            }
+                var excludedEffects = new List<CardEffect>();
 
-            if (_characterCard.CardData.Effect != CardEffect.CalamityJanet)
+                var equipments = PhotonNetwork.LocalPlayer.BoardCardIds
+                    .Select(c => _gameManager.Cards[c])
+                    .Where(c => c.Effect == CardEffect.Barrel
+                        || c.Effect == CardEffect.Scope
+                        || c.Effect == CardEffect.Mustang)
+                    .ToList();
+                if (equipments.Any())
+                {
+                    excludedEffects.AddRange(equipments.Select(c => c.Effect));
+                }
+
+                if (_characterCard.CardData.Effect != CardEffect.CalamityJanet)
+                {
+                    excludedEffects.Add(CardEffect.Missed);
+                }
+
+                _handCards.ForEach(c => c.SetPlayable(!excludedEffects.Contains(c.CardData.Effect)));
+            }
+            else if (_gameManager.IsLocalPlayerTarget && state is CardResolutionState)
             {
-                excludedEffects.Add(CardEffect.Missed);
+                var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
+                switch (card.Effect)
+                {
+                    case CardEffect.Bang:
+                    case CardEffect.Damage:
+                    case CardEffect.Missed:
+                        _handCards.ForEach(c => c.SetPlayable(
+                            c.CardData.Effect == CardEffect.Missed ||
+                            (c.CardData.Effect == CardEffect.Bang && _characterCard.CardData.Effect == CardEffect.CalamityJanet)));
+                        break;
+
+                    case CardEffect.Duel:
+                    case CardEffect.Indians:
+                        _handCards.ForEach(c => c.SetPlayable(
+                            c.CardData.Effect == CardEffect.Bang ||
+                            (c.CardData.Effect == CardEffect.Missed && _characterCard.CardData.Effect == CardEffect.CalamityJanet)));
+                        break;
+                }
             }
+            else
+            {
+                _handCards.ForEach(c => c.SetPlayable(false));
 
-            _handCards.ForEach(c => c.SetPlayable(!excludedEffects.Contains(c.CardData.Effect)));
-
-            _characterCard.SetPlayable(_characterCard.CardData.Effect == CardEffect.SidKetchum);
-        }
-
-        private void ResetPlayableCards()
-        {
-            _handCards.ForEach(c => c.SetPlayable(false));
-
-            _characterCard.SetPlayable(false);
+                _characterCard.SetPlayable(false);
+            }
         }
 
         #endregion
@@ -290,20 +311,9 @@ namespace Thirties.UnofficialBang
             {
                 Configure();
             }
-            else if (state is CardSelectionState && IsLocalPlayer)
+            else if (IsLocalPlayer && state is PlayPhaseState)
             {
-                if (_gameManager.IsLocalPlayerTurn)
-                {
-                    ConfigurePlayableCards();
-                }
-                else
-                {
-                    ResetPlayableCards();
-                }
-            }
-            else if (state is CardResolutionState && IsLocalPlayer)
-            {
-                ResetPlayableCards();
+                ConfigurePlayableCards(state);
             }
         }
 
