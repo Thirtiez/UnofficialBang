@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    [CreateAssetMenu(menuName = "Card Sprite Table")]
+    [CreateAssetMenu(menuName = "BANG/Card Sprite Table")]
     public class CardSpriteTable : BaseAssetTable<Sprite>
     {
 

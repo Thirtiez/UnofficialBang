@@ -16,7 +16,7 @@ namespace Thirties.UnofficialBang
         CureColor,
     }
 
-    [CreateAssetMenu(menuName = "Color Settings")]
+    [CreateAssetMenu(menuName = "BANG/Color Settings")]
     public class ColorSettings : SerializedScriptableObject
     {
         [Header("Text")]

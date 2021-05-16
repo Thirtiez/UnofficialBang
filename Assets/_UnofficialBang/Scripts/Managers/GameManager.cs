@@ -36,6 +36,13 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private AnimationSettings animationSettings;
 
+#if BANG_DEBUG
+        [Header("Debug")]
+
+        [SerializeField]
+        private DeckDebug deckDebug;
+#endif
+
         #endregion
 
         #region Public properties
@@ -162,6 +169,20 @@ namespace Thirties.UnofficialBang
                 .OrderBy(p => p)
                 .ToArray();
 
+#if BANG_DEBUG
+            PhotonNetwork.CurrentRoom.MainDeckCardIds = deckDebug.MainCards
+                .Select(c => c.Id)
+                .ToArray();
+
+            PhotonNetwork.CurrentRoom.CharactersDeckCardIds = deckDebug.CharacterCards
+                .Select(c => c.Id)
+                .ToArray();
+
+            PhotonNetwork.CurrentRoom.RolesDeckCardIds = deckDebug.RoleCards
+                .Take(PhotonNetwork.CurrentRoom.PlayerCount)
+                .Select(c => c.Id)
+                .ToArray();
+#else
             PhotonNetwork.CurrentRoom.MainDeckCardIds = Cards
                 .Where(c => c.Class == CardClass.Blue || c.Class == CardClass.Brown)
                 .Select(c => c.Id)
@@ -193,6 +214,7 @@ namespace Thirties.UnofficialBang
                 .Select(c => c.Id)
                 .ToArray()
                 .Shuffle();
+#endif
         }
 
         public CardData DrawPlayingCard()

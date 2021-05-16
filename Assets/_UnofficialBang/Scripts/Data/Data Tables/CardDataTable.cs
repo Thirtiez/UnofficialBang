@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    [CreateAssetMenu(menuName = "Card Data Table")]
+    [CreateAssetMenu(menuName = "BANG/Card Data Table")]
     public class CardDataTable : DataTable<CardData>
     {
 

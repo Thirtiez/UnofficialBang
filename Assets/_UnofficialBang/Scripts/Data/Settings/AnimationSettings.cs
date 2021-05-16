@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Thirties.UnofficialBang
 {
-    [CreateAssetMenu(menuName = "Animation Settings")]
+    [CreateAssetMenu(menuName = "BANG/Animation Settings")]
     public class AnimationSettings : SerializedScriptableObject
     {
         [SerializeField]
