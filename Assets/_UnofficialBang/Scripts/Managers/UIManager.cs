@@ -56,6 +56,17 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private CommandElementUI commandElementPrefab;
 
+        [Header("Card Picker")]
+
+        [SerializeField]
+        private Transform faceUpCardsContainer;
+
+        [SerializeField]
+        private Transform faceDownCardsContainer;
+
+        [SerializeField]
+        private CardElementUI cardElementPrefab;
+
         #endregion
 
         #region Private fields
@@ -216,11 +227,6 @@ namespace Thirties.UnofficialBang
                                         _gameManager.SendEvent(PhotonEvent.TakingDamage, new TakingDamageEventData { PlayerId = PhotonNetwork.LocalPlayer.ActorNumber, Amount = 1 }));
                                     _commands.Add(damageCommand);
                                 }
-                                break;
-
-                            case CardEffect.Discard:
-                                headerText.text = _gameManager.IsLocalPlayerTarget ? $"Puoi scegliere una carta da scartare"
-                                    : $"{_currentTargetNickname} può scegliere una carta da scartare";
                                 break;
 
                             case CardEffect.GeneralStore:
