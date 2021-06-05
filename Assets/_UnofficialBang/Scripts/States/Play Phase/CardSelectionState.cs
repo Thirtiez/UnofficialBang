@@ -40,9 +40,9 @@ namespace Thirties.UnofficialBang
 
         private void OnPlayingCard(PlayingCardEventData eventData)
         {
+            PhotonNetwork.CurrentRoom.CurrentInstigatorId = eventData.InstigatorId;
             PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
             PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;
-            PhotonNetwork.CurrentRoom.LastDuelTargetId = eventData.InstigatorId;
 
             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
         }

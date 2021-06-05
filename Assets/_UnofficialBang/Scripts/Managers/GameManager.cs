@@ -72,11 +72,15 @@ namespace Thirties.UnofficialBang
         public UnityAction<TakingDamageEventData> TakingDamage { get; set; }
         public UnityAction<GainingHealthEventData> GainingHealth { get; set; }
         public UnityAction<DiscardingCardEventData> DiscardingCard { get; set; }
+        public UnityAction<StealingCardEventData> StealingCard { get; set; }
 
         public UnityAction<CardHoverEnterEventData> CardHoverEnter { get; set; }
         public UnityAction CardHoverExit { get; set; }
         public UnityAction<SelectingCardEventData> CardSelected { get; set; }
         public UnityAction CardCanceled { get; set; }
+
+        public UnityAction<CardPickerEnterEventData> CardPickerEnter { get; set; }
+        public UnityAction<CardPickerExitEventData> CardPickerExit { get; set; }
 
         #endregion
 
@@ -108,6 +112,7 @@ namespace Thirties.UnofficialBang
                 TakingDamage += OnTakingDamage;
                 GainingHealth += OnGainingHealth;
                 DiscardingCard += OnDiscardingCard;
+                StealingCard += OnStealingCard;
             }
         }
 
@@ -123,6 +128,7 @@ namespace Thirties.UnofficialBang
                 TakingDamage -= OnTakingDamage;
                 GainingHealth -= OnGainingHealth;
                 DiscardingCard -= OnDiscardingCard;
+                StealingCard -= OnStealingCard;
             }
         }
 
@@ -311,6 +317,11 @@ namespace Thirties.UnofficialBang
                     var discardingCardEventData = JsonConvert.DeserializeObject<DiscardingCardEventData>(json);
                     DiscardingCard?.Invoke(discardingCardEventData);
                     break;
+
+                case PhotonEvent.StealingCard:
+                    var stealingCardEventData = JsonConvert.DeserializeObject<StealingCardEventData>(json);
+                    StealingCard?.Invoke(stealingCardEventData);
+                    break;
             }
         }
 
@@ -388,21 +399,49 @@ namespace Thirties.UnofficialBang
 
         private void OnDiscardingCard(DiscardingCardEventData eventData)
         {
-            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            var target = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
             var card = Cards[eventData.CardId];
 
             if (eventData.IsFromHand)
             {
-                player.HandCardIds = player.HandCardIds.Where(c => c != card.Id).ToArray();
+                target.HandCardIds = target.HandCardIds.Where(c => c != card.Id).ToArray();
             }
             else
             {
-                player.BoardCardIds = player.BoardCardIds.Where(c => c != card.Id).ToArray();
-                if (card.Effect == CardEffect.Weapon)
+                target.BoardCardIds = target.BoardCardIds.Where(c => c != card.Id).ToArray();
+                switch (card.Effect)
                 {
-                    player.Range -= card.EffectValue.Value;
+                    case CardEffect.Scope:
+                        target.Range -= 1;
+                        break;
+
+                    case CardEffect.Mustang:
+                        target.BonusDistance -= 1;
+                        break;
+
+                    case CardEffect.Weapon:
+                        target.Range -= card.EffectValue.Value;
+                        break;
                 }
             }
+        }
+
+        private void OnStealingCard(StealingCardEventData eventData)
+        {
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
+            var target = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
+            var card = Cards[eventData.CardId];
+
+            if (eventData.IsFromHand)
+            {
+                target.HandCardIds = target.HandCardIds.Where(c => c != card.Id).ToArray();
+            }
+            else
+            {
+                target.BoardCardIds = target.BoardCardIds.Where(c => c != card.Id).ToArray();
+            }
+
+            player.HandCardIds = player.HandCardIds.AppendWith(card.Id).ToArray();
         }
 
         #endregion

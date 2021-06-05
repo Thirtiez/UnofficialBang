@@ -9,15 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Thirties.UnofficialBang
 {
     public class PlayerView : MonoBehaviour
     {
-        #region Static events
+        #region Static fields
 
-        private static UnityAction<CardView, int> equipCardToPlayer;
+        private static List<PlayerView> _playerViews = new List<PlayerView>();
 
         #endregion
 
@@ -113,6 +112,8 @@ namespace Thirties.UnofficialBang
 
         protected void OnEnable()
         {
+            _playerViews.Add(this);
+
             _gameManager = GameManager.Instance;
 
             _gameManager.StateEnter += OnStateEnter;
@@ -123,12 +124,13 @@ namespace Thirties.UnofficialBang
             _gameManager.TakingDamage += OnTakingDamage;
             _gameManager.GainingHealth += OnGainingHealth;
             _gameManager.DiscardingCard += OnDiscardingCard;
-
-            equipCardToPlayer += OnEquipCardToPlayer;
+            _gameManager.StealingCard += OnStealingCard;
         }
 
         protected void OnDisable()
         {
+            _playerViews.Remove(this);
+
             _gameManager.StateEnter -= OnStateEnter;
             _gameManager.StateExit -= OnStateExit;
             _gameManager.DealingCard -= OnDealingCard;
@@ -137,8 +139,7 @@ namespace Thirties.UnofficialBang
             _gameManager.TakingDamage -= OnTakingDamage;
             _gameManager.GainingHealth -= OnGainingHealth;
             _gameManager.DiscardingCard -= OnDiscardingCard;
-
-            equipCardToPlayer -= OnEquipCardToPlayer;
+            _gameManager.StealingCard -= OnStealingCard;
         }
 
         #endregion
@@ -170,14 +171,25 @@ namespace Thirties.UnofficialBang
             }
         }
 
-        private void DealCard(CardData cardData, Spline targetSpline, List<CardView> cardList, bool isCovered = false)
+        private void DealCard(CardData cardData, Transform fromTransform = null, Spline toSpline = null, List<CardView> cardList = null, bool isCovered = false)
         {
-            var card = Instantiate(cardPrefab, deckTransform.position, deckTransform.rotation, targetSpline.transform);
+            fromTransform = fromTransform ?? deckTransform;
+            toSpline = toSpline ?? handSpline;
+            cardList = cardList ?? _handCards;
+
+            var card = Instantiate(cardPrefab, fromTransform.position, fromTransform.rotation, toSpline.transform);
             card.Configure(cardData, isCovered);
 
             cardList.Add(card);
 
-            RefreshSpline(targetSpline, cardList);
+            RefreshSpline(toSpline, cardList);
+        }
+
+        private void EquipCard(CardView card)
+        {
+            _boardCards.Add(card);
+            card.transform.SetParent(boardSpline.transform);
+            RefreshSpline(boardSpline, _boardCards);
         }
 
         private void DiscardCard(CardView card)
@@ -190,13 +202,6 @@ namespace Thirties.UnofficialBang
 
             card.transform.SetParent(discardTransform);
             card.MoveTo(Vector3.zero, Quaternion.identity, Vector3.one);
-        }
-
-        private void EquipCard(CardView card)
-        {
-            _boardCards.Add(card);
-            card.transform.SetParent(boardSpline.transform);
-            RefreshSpline(boardSpline, _boardCards);
         }
 
         private void RefreshSpline(Spline targetSpline, List<CardView> cardList)
@@ -337,16 +342,16 @@ namespace Thirties.UnofficialBang
                 if (cardData.Class == CardClass.Blue || cardData.Class == CardClass.Brown)
                 {
                     bool isCovered = eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber;
-                    DealCard(cardData, handSpline, _handCards, isCovered);
+                    DealCard(cardData, deckTransform, handSpline, _handCards, isCovered);
                 }
                 else if (cardData.Class == CardClass.Character)
                 {
-                    DealCard(cardData, sideSpline, _sideCards);
+                    DealCard(cardData, deckTransform, sideSpline, _sideCards);
                 }
                 else if (cardData.Class == CardClass.Role)
                 {
                     bool isCovered = eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber;
-                    DealCard(cardData, sideSpline, _sideCards, isCovered);
+                    DealCard(cardData, deckTransform, sideSpline, _sideCards, isCovered);
                 }
             }
         }
@@ -383,7 +388,8 @@ namespace Thirties.UnofficialBang
                         }
                         else
                         {
-                            equipCardToPlayer.Invoke(card, eventData.TargetId);
+                            var targetView = _playerViews.FirstOrDefault(p => p.PlayerId == eventData.TargetId);
+                            targetView.EquipCard(card);
                         }
                         break;
                 }
@@ -430,6 +436,8 @@ namespace Thirties.UnofficialBang
 
         private void OnDiscardingCard(DiscardingCardEventData eventData)
         {
+            if (_player.ActorNumber != eventData.TargetId) return;
+
             var cardList = eventData.IsFromHand ? _handCards : _boardCards;
             var spline = eventData.IsFromHand ? handSpline : boardSpline;
 
@@ -443,11 +451,24 @@ namespace Thirties.UnofficialBang
             DiscardCard(card);
         }
 
-        private void OnEquipCardToPlayer(CardView card, int targetId)
+        private void OnStealingCard(StealingCardEventData eventData)
         {
-            if (PlayerId != targetId) return;
+            if (_player.ActorNumber != eventData.TargetId) return;
 
-            EquipCard(card);
+            var cardData = _gameManager.Cards[eventData.CardId];
+            var cardList = eventData.IsFromHand ? _handCards : _boardCards;
+            var spline = eventData.IsFromHand ? handSpline : boardSpline;
+
+            var card = cardList.SingleOrDefault(c => c.CardData.Id == cardData.Id);
+            card.SetPlayable(false);
+            card.Show();
+
+            cardList.Remove(card);
+            Destroy(card.gameObject);
+            RefreshSpline(spline, cardList);
+
+            var playerView = _playerViews.FirstOrDefault(p => p.PlayerId == eventData.PlayerId);
+            playerView.DealCard(cardData, spline.transform);
         }
 
         #endregion

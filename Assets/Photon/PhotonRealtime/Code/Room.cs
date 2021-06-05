@@ -50,6 +50,13 @@ namespace Photon.Realtime
 
         public Player CurrentPlayer => GetPlayer(CurrentPlayerId);
 
+        public int CurrentInstigatorId {
+            get => CustomProperties.ContainsKey("InstigatorId") ? (int)CustomProperties["InstigatorId"] : 0;
+            set => SetCustomProperties(new Hashtable { { "InstigatorId", value } });
+        }
+
+        public Player CurrentInstigator => GetPlayer(CurrentInstigatorId);
+
         public int CurrentTargetId {
             get => CustomProperties.ContainsKey("CurrentTargetId") ? (int)CustomProperties["CurrentTargetId"] : 0;
             set => SetCustomProperties(new Hashtable { { "CurrentTargetId", value } });
@@ -60,11 +67,6 @@ namespace Photon.Realtime
         public int CurrentCardId {
             get => CustomProperties.ContainsKey("CurrentCardId") ? (int)CustomProperties["CurrentCardId"] : 0;
             set => SetCustomProperties(new Hashtable { { "CurrentCardId", value } });
-        }
-
-        public int LastDuelTargetId {
-            get => CustomProperties.ContainsKey("LastDuelTargetId") ? (int)CustomProperties["LastDuelTargetId"] : 0;
-            set => SetCustomProperties(new Hashtable { { "LastDuelTargetId", value } });
         }
 
         public int[] TurnPlayerIds

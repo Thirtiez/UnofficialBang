@@ -59,8 +59,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardButton: {fileID: 1928724534825614017}
   cardImage: {fileID: 4799346120817115945}
+  cardBack: {fileID: 21300000, guid: a0ee449fa8b69d34a9089655249596e3, type: 3}
 --- !u!1 &1258539110498270112
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +146,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1238327082232446638}
+  - component: {fileID: 3787133016477098337}
   - component: {fileID: 1928724534825614017}
+  - component: {fileID: 5081873261459835614}
   m_Layer: 5
   m_Name: Card Element Button
   m_TagString: Untagged
@@ -172,6 +175,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3787133016477098337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258539110498270112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &1928724534825614017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +247,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!222 &5081873261459835614
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258539110498270112}
+  m_CullTransparentMesh: 0
 --- !u!1 &2388885637350557150
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +315,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

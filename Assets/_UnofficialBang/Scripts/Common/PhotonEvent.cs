@@ -9,5 +9,6 @@
         public const byte TakingDamage = 4;
         public const byte GainingHealth = 5;
         public const byte DiscardingCard = 6;
+        public const byte StealingCard = 7;
     }
 }

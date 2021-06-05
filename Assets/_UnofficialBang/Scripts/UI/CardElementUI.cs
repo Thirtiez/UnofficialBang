@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Thirties.UnofficialBang
@@ -14,10 +13,22 @@ namespace Thirties.UnofficialBang
         [SerializeField]
         private Image cardImage;
 
-        public void Configure(Sprite cardSprite, UnityAction onButtonClick)
+        [SerializeField]
+        private Sprite cardBack;
+
+        public void Configure(int cardId, bool isCovered)
         {
-            cardImage.sprite = cardSprite;
-            cardButton.onClick.AddListener(onButtonClick);
+            if (isCovered)
+            {
+                cardImage.sprite = cardBack;
+            }
+            else
+            {
+                var cardData = GameManager.Instance.Cards[cardId];
+                cardImage.sprite = GameManager.Instance.CardSpriteTable.Get(cardData.Sprite);
+            }
+
+            cardButton.onClick.AddListener(() => GameManager.Instance.CardPickerExit?.Invoke(new CardPickerExitEventData { CardId = cardId, IsFromHand = isCovered}));
         }
     }
 }

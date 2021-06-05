@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,6 +61,9 @@ namespace Thirties.UnofficialBang
         [Header("Card Picker")]
 
         [SerializeField]
+        private GameObject cardPicker;
+
+        [SerializeField]
         private Transform faceUpCardsContainer;
 
         [SerializeField]
@@ -74,6 +79,8 @@ namespace Thirties.UnofficialBang
         private GameManager _gameManager;
 
         private List<CommandElementUI> _commands = new List<CommandElementUI>();
+        private List<CardElementUI> _faceUpCards = new List<CardElementUI>();
+        private List<CardElementUI> _faceDownCards = new List<CardElementUI>();
 
         private string _currentPlayerNickname => _gameManager.ColorSettings.Colorize(PhotonNetwork.CurrentRoom.CurrentPlayer.NickName, TextColorization.PlayerColor);
         private string _currentTargetNickname => _gameManager.ColorSettings.Colorize(PhotonNetwork.CurrentRoom.CurrentTarget.NickName, TextColorization.PlayerColor);
@@ -103,6 +110,9 @@ namespace Thirties.UnofficialBang
             _gameManager.TakingDamage += OnTakingDamage;
             _gameManager.GainingHealth += OnGainingHealth;
             _gameManager.DiscardingCard += OnDiscardingCard;
+            _gameManager.StealingCard += OnStealingCard;
+            _gameManager.CardPickerEnter += OnCardPickerEnter;
+            _gameManager.CardPickerExit += OnCardPickerExit;
 
             exitButton.onClick.AddListener(OnExitButtonClicked);
             cancelExitButton.onClick.AddListener(OnCancelExitButtonClicked);
@@ -115,6 +125,7 @@ namespace Thirties.UnofficialBang
             commandsContainer.gameObject.SetActive(false);
             exitModal.SetActive(false);
             header.SetActive(true);
+            cardPicker.SetActive(false);
         }
 
         private void OnDestroy()
@@ -132,6 +143,9 @@ namespace Thirties.UnofficialBang
             _gameManager.TakingDamage -= OnTakingDamage;
             _gameManager.GainingHealth -= OnGainingHealth;
             _gameManager.DiscardingCard -= OnDiscardingCard;
+            _gameManager.StealingCard -= OnStealingCard;
+            _gameManager.CardPickerEnter -= OnCardPickerEnter;
+            _gameManager.CardPickerExit -= OnCardPickerExit;
         }
 
         #endregion
@@ -330,13 +344,65 @@ namespace Thirties.UnofficialBang
         private void OnDiscardingCard(DiscardingCardEventData eventData)
         {
             var card = _gameManager.Cards[eventData.CardId];
-            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId);
-            string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+            var cardColorization = card.Class == CardClass.Blue ? TextColorization.BlueCard : TextColorization.BrownCard;
+            string cardName = _gameManager.ColorSettings.Colorize(card.Name, cardColorization);
+
+            var target = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
+            string targetName = _gameManager.ColorSettings.Colorize(target.NickName, TextColorization.PlayerColor);
+
+            if (eventData.PlayerId.HasValue)
+            {
+                var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.PlayerId.Value);
+                string playerName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
+
+                gameLog.Log($"{playerName} fa scartare a {targetName} una carta {cardName}");
+            }
+            else
+            {
+                gameLog.Log($"{targetName} scarta una carta {cardName}");
+            }
+
+        }
+
+        private void OnStealingCard(StealingCardEventData eventData)
+        {
+            var card = _gameManager.Cards[eventData.CardId];
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(eventData.TargetId);
+            string targetName = _gameManager.ColorSettings.Colorize(player.NickName, TextColorization.PlayerColor);
 
             var cardColorization = card.Class == CardClass.Blue ? TextColorization.BlueCard : TextColorization.BrownCard;
             string cardName = _gameManager.ColorSettings.Colorize(card.Name, cardColorization);
 
-            gameLog.Log($"{playerName} scarta una carta {cardName}");
+            gameLog.Log($"{targetName} scarta una carta {cardName}");
+        }
+
+        private void OnCardPickerEnter(CardPickerEnterEventData eventData)
+        {
+            _faceDownCards = eventData.FaceDownCards.Select(c =>
+            {
+                var cardElement = Instantiate(cardElementPrefab, faceDownCardsContainer);
+                cardElement.Configure(c, true);
+
+                return cardElement;
+            }).ToList();
+
+            _faceUpCards = eventData.FaceUpCards.Select(c =>
+            {
+                var cardElement = Instantiate(cardElementPrefab, faceDownCardsContainer);
+                cardElement.Configure(c, false);
+
+                return cardElement;
+            }).ToList();
+
+            cardPicker.gameObject.SetActive(true);
+        }
+
+        private void OnCardPickerExit(CardPickerExitEventData eventData)
+        {
+            _faceDownCards.ForEach(c => Destroy(c.gameObject));
+            _faceUpCards.ForEach(c => Destroy(c.gameObject));
+
+            cardPicker.gameObject.SetActive(false);
         }
 
         #endregion

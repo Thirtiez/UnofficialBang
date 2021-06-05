@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using Sirenix.Utilities;
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -17,11 +16,11 @@ namespace Thirties.UnofficialBang
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
 
+            var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
+            var targetPlayer = PhotonNetwork.CurrentRoom.CurrentTarget;
+
             if (PhotonNetwork.IsMasterClient)
             {
-                var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
-                var targetPlayer = PhotonNetwork.CurrentRoom.CurrentTarget;
-
                 switch (card.Effect)
                 {
                     case CardEffect.Scope:
@@ -33,19 +32,17 @@ namespace Thirties.UnofficialBang
                         break;
 
                     case CardEffect.Weapon:
-                        targetPlayer.BoardCardIds = targetPlayer.BoardCardIds.AppendWith(card.Id).ToArray();
-                        if (card.Effect == CardEffect.Weapon)
+                        var previousWeapon = targetPlayer.BoardCardIds?
+                            .Select(c => _gameManager.Cards[c])?
+                            .SingleOrDefault(c => c.Effect == CardEffect.Weapon || c.Effect == CardEffect.Volcanic);
+                        if (previousWeapon != null)
                         {
-                            targetPlayer.Range += card.EffectValue.Value;
-
-                            var previousWeapon = targetPlayer.BoardCardIds?
-                                .Select(c => _gameManager.Cards[c])?
-                                .SingleOrDefault(c => c.Effect == CardEffect.Weapon || c.Effect == CardEffect.Volcanic);
-                            if (previousWeapon != null)
-                            {
-                                _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData { CardId = previousWeapon.Id, PlayerId = targetPlayer.ActorNumber, IsFromHand = false });
-                            }
+                            _gameManager.SendEvent(PhotonEvent.DiscardingCard,
+                                new DiscardingCardEventData { CardId = previousWeapon.Id, PlayerId = targetPlayer.ActorNumber, IsFromHand = false });
                         }
+
+                        targetPlayer.Range += card.EffectValue.Value;
+                        targetPlayer.BoardCardIds = targetPlayer.BoardCardIds.AppendWith(card.Id).ToArray();
                         break;
 
                     case CardEffect.Cure:
@@ -65,11 +62,9 @@ namespace Thirties.UnofficialBang
                         break;
                 }
             }
-            
+
             if (_gameManager.IsLocalPlayerTarget)
             {
-                var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
-
                 switch (card.Effect)
                 {
                     case CardEffect.Bang:
@@ -92,11 +87,26 @@ namespace Thirties.UnofficialBang
 
                     case CardEffect.Discard:
                     case CardEffect.Panic:
+                        break;
+
                     case CardEffect.GeneralStore:
+                        //TODO General store
                         break;
 
                     default:
                         GoForward();
+                        break;
+                }
+            }
+            else if (_gameManager.IsLocalPlayerTurn)
+            {
+                switch (card.Effect)
+                {
+                    case CardEffect.Discard:
+                    case CardEffect.Panic:
+                        _gameManager.CardPickerExit += OnCardPickerExit;
+
+                        _gameManager.CardPickerEnter?.Invoke(new CardPickerEnterEventData { FaceDownCards = targetPlayer.HandCardIds, FaceUpCards = targetPlayer.BoardCardIds });
                         break;
                 }
             }
@@ -113,6 +123,7 @@ namespace Thirties.UnofficialBang
             _gameManager.TakingDamage -= OnTakingDamage;
             _gameManager.DealingCard -= OnDealingCard;
             _gameManager.GainingHealth -= OnGainingHealth;
+            _gameManager.CardPickerExit -= OnCardPickerExit;
 
             base.OnStateExit(animator, stateInfo, layerIndex);
         }
@@ -134,8 +145,8 @@ namespace Thirties.UnofficialBang
             else if (!tookDamage && card.Effect == CardEffect.Duel)
             {
                 int currentTargetId = PhotonNetwork.LocalPlayer.ActorNumber;
-                PhotonNetwork.CurrentRoom.CurrentTargetId = PhotonNetwork.CurrentRoom.LastDuelTargetId;
-                PhotonNetwork.CurrentRoom.LastDuelTargetId = currentTargetId;
+                PhotonNetwork.CurrentRoom.CurrentTargetId = PhotonNetwork.CurrentRoom.CurrentInstigatorId;
+                PhotonNetwork.CurrentRoom.CurrentInstigatorId = currentTargetId;
 
                 trigger = FSMTrigger.CardResolution;
             }
@@ -165,6 +176,34 @@ namespace Thirties.UnofficialBang
         private void OnGainingHealth(GainingHealthEventData eventData)
         {
             _gameManager.StartCoroutine(DelayAction(_gameManager.AnimationSettings.BulletAnimationDelay, () => GoForward()));
+        }
+
+        private void OnCardPickerExit(CardPickerExitEventData eventData)
+        {
+            var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
+
+            if (card.Effect == CardEffect.Discard)
+            {
+                _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData
+                {
+                    CardId = eventData.CardId,
+                    PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                    TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
+                    IsFromHand = eventData.IsFromHand
+                });
+            }
+            else if (card.Effect == CardEffect.Panic)
+            {
+                _gameManager.SendEvent(PhotonEvent.StealingCard, new StealingCardEventData
+                {
+                    CardId = eventData.CardId,
+                    PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                    TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
+                    IsFromHand = eventData.IsFromHand
+                });
+            }
+
+            GoForward();
         }
 
         private IEnumerator DrawCards(Player targetPlayer, int count)
