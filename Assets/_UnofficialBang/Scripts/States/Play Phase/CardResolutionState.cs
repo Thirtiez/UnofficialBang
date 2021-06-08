@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using Sirenix.Utilities;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -53,13 +54,6 @@ namespace Thirties.UnofficialBang
                     case CardEffect.Draw:
                         _gameManager.StartCoroutine(DrawCards(targetPlayer, card.EffectValue.Value));
                         break;
-
-                    case CardEffect.GeneralStore:
-                        if (PhotonNetwork.CurrentRoom.CurrentPlayerId == PhotonNetwork.CurrentRoom.CurrentTargetId)
-                        {
-                            //TODO General store
-                        }
-                        break;
                 }
             }
 
@@ -90,7 +84,8 @@ namespace Thirties.UnofficialBang
                         break;
 
                     case CardEffect.GeneralStore:
-                        //TODO General store
+                        _gameManager.CardPickerExit += OnCardPickerExit;
+                        _gameManager.CardPickerEnter?.Invoke(new CardPickerEnterEventData { FaceUpCards = PhotonNetwork.CurrentRoom.GeneralStoreCardIds });
                         break;
 
                     default:
@@ -105,7 +100,6 @@ namespace Thirties.UnofficialBang
                     case CardEffect.Discard:
                     case CardEffect.Panic:
                         _gameManager.CardPickerExit += OnCardPickerExit;
-
                         _gameManager.CardPickerEnter?.Invoke(new CardPickerEnterEventData { FaceDownCards = targetPlayer.HandCardIds, FaceUpCards = targetPlayer.BoardCardIds });
                         break;
                 }
@@ -182,25 +176,38 @@ namespace Thirties.UnofficialBang
         {
             var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
 
-            if (card.Effect == CardEffect.Discard)
+            switch (card.Effect)
             {
-                _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData
-                {
-                    CardId = eventData.CardId,
-                    PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
-                    TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
-                    IsFromHand = eventData.IsFromHand
-                });
-            }
-            else if (card.Effect == CardEffect.Panic)
-            {
-                _gameManager.SendEvent(PhotonEvent.StealingCard, new StealingCardEventData
-                {
-                    CardId = eventData.CardId,
-                    PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
-                    TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
-                    IsFromHand = eventData.IsFromHand
-                });
+                case CardEffect.Discard:
+                    _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData
+                    {
+                        CardId = eventData.CardId,
+                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                        TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
+                        IsFromHand = eventData.IsFromHand
+                    });
+                    break;
+
+                case CardEffect.Panic:
+                    _gameManager.SendEvent(PhotonEvent.StealingCard, new StealingCardEventData
+                    {
+                        CardId = eventData.CardId,
+                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                        TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
+                        IsFromHand = eventData.IsFromHand
+                    });
+                    break;
+
+                case CardEffect.GeneralStore:
+                    PhotonNetwork.CurrentRoom.GeneralStoreCardIds = PhotonNetwork.CurrentRoom.GeneralStoreCardIds
+                        .Where(c => c != eventData.CardId)
+                        .ToArray();
+                    _gameManager.SendEvent(PhotonEvent.DealingCard, new DealingCardEventData
+                    {
+                        CardId = eventData.CardId,
+                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                    });
+                    break;
             }
 
             GoForward();

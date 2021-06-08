@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System.Linq;
 using UnityEngine;
 
 namespace Thirties.UnofficialBang
@@ -40,9 +41,26 @@ namespace Thirties.UnofficialBang
 
         private void OnPlayingCard(PlayingCardEventData eventData)
         {
-            PhotonNetwork.CurrentRoom.CurrentInstigatorId = eventData.InstigatorId;
+            var card = _gameManager.Cards[eventData.CardId];
+
             PhotonNetwork.CurrentRoom.CurrentTargetId = eventData.TargetId;
             PhotonNetwork.CurrentRoom.CurrentCardId = eventData.CardId;
+
+            switch (card.Effect)
+            {
+                case CardEffect.Duel:
+                    PhotonNetwork.CurrentRoom.CurrentInstigatorId = eventData.InstigatorId;
+                    break;
+
+                case CardEffect.GeneralStore:
+                    {
+                        var cardIds = _gameManager.DrawPlayingCards(PhotonNetwork.CurrentRoom.TurnPlayerIds.Length)
+                            .Select(c => c.Id)
+                            .ToArray();
+                        PhotonNetwork.CurrentRoom.GeneralStoreCardIds = cardIds;
+                        break;
+                    }
+            }
 
             _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.CardResolution });
         }

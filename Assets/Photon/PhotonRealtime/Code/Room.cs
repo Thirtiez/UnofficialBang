@@ -51,8 +51,8 @@ namespace Photon.Realtime
         public Player CurrentPlayer => GetPlayer(CurrentPlayerId);
 
         public int CurrentInstigatorId {
-            get => CustomProperties.ContainsKey("InstigatorId") ? (int)CustomProperties["InstigatorId"] : 0;
-            set => SetCustomProperties(new Hashtable { { "InstigatorId", value } });
+            get => CustomProperties.ContainsKey("CurrentInstigatorId") ? (int)CustomProperties["CurrentInstigatorId"] : 0;
+            set => SetCustomProperties(new Hashtable { { "CurrentInstigatorId", value } });
         }
 
         public Player CurrentInstigator => GetPlayer(CurrentInstigatorId);
@@ -71,8 +71,8 @@ namespace Photon.Realtime
 
         public int[] TurnPlayerIds
         {
-            get => CustomProperties.ContainsKey("PlayerIds") ? ((int[])CustomProperties["PlayerIds"]) : new int[0];
-            set => SetCustomProperties(new Hashtable { { "PlayerIds", value } });
+            get => CustomProperties.ContainsKey("TurnPlayerIds") ? ((int[])CustomProperties["TurnPlayerIds"]) : new int[0];
+            set => SetCustomProperties(new Hashtable { { "TurnPlayerIds", value } });
         }
 
         public int[] MainDeckCardIds
@@ -99,18 +99,25 @@ namespace Photon.Realtime
             set => SetCustomProperties(new Hashtable { { "DiscardDeckCardIds", value } });
         }
 
+        public int[] GeneralStoreCardIds {
+            get => CustomProperties.ContainsKey("GeneralStoreCardIds") ? ((int[])CustomProperties["GeneralStoreCardIds"]) : new int[0];
+            set => SetCustomProperties(new Hashtable { { "GeneralStoreCardIds", value } });
+        }
+
         public void ClearCustomProperties()
         {
             var customProperties = new Hashtable
             {
                 {"CurrentPlayerId", 0},
+                {"CurrentInstigatorId", 0},
                 {"CurrentTargetId", 0},
                 {"CurrentCardId", 0},
-                {"PlayerIds", new int[0]},
+                {"TurnPlayerIds", new int[0]},
                 {"MainDeckCardIds", new int[0]},
                 {"RolesDeckCardIds", new int[0]},
                 {"CharactersDeckCardIds", new int[0]},
                 {"DiscardDeckCardIds", new int[0]},
+                {"GeneralStoreCardIds", new int[0]},
             };
             SetCustomProperties(customProperties);
         }

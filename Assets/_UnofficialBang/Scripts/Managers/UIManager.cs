@@ -378,7 +378,7 @@ namespace Thirties.UnofficialBang
 
         private void OnCardPickerEnter(CardPickerEnterEventData eventData)
         {
-            _faceDownCards = eventData.FaceDownCards.Select(c =>
+            _faceDownCards = eventData.FaceDownCards?.Select(c =>
             {
                 var cardElement = Instantiate(cardElementPrefab, faceDownCardsContainer);
                 cardElement.Configure(c, true);
@@ -386,7 +386,7 @@ namespace Thirties.UnofficialBang
                 return cardElement;
             }).ToList();
 
-            _faceUpCards = eventData.FaceUpCards.Select(c =>
+            _faceUpCards = eventData.FaceUpCards?.Select(c =>
             {
                 var cardElement = Instantiate(cardElementPrefab, faceDownCardsContainer);
                 cardElement.Configure(c, false);
@@ -399,8 +399,8 @@ namespace Thirties.UnofficialBang
 
         private void OnCardPickerExit(CardPickerExitEventData eventData)
         {
-            _faceDownCards.ForEach(c => Destroy(c.gameObject));
-            _faceUpCards.ForEach(c => Destroy(c.gameObject));
+            _faceDownCards?.ForEach(c => Destroy(c.gameObject));
+            _faceUpCards?.ForEach(c => Destroy(c.gameObject));
 
             cardPicker.gameObject.SetActive(false);
         }

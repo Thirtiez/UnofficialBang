@@ -213,15 +213,25 @@ namespace Thirties.UnofficialBang
         public CardData DrawPlayingCard()
         {
             var deck = PhotonNetwork.CurrentRoom.MainDeckCardIds;
-            var card = DrawCard(ref deck);
+            var card = DrawCards(ref deck, 1).FirstOrDefault();
             PhotonNetwork.CurrentRoom.MainDeckCardIds = deck;
             return card;
+        }
+
+        public List<CardData> DrawPlayingCards(int count)
+        {
+            if (count == 0) return null;
+
+            var deck = PhotonNetwork.CurrentRoom.MainDeckCardIds;
+            var cards = DrawCards(ref deck, count);
+            PhotonNetwork.CurrentRoom.MainDeckCardIds = deck;
+            return cards;
         }
 
         public CardData DrawDiscardedCard()
         {
             var deck = PhotonNetwork.CurrentRoom.DiscardDeckCardIds;
-            var card = DrawCard(ref deck);
+            var card = DrawCards(ref deck, 1).FirstOrDefault();
             PhotonNetwork.CurrentRoom.DiscardDeckCardIds = deck;
             return card;
         }
@@ -229,7 +239,7 @@ namespace Thirties.UnofficialBang
         public CardData DrawCharacter()
         {
             var deck = PhotonNetwork.CurrentRoom.CharactersDeckCardIds;
-            var card = DrawCard(ref deck);
+            var card = DrawCards(ref deck, 1).FirstOrDefault();
             PhotonNetwork.CurrentRoom.CharactersDeckCardIds = deck;
             return card;
         }
@@ -237,7 +247,7 @@ namespace Thirties.UnofficialBang
         public CardData DrawRole()
         {
             var deck = PhotonNetwork.CurrentRoom.RolesDeckCardIds;
-            var card = DrawCard(ref deck);
+            var card = DrawCards(ref deck, 1).FirstOrDefault();
             PhotonNetwork.CurrentRoom.RolesDeckCardIds = deck;
             return card;
         }
@@ -259,13 +269,25 @@ namespace Thirties.UnofficialBang
 
         #region Private methods
 
-        private CardData DrawCard(ref int[] deckIds)
+        private List<CardData> DrawCards(ref int[] deckIds, int count)
         {
+            if (deckIds.Length < count)
+            {
+                count = deckIds.Length;
+            }
+
             if (deckIds.Length > 0)
             {
-                var cardId = deckIds[0];
-                deckIds = deckIds.Skip(1).ToArray();
-                return Cards[cardId];
+                var cardIds = deckIds
+                    .Take(count)
+                    .Select(c => Cards[c])
+                    .ToList();
+
+                deckIds = deckIds
+                    .Skip(count)
+                    .ToArray();
+
+                return cardIds;
             }
 
             return null;
