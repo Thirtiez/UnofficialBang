@@ -91,6 +91,8 @@ namespace Photon.Realtime
             set => SetCustomProperties(new Hashtable { { "RoleCardId", value } });
         }
 
+        public int DiscardCount => HandCardIds.Length - CurrentHealth;
+
         public void ClearCustomProperties()
         {
             var customProperties = new Hashtable

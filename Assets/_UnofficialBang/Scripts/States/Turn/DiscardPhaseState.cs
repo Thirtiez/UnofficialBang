@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -9,6 +10,13 @@ namespace Thirties.UnofficialBang
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateEnter(animator, stateInfo, layerIndex);
+
+            if (_gameManager.IsLocalPlayerTurn)
+            {
+                _gameManager.CardPickerEnter(new CardPickerEnterEventData { FaceUpCards = PhotonNetwork.CurrentRoom.CurrentPlayer.HandCardIds });
+
+                _gameManager.CardPickerExit += OnCardPickerExit;
+            }
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,46 +27,35 @@ namespace Thirties.UnofficialBang
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
+
+            _gameManager.CardPickerExit -= OnCardPickerExit;
         }
 
         private void OnCardPickerExit(CardPickerExitEventData eventData)
         {
-            var card = _gameManager.Cards[PhotonNetwork.CurrentRoom.CurrentCardId];
-                        int cardsToDiscardcount = PhotonNetwork.CurrentRoom.CurrentPlayer.DiscardCount;
-
-            switch (card.Effect)
+            _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData
             {
-                case CardEffect.Discard:
-                    _gameManager.SendEvent(PhotonEvent.DiscardingCard, new DiscardingCardEventData
-                    {
-                        CardId = eventData.CardId,
-                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
-                        TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
-                        IsFromHand = eventData.IsFromHand
-                    });
-                    break;
+                CardId = eventData.CardId,
+                TargetId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                IsFromHand = true
+            });
 
-                case CardEffect.Panic:
-                    _gameManager.SendEvent(PhotonEvent.StealingCard, new StealingCardEventData
-                    {
-                        CardId = eventData.CardId,
-                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
-                        TargetId = PhotonNetwork.CurrentRoom.CurrentTargetId,
-                        IsFromHand = eventData.IsFromHand
-                    });
-                    break;
-
-                case CardEffect.GeneralStore:
-                    PhotonNetwork.CurrentRoom.GeneralStoreCardIds = PhotonNetwork.CurrentRoom.GeneralStoreCardIds
-                        .Where(c => c != eventData.CardId)
-                        .ToArray();
-                    _gameManager.SendEvent(PhotonEvent.DealingCard, new DealingCardEventData
-                    {
-                        CardId = eventData.CardId,
-                        PlayerId = PhotonNetwork.CurrentRoom.CurrentTargetId,
-                    });
-                    break;
+            if (PhotonNetwork.CurrentRoom.CurrentPlayer.DiscardCount > 1)
+            {
+                _gameManager.StartCoroutine(DelayCardPicker());
             }
+            else
+            {
+                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.Forward });
+            }
+
+        }
+
+        private IEnumerator DelayCardPicker()
+        {
+            yield return new WaitForSeconds(_gameManager.AnimationSettings.DealCardDelay);
+
+            _gameManager.CardPickerEnter(new CardPickerEnterEventData { FaceUpCards = PhotonNetwork.CurrentRoom.CurrentPlayer.HandCardIds });
         }
     }
 }
