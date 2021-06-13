@@ -39,7 +39,7 @@ namespace Thirties.UnofficialBang
                         if (previousWeapon != null)
                         {
                             _gameManager.SendEvent(PhotonEvent.DiscardingCard,
-                                new DiscardingCardEventData { CardId = previousWeapon.Id, PlayerId = targetPlayer.ActorNumber, IsFromHand = false });
+                                new DiscardingCardEventData { CardId = previousWeapon.Id, TargetId = targetPlayer.ActorNumber, IsFromHand = false });
                         }
 
                         targetPlayer.Range += card.EffectValue.Value;

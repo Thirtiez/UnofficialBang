@@ -249,6 +249,17 @@ namespace Thirties.UnofficialBang
                                 break;
                         }
                     }
+                    else if (state is DiscardPhaseState)
+                    {
+                        int cardsToDiscardcount = PhotonNetwork.CurrentRoom.CurrentPlayer.DiscardCount;
+                        headerText.text = _gameManager.IsLocalPlayerTurn ? $"Devi scartare {cardsToDiscardcount} carte"
+                            : $"{_currentPlayerNickname} deve scartare {cardsToDiscardcount} carte...";
+                    }
+                    else if (state is TurnEndState)
+                    {
+                        headerText.text = _gameManager.IsLocalPlayerTurn ? $"Il tuo turno è concluso"
+                            : $"{_currentPlayerNickname} ha concluso il suo turno";
+                    }
                 }
             }
         }
