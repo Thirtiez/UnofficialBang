@@ -83,12 +83,12 @@ namespace Thirties.UnofficialBang
         private List<CardView> _sideCards = new List<CardView>();
         private List<CardView> _handCards = new List<CardView>();
         private List<CardView> _boardCards = new List<CardView>();
-
         private List<CardView> _discardedCards = new List<CardView>();
 
+        private CardView _roleCard;
+        private CardView _characterCard;
+
         private Player _player => PhotonNetwork.CurrentRoom.GetPlayer(PlayerId);
-        private CardView _roleCard => _sideCards[0];
-        private CardView _characterCard => _sideCards[1];
 
         #endregion
 
@@ -98,7 +98,7 @@ namespace Thirties.UnofficialBang
         {
             { 1, new List<int> {0} },
             { 2, new List<int> {0, 4} },
-            { 3, new List<int> {0, 2, 6} },
+            { 3, new List<int> {0, 3, 5} },
             { 4, new List<int> {0, 2, 4, 6} },
             { 5, new List<int> {0, 1, 3, 5, 7} },
             { 6, new List<int> {0, 1, 3, 4, 5, 7} },
@@ -347,11 +347,15 @@ namespace Thirties.UnofficialBang
                 else if (cardData.Class == CardClass.Character)
                 {
                     DealCard(cardData, deckTransform, sideSpline, _sideCards);
+
+                    _characterCard = _sideCards.Last();
                 }
                 else if (cardData.Class == CardClass.Role)
                 {
                     bool isCovered = eventData.PlayerId != PhotonNetwork.LocalPlayer.ActorNumber;
                     DealCard(cardData, deckTransform, sideSpline, _sideCards, isCovered);
+
+                    _roleCard = _sideCards.Last();
                 }
             }
         }

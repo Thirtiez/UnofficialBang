@@ -205,7 +205,7 @@ namespace Thirties.UnofficialBang
                     _gameManager.SendEvent(PhotonEvent.DealingCard, new DealingCardEventData
                     {
                         CardId = eventData.CardId,
-                        PlayerId = PhotonNetwork.CurrentRoom.CurrentPlayerId,
+                        PlayerId = PhotonNetwork.CurrentRoom.CurrentTargetId,
                     });
                     break;
             }
