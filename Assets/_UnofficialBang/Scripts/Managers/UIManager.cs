@@ -184,7 +184,8 @@ namespace Thirties.UnofficialBang
                             var passCommand = Instantiate(commandElementPrefab, commandsContainer);
                             passCommand.Configure("Passa", () =>
                             {
-                                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = FSMTrigger.DiscardPhase });
+                                int trigger = PhotonNetwork.CurrentRoom.CurrentPlayer.DiscardCount > 0 ? FSMTrigger.DiscardPhase : FSMTrigger.TurnEnd;
+                                _gameManager.SendEvent(PhotonEvent.ChangingState, new ChangingStateEventData { Trigger = trigger });
                             });
 
                             _commands.Add(passCommand);
